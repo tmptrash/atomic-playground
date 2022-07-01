@@ -1,5 +1,6 @@
+import React from 'react';
 import './Status.scss';
 
 export default function Status() {
-    return <div className="status"></div>
+  return <div className="status"></div>
 }
