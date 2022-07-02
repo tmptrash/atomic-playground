@@ -1,4 +1,3 @@
-// TODO: add resize handler
 import Konva from "konva";
 import { KonvaEventObject } from "konva/lib/Node";
 import { Vector2d } from "konva/lib/types";
@@ -32,6 +31,14 @@ export default class Grid {
 
     stage.on('wheel', e => this.onWheel(e, stage, gridLayer));
     stage.on('dragend', () => this.draw(gridLayer));
+    window.addEventListener('resize', () => this.onResize(stage, cfg));
+  }
+
+  private onResize(stage: Konva.Stage, cfg: GridCfg) {
+    const canvasEl = document.querySelector(cfg.query) as HTMLElement;
+
+    stage.width(canvasEl.clientWidth * this.scale);
+    stage.height(canvasEl.clientHeight * this.scale);
   }
 
   private onWheel(e: KonvaEventObject<WheelEvent>, stage: Konva.Stage, gridLayer: Konva.Layer) {
