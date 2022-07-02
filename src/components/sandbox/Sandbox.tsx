@@ -2,19 +2,15 @@ import React from 'react';
 import { useEffect } from "react";
 import './Sandbox.scss';
 import Grid from './Grid';
+import { GridCfgDef } from './GridCfg';
 
 const CANVAS_QUERY = 'canvas';
 
-type Props = {
-  rows: number,
-  cols: number
-}
-
-export default function Sandbox({rows = 10, cols = 10}: Props) {
+export default function Sandbox() {
   let grid: Grid;
 
   useEffect(() => {
-    grid = new Grid(rows, cols, '#' + CANVAS_QUERY);
+    grid = new Grid({...GridCfgDef, query: '#' + CANVAS_QUERY});
   });
 
   return <div id={CANVAS_QUERY} className="grid"/>

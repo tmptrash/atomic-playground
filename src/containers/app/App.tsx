@@ -6,7 +6,7 @@ import './App.scss';
 export default function App() {
   return (
     <>
-      <Sandbox rows={10} cols={10}/>
+      <Sandbox/>
       <Status/>
     </>
   )
