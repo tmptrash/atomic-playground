@@ -1,6 +1,6 @@
 import React from 'react';
-import Sandbox from '../../components/sandbox/Sandbox';
-import Status from '../../components/status/Status';
+import Sandbox from '../sandbox/Sandbox';
+import Status from '../status/Status';
 import './App.scss';
 
 export default function App() {
