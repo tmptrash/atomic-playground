@@ -28,13 +28,13 @@ export default class Grid {
     });
 
     stage.add(gridLayer);
-    this.drawLines(gridLayer);
+    this.draw(gridLayer);
 
     stage.on('wheel', e => this.onWheel(e, stage, gridLayer));
-    stage.on('dragend', () => this.drawLines(gridLayer));
+    stage.on('dragend', () => this.draw(gridLayer));
   }
 
-  onWheel(e: KonvaEventObject<WheelEvent>, stage: Konva.Stage, gridLayer: Konva.Layer) {
+  private onWheel(e: KonvaEventObject<WheelEvent>, stage: Konva.Stage, gridLayer: Konva.Layer) {
     e.evt.preventDefault();
 
     const pointer = stage.getPointerPosition() as Vector2d;
@@ -49,13 +49,17 @@ export default class Grid {
     stage.scale({ x: this.scale, y: this.scale });
     stage.position({ x: pointer.x - toX * this.scale, y: pointer.y - toY * this.scale });
     stage.draw();
-    this.drawLines(gridLayer);
+    this.draw(gridLayer);
   }
 
-  drawLines(gridLayer: Konva.Layer) {
+  private draw(gridLayer: Konva.Layer) {
     gridLayer.clear();
     gridLayer.destroyChildren();
-    
+    this.drawLines(gridLayer);
+    this.drawBorderAndFill(gridLayer);
+  }
+
+  private drawLines(gridLayer: Konva.Layer) {
     const xSize = this.cfg.cols * this.cfg.stepSize;
     const ySize = this.cfg.rows * this.cfg.stepSize;
 
@@ -81,8 +85,12 @@ export default class Grid {
         })
       );
     }
-    
-    const rStageBorder = new Konva.Rect({
+  }
+
+  private drawBorderAndFill(gridLayer: Konva.Layer) {
+    const xSize = this.cfg.cols * this.cfg.stepSize;
+    const ySize = this.cfg.rows * this.cfg.stepSize;
+    const rGridBorder = new Konva.Rect({
       x: -2,
       y: -2,
       width: xSize,
@@ -90,7 +98,7 @@ export default class Grid {
       strokeWidth: 4,
       stroke: theme.gridBack
     });
-    const rStageFill = new Konva.Rect({
+    const rGridFill = new Konva.Rect({
       x: -2,
       y: -2,
       width: xSize,
@@ -99,8 +107,6 @@ export default class Grid {
       opacity: 0.15
     });
     
-    gridLayer.add(rStageFill, rStageBorder); 
-
-    gridLayer.batchDraw();
+    gridLayer.add(rGridFill, rGridBorder); 
   }
 }
