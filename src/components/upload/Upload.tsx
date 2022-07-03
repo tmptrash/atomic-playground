@@ -7,7 +7,6 @@ export default function Upload() {
   const [file, setFile] = useState('');
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
-    console.log(event);
     if (!event?.target?.files?.length) { return }
     const reader = new FileReader();
     reader.onload = onLoad(event);
