@@ -1,10 +1,13 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import Button from '@mui/material/Button';
 import { Input } from './styled';
 import { EVENTS, fire } from './../../utils/bus';
 
 export default function Upload() {
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const [file, setFile] = useState('');
+
+  function onChange(event: ChangeEvent<HTMLInputElement>) {
+    console.log(event);
     if (!event?.target?.files?.length) { return }
     const reader = new FileReader();
     reader.onload = onLoad(event);
@@ -16,6 +19,7 @@ export default function Upload() {
       if (e?.target?.result) {
         try {
           fire(EVENTS.UPLOAD, JSON.parse(e.target.result.toString()));
+          setFile('');
         } catch(e) {
           console.error(`Invalid json file ${event?.target?.files?.[0]}`);
         }
@@ -25,7 +29,7 @@ export default function Upload() {
 
   return (
     <label htmlFor="upload-file">
-      <Input accept="application/JSON" id="upload-file" type="file" onChange={onChange}/>
+      <Input accept="application/JSON" id="upload-file" type="file" onChange={onChange} value={file}/>
       <Button variant="contained" component="span">
         Upload
       </Button>
