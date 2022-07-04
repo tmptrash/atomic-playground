@@ -4,13 +4,15 @@ import './Sandbox.scss';
 import Grid from './Grid';
 import { GridCfgDef } from './GridCfg';
 import { EVENTS, on, off} from './../../utils/bus';
+import { IJson } from '../../interfaces/json';
 
 const CANVAS_QUERY = 'canvas';
 
 export default function Sandbox() {
   let grid: Grid;
 
-  function onUpload(json: any) {
+  function onUpload(json: IJson) {
+    // TODO: load atoms here
     console.log(json);
   }
 
