@@ -11,9 +11,9 @@ const ATOM_COLORS = {
 }
 
 export default class Atom {
+  x: number;
+  y: number;
   private layer: Konva.Layer;
-  private x: number;
-  private y: number;
   private size: number;
   private type: AtomType;
 
@@ -27,8 +27,8 @@ export default class Atom {
 
   draw() {
     this.layer.add(new Konva.Rect({
-      x: -2,
-      y: -2,
+      x: this.x,
+      y: this.y,
       width: this.size,
       height: this.size,
       strokeWidth: 4,

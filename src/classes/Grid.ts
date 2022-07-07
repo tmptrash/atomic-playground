@@ -6,6 +6,7 @@ import Lines from './Lines';
 
 export default class Grid {
   cfg: GridCfg;
+  layer: Konva.Layer;
   private scale = 1;
   private stage: Konva.Stage;
   private lines: Lines;
@@ -24,17 +25,17 @@ export default class Grid {
       height: canvasEl.clientHeight
     });
     this.lines = new Lines(this.cfg);
-    const gridLayer = new Konva.Layer({
+    this.layer = new Konva.Layer({
       draggable: false,
       x: 0,
       y: 0
     });
 
-    this.stage.add(gridLayer);
-    this.draw(gridLayer);
+    this.stage.add(this.layer);
+    this.draw(this.layer);
 
-    this.stage.on('wheel', e => this.onWheel(e, gridLayer));
-    this.stage.on('dragend', () => this.draw(gridLayer));
+    this.stage.on('wheel', e => this.onWheel(e, this.layer));
+    this.stage.on('dragend', () => this.draw(this.layer));
     window.addEventListener('resize', (this.onResizeCb = () => this.onResize(this.cfg)));
   }
 
