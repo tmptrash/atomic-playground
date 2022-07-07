@@ -11,11 +11,13 @@ export default class Grid {
   private stage: Konva.Stage;
   private lines: Lines;
   private onResizeCb;
+  private onAfterRender: () => void;
 
-  constructor(cfg: GridCfg) {
+  constructor(cfg: GridCfg, onAfterRender: () => void) {
     this.cfg = cfg;
 
     const canvasEl = document.querySelector(this.cfg.query) as HTMLElement;
+    this.onAfterRender = onAfterRender;
     this.stage = new Konva.Stage({
       container: this.cfg.query,
       draggable: true,
@@ -49,6 +51,7 @@ export default class Grid {
     gridLayer.destroyChildren();
     this.lines.drawLines(gridLayer);
     this.lines.drawBorderAndFill(gridLayer);
+    this.onAfterRender();
   }
 
   private onResize(cfg: GridCfg) {

@@ -15,6 +15,10 @@ export default function Sandbox(props: GridCfg) {
   let grid: Grid;
   const atoms: {[name: string]: Atom} = {};
 
+  function onAfterRender() {
+    for(const a in atoms) { atoms[a].draw() }
+  }
+
   function onUpload(json: IJson) {
     if (json.width !== grid.cfg.cols || json.height !== grid.cfg.rows) {
       console.error(`Invalid width/height of imported JSON. Required (w=${grid.cfg.cols}, h=${grid.cfg.rows}). Imported (w=${json.width}, h=${json.height})`);
@@ -41,7 +45,7 @@ export default function Sandbox(props: GridCfg) {
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    grid = new Grid({...props, query: '#' + CANVAS_QUERY});
+    grid = new Grid({...props, query: '#' + CANVAS_QUERY}, onAfterRender);
     on(EVENTS.UPLOAD, onUpload);
     return onDestroy;
   });
