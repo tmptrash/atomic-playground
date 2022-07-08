@@ -1,6 +1,6 @@
 import Konva from "konva";
 import { GridCfg } from "./GridCfg";
-import theme from './../theme';
+import Config from '../config';
 
 export default class Lines {
   private cfg: GridCfg;
@@ -19,8 +19,8 @@ export default class Lines {
         new Konva.Line({
           x: i * this.cfg.stepSize,
           points: [0, 0, 0, ySize],
-          stroke: theme.gridColor,
-          strokeWidth: .1
+          stroke: Config.grid.linesColor,
+          strokeWidth: Config.grid.lineWidth
         })
       );
     }
@@ -30,8 +30,8 @@ export default class Lines {
         new Konva.Line({
           y: i * this.cfg.stepSize,
           points: [0, 0, xSize, 0],
-          stroke: theme.gridColor,
-          strokeWidth: .1
+          stroke: Config.grid.linesColor,
+          strokeWidth: Config.grid.lineWidth
         })
       );
     }
@@ -40,21 +40,22 @@ export default class Lines {
   drawBorderAndFill(gridLayer: Konva.Layer) {
     const xSize = this.cfg.cols * this.cfg.stepSize;
     const ySize = this.cfg.rows * this.cfg.stepSize;
+    const borderPos = -Config.grid.borderWidth / 2;
     const rGridBorder = new Konva.Rect({
-      x: -2,
-      y: -2,
+      x: borderPos,
+      y: borderPos,
       width: xSize,
       height: ySize,
-      strokeWidth: 4,
-      stroke: theme.gridBack
+      strokeWidth: Config.grid.borderWidth,
+      stroke: Config.grid.fillColor
     });
     const rGridFill = new Konva.Rect({
-      x: -2,
-      y: -2,
+      x: borderPos,
+      y: borderPos,
       width: xSize,
       height: ySize,
-      fill: theme.gridBack,
-      opacity: 0.15
+      fill: Config.grid.fillColor,
+      opacity: Config.grid.fillOpacity
     });
     
     gridLayer.add(rGridFill, rGridBorder); 

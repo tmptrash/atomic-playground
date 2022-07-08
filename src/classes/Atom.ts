@@ -1,13 +1,13 @@
 import Konva from "konva";
 import { AtomType } from "../enums/enums";
-import theme from "../theme";
+import Config from "../config";
 
 const ATOM_COLORS = {
-  [AtomType.MOV]: theme.atoms.movColor,
-  [AtomType.FIX]: theme.atoms.fixColor,
-  [AtomType.SPL]: theme.atoms.splColor,
-  [AtomType.IF] : theme.atoms.ifColor,
-  [AtomType.JOB]: theme.atoms.jobColor
+  [AtomType.MOV]: Config.atoms.movColor,
+  [AtomType.FIX]: Config.atoms.fixColor,
+  [AtomType.SPL]: Config.atoms.splColor,
+  [AtomType.IF] : Config.atoms.ifColor,
+  [AtomType.JOB]: Config.atoms.jobColor
 }
 
 export default class Atom {
@@ -26,12 +26,13 @@ export default class Atom {
   }
 
   draw() {
+    const lineWidth = + Config.grid.lineWidth;
     this.layer.add(new Konva.Rect({
-      x: this.x,
-      y: this.y,
-      width: this.size,
-      height: this.size,
-      strokeWidth: 4,
+      x: this.x + lineWidth,
+      y: this.y + lineWidth,
+      width: this.size - lineWidth * 2,
+      height: this.size - lineWidth * 2,
+      strokeWidth: lineWidth,
       stroke: ATOM_COLORS[this.type],
       fill: ATOM_COLORS[this.type]
     }));

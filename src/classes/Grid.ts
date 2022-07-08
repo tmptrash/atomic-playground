@@ -1,6 +1,7 @@
 import Konva from "konva";
 import { KonvaEventObject } from "konva/lib/Node";
 import { Vector2d } from "konva/lib/types";
+import Config from "../config";
 import { GridCfg } from "./GridCfg";
 import Lines from './Lines';
 
@@ -67,11 +68,13 @@ export default class Grid {
     const pointer = this.stage.getPointerPosition() as Vector2d;
     const toX = (pointer.x - this.stage.x()) / this.scale;
     const toY = (pointer.y - this.stage.y()) / this.scale;
+    const minZoom = Config.minZoom;
+    const maxZoom = Config.maxZoom;
 
     // Zoom in or zoom out?
     this.scale += e?.evt?.deltaY > 0 ? this.cfg.scaleSpeed : -this.cfg.scaleSpeed;
-    if (this.scale < .1) { this .scale = .1 }
-    else if (this.scale > 10) { this.scale = 10 }
+    if (this.scale < minZoom) { this.scale = minZoom }
+    else if (this.scale > maxZoom) { this.scale = maxZoom }
 
     this.stage.scale({ x: this.scale, y: this.scale });
     this.stage.position({ x: pointer.x - toX * this.scale, y: pointer.y - toY * this.scale });
