@@ -1,23 +1,19 @@
 import Konva from "konva";
-import { GridCfg } from "./GridCfg";
 import Config from '../config';
 
 export default class Lines {
-  private cfg: GridCfg;
-
-  constructor(cfg: GridCfg) {
-    this.cfg = cfg;
-  }
-
   drawLines(gridLayer: Konva.Layer) {
-    const xSize = this.cfg.cols * this.cfg.stepSize;
-    const ySize = this.cfg.rows * this.cfg.stepSize;
+    const stepSize = Config.grid.stepSize;
+    const cols = Config.grid.cols;
+    const rows = Config.grid.rows;
+    const xSize = Config.grid.cols * stepSize;
+    const ySize = Config.grid.rows * stepSize;
 
     // draw vertical lines
-    for (let i = 0; i <= this.cfg.cols; i++) {
+    for (let i = 0; i <= cols; i++) {
       gridLayer.add(
         new Konva.Line({
-          x: i * this.cfg.stepSize,
+          x: i * stepSize,
           points: [0, 0, 0, ySize],
           stroke: Config.grid.linesColor,
           strokeWidth: Config.grid.lineWidth
@@ -25,10 +21,10 @@ export default class Lines {
       );
     }
     //draw Horizontal lines
-    for (let i = 0; i <= this.cfg.rows; i++) {
+    for (let i = 0; i <= rows; i++) {
       gridLayer.add(
         new Konva.Line({
-          y: i * this.cfg.stepSize,
+          y: i * stepSize,
           points: [0, 0, xSize, 0],
           stroke: Config.grid.linesColor,
           strokeWidth: Config.grid.lineWidth
@@ -38,8 +34,8 @@ export default class Lines {
   }
 
   drawBorderAndFill(gridLayer: Konva.Layer) {
-    const xSize = this.cfg.cols * this.cfg.stepSize;
-    const ySize = this.cfg.rows * this.cfg.stepSize;
+    const xSize = Config.grid.cols * Config.grid.stepSize;
+    const ySize = Config.grid.rows * Config.grid.stepSize;
     const borderPos = -Config.grid.borderWidth / 2;
     const rGridBorder = new Konva.Rect({
       x: borderPos,

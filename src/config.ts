@@ -1,12 +1,17 @@
 const Config = {
   minZoom: .1,
   maxZoom: 20,
+  zoomStep: .3,
   grid: {
     linesColor: 'aaa',
     fillColor: 'blue',
     lineWidth: .1,
     fillOpacity: .15,
-    borderWidth: 4
+    borderWidth: 4,
+    stepSize: 40,
+    query: 'canvas',
+    rows: 10,
+    cols: 10
   },
   atoms: {
     movColor: 'red',

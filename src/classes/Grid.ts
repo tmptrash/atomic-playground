@@ -2,11 +2,9 @@ import Konva from "konva";
 import { KonvaEventObject } from "konva/lib/Node";
 import { Vector2d } from "konva/lib/types";
 import Config from "../config";
-import { GridCfg } from "./GridCfg";
 import Lines from './Lines';
 
 export default class Grid {
-  cfg: GridCfg;
   layer: Konva.Layer;
   private scale = 1;
   private stage: Konva.Stage;
@@ -14,20 +12,19 @@ export default class Grid {
   private onResizeCb;
   private onAfterRender: () => void;
 
-  constructor(cfg: GridCfg, onAfterRender: () => void) {
-    this.cfg = cfg;
-
-    const canvasEl = document.querySelector(this.cfg.query) as HTMLElement;
+  constructor(onAfterRender: () => void) {
+    const query = Config.grid.query;
+    const canvasEl = document.querySelector('#' + query) as HTMLElement;
     this.onAfterRender = onAfterRender;
     this.stage = new Konva.Stage({
-      container: this.cfg.query,
+      container: query,
       draggable: true,
-      x: this.cfg.border,
-      y: this.cfg.border,
+      x: Config.grid.borderWidth,
+      y: Config.grid.borderWidth,
       width: canvasEl.clientWidth,
       height: canvasEl.clientHeight
     });
-    this.lines = new Lines(this.cfg);
+    this.lines = new Lines();
     this.layer = new Konva.Layer({
       draggable: false,
       x: 0,
@@ -39,7 +36,7 @@ export default class Grid {
 
     this.stage.on('wheel', e => this.onWheel(e, this.layer));
     this.stage.on('dragend', () => this.draw(this.layer));
-    window.addEventListener('resize', (this.onResizeCb = () => this.onResize(this.cfg)));
+    window.addEventListener('resize', (this.onResizeCb = () => this.onResize()));
   }
 
   destroy() {
@@ -55,8 +52,8 @@ export default class Grid {
     this.onAfterRender();
   }
 
-  private onResize(cfg: GridCfg) {
-    const canvasEl = document.querySelector(cfg.query) as HTMLElement;
+  private onResize() {
+    const canvasEl = document.querySelector('#' + Config.grid.query) as HTMLElement;
 
     this.stage.width(canvasEl.clientWidth * this.scale);
     this.stage.height(canvasEl.clientHeight * this.scale);
@@ -72,7 +69,7 @@ export default class Grid {
     const maxZoom = Config.maxZoom;
 
     // Zoom in or zoom out?
-    this.scale += e?.evt?.deltaY > 0 ? this.cfg.scaleSpeed : -this.cfg.scaleSpeed;
+    this.scale += e?.evt?.deltaY > 0 ? Config.zoomStep : -Config.zoomStep;
     if (this.scale < minZoom) { this.scale = minZoom }
     else if (this.scale > maxZoom) { this.scale = maxZoom }
 
