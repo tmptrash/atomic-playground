@@ -5,11 +5,13 @@ import Grid from '../../classes/Grid';
 import { EVENTS, on, off} from './../../utils/bus';
 import { IAtom, IBlock, IJson, IVm } from '../../interfaces/json';
 import Atom from '../../classes/Atom';
-import { AtomTypes, Modes } from '../../enums/enums';
+import { AtomTypes } from '../../enums/enums';
 import Config from '../../config';
-import Store from '../../store';
+import { bind } from '../../utils/utils';
 
 export default function Sandbox() {
+  bind('sandbox');
+
   let grid: Grid;
   const atoms: {[name: string]: Atom} = {};
 
@@ -42,10 +44,6 @@ export default function Sandbox() {
     });
   }
 
-  function onMode(mode: Modes) {
-    Store.mode = mode;
-  }
-
   function onDestroy() {
     off(EVENTS.UPLOAD, onUpload);
     grid.destroy();
@@ -55,9 +53,9 @@ export default function Sandbox() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     grid = new Grid(onAfterRender);
     on(EVENTS.UPLOAD, onUpload);
-    on(EVENTS.MODE, onMode);
     return onDestroy;
   });
 
+  console.log('Sandbox rendering...');
   return <div id={Config.grid.query} className="grid"/>
 }

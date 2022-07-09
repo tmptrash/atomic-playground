@@ -1,7 +1,14 @@
 import { Modes } from "./enums/enums";
 
-const Store = {
-  mode: Modes.Edit
+export interface ISandbox {
+    mode: Modes
+}
+export interface IStore {
+  sandbox: ISandbox
 }
 
-export default Store;
+export const Store: IStore = {
+  sandbox: {
+    mode: Modes.Edit
+  }
+}

@@ -1,4 +1,3 @@
 export const EVENTS = {
-  UPLOAD: 'upload',
-  MODE: 'mode'
+  UPLOAD: 'upload'
 }

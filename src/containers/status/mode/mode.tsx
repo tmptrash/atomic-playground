@@ -5,14 +5,14 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import { id } from '../../../utils/utils';
-import { EVENTS, fire } from '../../../utils/bus';
 import { Modes } from '../../../enums/enums';
+import { Store } from '../../../store';
 
 export default function Mode() {
   const labelId = id();
 
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
-    fire(EVENTS.MODE, e.target.value);
+    Store.sandbox.mode = e.target.value as Modes;
   }
 
   return (

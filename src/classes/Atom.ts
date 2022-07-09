@@ -1,7 +1,7 @@
 import Konva from "konva";
 import { AtomTypes, Modes } from "../enums/enums";
 import Config from "../config";
-import Store from '../store';
+import { Store } from '../store';
 
 const ATOM_COLORS = {
   [AtomTypes.Mov]: Config.atoms.movColor,
@@ -38,8 +38,8 @@ export default class Atom {
       fill: ATOM_COLORS[this.type]
     });
 
-    rect.on('mouseup', e => {
-      if (Store.mode === Modes.Clear) {
+    rect.on('mouseup', () => {
+      if (Store.sandbox.mode === Modes.Clear) {
         rect.destroy();
       }
     });
