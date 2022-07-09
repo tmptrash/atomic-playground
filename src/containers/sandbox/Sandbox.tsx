@@ -1,10 +1,10 @@
 import React from 'react';
 import { useEffect } from "react";
-import './Sandbox.scss';
-import Grid from '../../classes/Grid';
-import { EVENTS, on, off} from './../../utils/bus';
+import './sandbox.scss';
+import Grid from '../../classes/grid';
+import { EVENTS, on, off} from '../../utils/bus';
 import { IAtom, IBlock, IJson, IVm } from '../../interfaces/json';
-import Atom from '../../classes/Atom';
+import Atom from '../../classes/atom';
 import { AtomTypes } from '../../enums/enums';
 import Config from '../../config';
 import { bind } from '../../utils/utils';

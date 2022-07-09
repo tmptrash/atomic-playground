@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import Button from '@mui/material/Button';
 import { Input } from './styled';
-import { EVENTS, fire } from './../../utils/bus';
+import { EVENTS, fire } from '../../utils/bus';
 
 export default function Upload() {
   const [file, setFile] = useState('');
