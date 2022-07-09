@@ -2,7 +2,7 @@ import Konva from "konva";
 import { KonvaEventObject } from "konva/lib/Node";
 import { Vector2d } from "konva/lib/types";
 import Config from "../config";
-import Lines from './lines';
+import Lines from './liness';
 
 export default class Grid {
   layer: Konva.Layer;
