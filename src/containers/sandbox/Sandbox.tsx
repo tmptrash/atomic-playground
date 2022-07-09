@@ -5,7 +5,7 @@ import Grid from '../../classes/Grid';
 import { EVENTS, on, off} from './../../utils/bus';
 import { IAtom, IBlock, IJson, IVm } from '../../interfaces/json';
 import Atom from '../../classes/Atom';
-import { AtomType } from '../../enums/enums';
+import { AtomTypes, Modes } from '../../enums/enums';
 import Config from '../../config';
 
 export default function Sandbox() {
@@ -13,7 +13,12 @@ export default function Sandbox() {
   const atoms: {[name: string]: Atom} = {};
 
   function onAfterRender() {
-    for(const a in atoms) { atoms[a].draw() }
+    for(const a in atoms) {
+      // eslint-disable-next-line no-prototype-builtins
+      if (atoms.hasOwnProperty(a)) {
+        atoms[a].draw();
+      }
+    }
   }
 
   function onUpload(json: IJson) {
@@ -26,7 +31,7 @@ export default function Sandbox() {
     json.blocks.forEach((b: IBlock) => {
       b.atoms.forEach((a: IAtom) => {
         // TODO: atom type
-        const atom = new Atom(grid.layer, a.x * stepSize, a.y * stepSize, stepSize, AtomType.MOV);
+        const atom = new Atom(grid.layer, a.x * stepSize, a.y * stepSize, stepSize, AtomTypes.Mov);
         atoms[`${a.x}-${a.y}`] = atom;
         atom.draw();
       });
@@ -34,6 +39,10 @@ export default function Sandbox() {
         console.log(v);
       });
     });
+  }
+
+  function onMode(mode: Modes) {
+    console.log(mode);
   }
 
   function onDestroy() {
@@ -45,13 +54,9 @@ export default function Sandbox() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     grid = new Grid(onAfterRender);
     on(EVENTS.UPLOAD, onUpload);
+    on(EVENTS.MODE, onMode);
     return onDestroy;
   });
 
   return <div id={Config.grid.query} className="grid"/>
-}
-
-Sandbox.defaultProps = {
-  rows: 10,
-  cols: 10
 }

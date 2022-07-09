@@ -1,13 +1,13 @@
 import Konva from "konva";
-import { AtomType } from "../enums/enums";
+import { AtomTypes } from "../enums/enums";
 import Config from "../config";
 
 const ATOM_COLORS = {
-  [AtomType.MOV]: Config.atoms.movColor,
-  [AtomType.FIX]: Config.atoms.fixColor,
-  [AtomType.SPL]: Config.atoms.splColor,
-  [AtomType.IF] : Config.atoms.ifColor,
-  [AtomType.JOB]: Config.atoms.jobColor
+  [AtomTypes.Mov]: Config.atoms.movColor,
+  [AtomTypes.Fix]: Config.atoms.fixColor,
+  [AtomTypes.Spl]: Config.atoms.splColor,
+  [AtomTypes.If] : Config.atoms.ifColor,
+  [AtomTypes.Job]: Config.atoms.jobColor
 }
 
 export default class Atom {
@@ -15,9 +15,9 @@ export default class Atom {
   y: number;
   private layer: Konva.Layer;
   private size: number;
-  private type: AtomType;
+  private type: AtomTypes;
 
-  constructor(layer: Konva.Layer, x: number, y: number, size: number, type: AtomType) {
+  constructor(layer: Konva.Layer, x: number, y: number, size: number, type: AtomTypes) {
     this.layer = layer;
     this.x = x;
     this.y = y;
