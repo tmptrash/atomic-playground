@@ -1,6 +1,7 @@
 import Konva from "konva";
-import { AtomTypes } from "../enums/enums";
+import { AtomTypes, Modes } from "../enums/enums";
 import Config from "../config";
+import Store from '../store';
 
 const ATOM_COLORS = {
   [AtomTypes.Mov]: Config.atoms.movColor,
@@ -27,7 +28,7 @@ export default class Atom {
 
   draw() {
     const lineWidth = + Config.grid.lineWidth;
-    this.layer.add(new Konva.Rect({
+    const rect = new Konva.Rect({
       x: this.x + lineWidth,
       y: this.y + lineWidth,
       width: this.size - lineWidth * 2,
@@ -35,6 +36,14 @@ export default class Atom {
       strokeWidth: lineWidth,
       stroke: ATOM_COLORS[this.type],
       fill: ATOM_COLORS[this.type]
-    }));
+    });
+
+    rect.on('mouseup', e => {
+      if (Store.mode === Modes.Clear) {
+        rect.destroy();
+      }
+    });
+
+    this.layer.add(rect);
   }
 }

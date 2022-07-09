@@ -7,6 +7,7 @@ import { IAtom, IBlock, IJson, IVm } from '../../interfaces/json';
 import Atom from '../../classes/Atom';
 import { AtomTypes, Modes } from '../../enums/enums';
 import Config from '../../config';
+import Store from '../../store';
 
 export default function Sandbox() {
   let grid: Grid;
@@ -42,7 +43,7 @@ export default function Sandbox() {
   }
 
   function onMode(mode: Modes) {
-    console.log(mode);
+    Store.mode = mode;
   }
 
   function onDestroy() {
