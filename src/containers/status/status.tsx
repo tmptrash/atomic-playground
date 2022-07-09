@@ -1,8 +1,8 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import Upload from '../../components/upload/uploadd';
+import Upload from '../../components/upload/upload';
 import './status.scss';
-import Mode from './mode/modee';
+import Mode from './mode/mode';
 
 export default function Status() {
   console.log('Status rendering...');
