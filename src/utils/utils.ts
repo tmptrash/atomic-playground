@@ -39,8 +39,7 @@ interface IObj {
 
 function useUpdate() {
   const [, updateState] = React.useState({});
-  // TODO: https://stackoverflow.com/questions/46240647/react-how-to-force-a-function-component-to-render/53837442#53837442
-  return React.useCallback(() => updateState({}), []);
+  return () => updateState({});
 }
 
 function isObject(obj: unknown): boolean { return !!obj && typeof obj === 'object' }
