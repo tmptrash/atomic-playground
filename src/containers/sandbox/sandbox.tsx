@@ -8,9 +8,10 @@ import Atom from '../../classes/atom';
 import { AtomTypes } from '../../enums/enums';
 import Config from '../../config';
 import { bind } from '../../utils/utils';
+import { Store } from '../../store';
 
 export default function Sandbox() {
-  bind('sandbox');
+  bind(Store.sandbox);
 
   let grid: Grid;
   const atoms: {[name: string]: Atom} = {};

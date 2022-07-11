@@ -1,32 +1,58 @@
 import React from 'react';
-import get from 'lodash.get';
 import { Store } from '../store';
 
 let idValue = 0;
-
-export interface IObj {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [name: string]: any;
-}
 
 export function id() {
   return (++idValue).toString();
 }
 
-export function bind(path: string): IObj {
-  const [, updateState] = React.useState({});
-  const update = React.useCallback(() => updateState({}), []);
-  const obj = get(Store, path);
-  const p = path.split('.');
-  const parentKey = p.pop() as string;
-  const parent: IObj = p.length < 2 ? Store : get(Store, p.join('.'));
+// TODO: add check if an object is already binded
+export function bind(obj: IObj) {
+  const update = useUpdate();
+  const ret = findDeep(Store, obj);
+  if (ret === false) { throw new Error(`Storage doesn't contain specified object "${obj}"`) }
+  const [parent, key] = ret as StoreKey;
 
-  return parent[parentKey] = new Proxy(obj, {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    set(target: typeof obj, prop: string | symbol, val: any): boolean {
-      target[prop as keyof IObj] = val;
-      update();
-      return true;
-    }
+  React.useEffect(() => () => {
+    parent[key] = parent[key].old;
+    delete parent[key].old;
   });
+  React.useEffect(() => {
+    parent[key].old = parent[key];
+    parent[key] = new Proxy(parent[key], {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      set(target: IObj, prop: string, val: any): boolean {
+        target[prop] = val;
+        update();
+        return true;
+      }
+    });
+  })
+}
+
+type StoreKey = [IObj, string];
+interface IObj {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [name: string]: any;
+}
+
+function useUpdate() {
+  const [, updateState] = React.useState({});
+  // TODO: https://stackoverflow.com/questions/46240647/react-how-to-force-a-function-component-to-render/53837442#53837442
+  return React.useCallback(() => updateState({}), []);
+}
+
+function isObject(obj: unknown): boolean { return !!obj && typeof obj === 'object' }
+function findDeep(obj: IObj, val: unknown): StoreKey | boolean {
+  for (const p in obj) {
+    const v = obj[p];
+    if (v === val) { return [obj, p] }
+    if (isObject(v)) {
+      const ret = findDeep(v, val);
+      if (ret) { return ret }
+    }
+  }
+
+  return false;
 }

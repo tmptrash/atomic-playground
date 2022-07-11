@@ -14,7 +14,6 @@
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
     "konva": "^8.3.10",
-    "lodash.get": "^4.4.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-konva": "^18.2.1",
@@ -24,7 +23,6 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "@types/lodash.get": "^4.4.7",
     "@typescript-eslint/eslint-plugin": "^5.30.0",
     "@typescript-eslint/parser": "^5.30.0",
     "eslint": "^8.18.0",
