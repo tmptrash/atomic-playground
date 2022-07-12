@@ -7,7 +7,7 @@ import { IAtom, IBlock, IJson, IVm } from '../../interfaces/json';
 import Atom from '../../classes/atom';
 import { AtomTypes } from '../../enums/enums';
 import Config from '../../config';
-import { bind } from '../../utils/utils';
+import { bind } from '../../utils/binder';
 import { Store } from '../../store';
 
 export default function Sandbox() {
