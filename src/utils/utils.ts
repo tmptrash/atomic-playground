@@ -7,11 +7,10 @@ export function id() {
   return (++idValue).toString();
 }
 
-// TODO: add check if an object is already binded
 export function bind(obj: IObj) {
   const update = useUpdate();
   const ret = findDeep(Store, obj);
-  if (ret === false) { throw new Error(`Storage doesn't contain specified object "${obj}"`) }
+  if (ret === false) { throw new Error(`Storage doesn't contain specified object "${JSON.stringify(obj)}"`) }
   const [parent, key] = ret as StoreKey;
 
   React.useEffect(() => () => {
@@ -19,6 +18,7 @@ export function bind(obj: IObj) {
     delete parent[key].old;
   });
   React.useEffect(() => {
+    if (parent[key].old) { throw new Error(`Current store property "${key}" is already user in other component`) }
     parent[key].old = parent[key];
     parent[key] = new Proxy(parent[key], {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

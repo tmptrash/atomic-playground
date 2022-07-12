@@ -57,6 +57,5 @@ export default function Sandbox() {
     return onDestroy;
   });
 
-  console.log('Sandbox rendering...');
   return <div id={Config.grid.query} className="grid"/>
 }
