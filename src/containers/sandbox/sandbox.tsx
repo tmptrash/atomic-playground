@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import './sandbox.scss';
 import { EVENTS, on, off} from '../../utils/bus';
 import { IAtom, IBlock, IJson, IVm } from '../../interfaces/json';
-import Atom from '../../classes/atom';
+import Atom from '../../components/atom';
 import { AtomTypes } from '../../enums/enums';
 import Config from '../../config';
 import { bind } from '../../utils/binder';
