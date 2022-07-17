@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import Button from '@mui/material/Button';
 import { Input } from './styled';
-import { EVENTS, fire } from '../../utils/bus';
+import { store } from '../../store/store';
 
 export default function Upload() {
   const [file, setFile] = useState('');
@@ -17,7 +17,7 @@ export default function Upload() {
     return (e: ProgressEvent<FileReader>) => {
       if (e?.target?.result) {
         try {
-          fire(EVENTS.UPLOAD, JSON.parse(e.target.result.toString()));
+          store.sandbox.atoms = JSON.parse(e.target.result.toString());
           setFile('');
         } catch(e) {
           console.error(`Invalid json file ${event?.target?.files?.[0]}`);

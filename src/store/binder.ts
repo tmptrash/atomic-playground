@@ -1,12 +1,13 @@
 import React from 'react';
-import { Store } from '../store';
-import { isObject } from './utils';
+import { store } from './store';
+import { isObject } from '../utils/utils';
+import { Changer } from './../types/store';
 
-type StoreKey = [IObj, string];
 interface IObj {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [name: string]: any;
 }
+type StoreKey = [IObj, string];
 /**
  * Binds a component to specified object in a store. Usage:
  * 
@@ -29,9 +30,9 @@ interface IObj {
  * import { Store } from 'store';
  * Store.prop.val = 2; // will rerender binded component
  */
-export function bind(obj: IObj) {
+export function bind(obj: IObj, changers?: Changer[]) {
   const update = useUpdate();
-  const ret = findDeep(Store, obj);
+  const ret = findDeep(store, obj);
   if (ret === false) { throw new Error(`Storage doesn't contain specified object "${JSON.stringify(obj)}"`) }
   const [parent, key] = ret as StoreKey;
 
@@ -45,7 +46,9 @@ export function bind(obj: IObj) {
     parent[key] = new Proxy(parent[key], {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       set(target: IObj, prop: string, val: any): boolean {
-        target[prop] = val;
+        let newVal = val;
+        changers && changers.forEach(c => newVal = c(newVal, prop));
+        target[prop] = newVal;
         update();
         return true;
       }
@@ -65,6 +68,7 @@ function useUpdate() {
  */
 function findDeep(obj: IObj, val: unknown): StoreKey | boolean {
   for (const p in obj) {
+    if (p === 'old') { continue }
     const v = obj[p];
     if (v === val) { return [obj, p] }
     if (isObject(v)) {

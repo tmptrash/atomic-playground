@@ -1,10 +1,12 @@
+import React, { useEffect, useRef, useState } from 'react';
 import Konva from 'konva';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { Vector2d } from 'konva/lib/types';
-import React, { useEffect, useRef, useState } from 'react';
 import { Layer, Stage } from 'react-konva';
 import Config from "../../config";
 import Lines from './lines';
+import { store } from '../../store/store';
+import Atom from '../atom';
 
 export default function Grid() {
   const [size, setSize] = useState({w: 0, h: 0});
@@ -62,6 +64,15 @@ export default function Grid() {
       onWheel={onWheel}>
       <Layer draggable={false} x={0} y={0}>
         <Lines/>
+        {store.sandbox.atoms.map((a, i) => (
+          <Atom
+            key={i}
+            x={a.x}
+            y={a.y}
+            size={a.size}
+            type={a.type}
+          />
+        ))}
       </Layer>
     </Stage>
   )

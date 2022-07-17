@@ -1,22 +1,22 @@
 /**
  * JSON related interfaces
  */
-export interface IAtom {
+export type Atom = {
   a: number,
   x: number,
   y: number
 }
-export interface IVm {
+export type Vm = {
   x: number,
   y: number,
   e: number
 }
-export interface IBlock {
-  atoms: IAtom[],
-  vms: IVm[]
+export type Block = {
+  atoms: Atom[],
+  vms: Vm[]
 }
-export interface IJson {
+export type Json = {
   width: number,
   height: number,
-  blocks: IBlock[]
+  blocks: Block[]
 }

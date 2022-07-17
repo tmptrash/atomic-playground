@@ -6,13 +6,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import { id } from '../../../utils/utils';
 import { Modes } from '../../../enums/enums';
-import { Store } from '../../../store';
+import { store } from '../../../store/store';
 
 export default function Mode() {
   const labelId = id();
 
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
-    Store.sandbox.mode = e.target.value as Modes;
+    store.status.mode = e.target.value as Modes;
   }
 
   return (

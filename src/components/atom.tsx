@@ -2,7 +2,7 @@ import React from 'react';
 import { useRef } from 'react';
 import Konva from 'konva';
 import { AtomTypes, Modes } from '../enums/enums';
-import { Store } from '../store';
+import { store } from '../store/store';
 import { Rect } from "react-konva";
 import Config from "../config";
 
@@ -26,7 +26,7 @@ export default function Atom(props: Props) {
   const rectRef = useRef(null);
 
   function onMouseup() {
-    if (Store.sandbox.mode === Modes.Clear) {
+    if (store.status.mode === Modes.Clear) {
       if (rectRef.current === null) { return }
       (rectRef.current as Konva.Rect).destroy();
     }
