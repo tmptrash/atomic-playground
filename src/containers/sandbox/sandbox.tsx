@@ -16,10 +16,11 @@ export default function Sandbox() {
   const grid = Config.grid;
   const query = grid.query;
   const stageRef = useRef(null);
-  let scale = 1;
 
   function onResize() {
     const canvasEl = document.querySelector('#' + Config.grid.query) as HTMLElement;
+    if (stageRef.current === null) { return }
+    const scale = (stageRef.current as Konva.Stage).scaleX();
     setSize({
       w: canvasEl.clientWidth * scale,
       h: canvasEl.clientHeight * scale
@@ -30,6 +31,7 @@ export default function Sandbox() {
     e.evt.preventDefault();
     if (stageRef.current === null) { return }
     const stage = stageRef.current as Konva.Stage;
+    let scale = stage.scaleX();
     const pointer = stage.getPointerPosition() as Vector2d;
     const toX = (pointer.x - stage.x()) / scale;
     const toY = (pointer.y - stage.y()) / scale;
