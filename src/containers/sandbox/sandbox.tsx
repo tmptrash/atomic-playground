@@ -7,13 +7,10 @@ import Config from '../../config';
 import { bind } from '../../store/binder';
 import { store } from '../../store/store';
 import Grid from '../../components/grid/grid';
-import { changeAtoms } from '../../store';
-import { Changer } from '../../types/store';
 import './sandbox.scss';
 
 export default function Sandbox() {
   bind(store.status);
-  bind(store.sandbox, [changeAtoms as Changer]);
 
   const [size, setSize] = useState({w: 0, h: 0});
   const grid = Config.grid;
