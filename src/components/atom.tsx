@@ -15,6 +15,7 @@ const ATOM_COLORS = {
 }
 
 type Props = {
+  id: string,
   x: number,
   y: number,
   size: number,
@@ -29,6 +30,9 @@ export default function Atom(props: Props) {
     if (store.status.mode === Modes.Clear) {
       if (rectRef.current === null) { return }
       (rectRef.current as Konva.Rect).destroy();
+      const atoms = store.sandbox.atoms;
+      atoms.splice(atoms.findIndex(a => a.id === props.id), 1);
+      store.sandbox.atoms = [...atoms];
     }
   }
 
