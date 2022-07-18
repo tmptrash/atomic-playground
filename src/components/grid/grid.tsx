@@ -7,8 +7,6 @@ import { bind } from '../../store/binder';
 export default function Grid() {
   bind(store.sandbox);
 
-  const atoms = store.sandbox.atoms;
-  console.log(atoms);
   return (
     <>
       <Lines/>

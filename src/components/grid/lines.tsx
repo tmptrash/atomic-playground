@@ -1,6 +1,7 @@
 import React from 'react';
 import { Line, Rect } from 'react-konva';
 import Config from "../../config";
+import { arr } from '../../utils/utils';
 
 export default function Lines() {
   const grid = Config.grid;
@@ -8,7 +9,6 @@ export default function Lines() {
   const xSize = grid.cols * grid.stepSize;
   const ySize = grid.rows * grid.stepSize;
   const borderPos = -grid.borderWidth / 2;
-  const arr = (n: number) => Array.from(Array(n).keys())
 
   return (
     <>
