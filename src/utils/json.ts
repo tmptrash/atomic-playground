@@ -1,5 +1,4 @@
 import Config from "../config";
-import { AtomTypes } from "../enums/enums";
 import { Atom as JsonAtom, Block, Json, Vm } from "../types/json";
 import { Atom } from "../types/store";
 import { id } from "./utils";
@@ -10,13 +9,9 @@ export function toAtoms(val: Json): Atom[] {
     return [];
   }
 
-  const stepSize = Config.grid.stepSize;
   const atoms: Atom[] = [];
   val.blocks.forEach((b: Block) => {
-    b.atoms.forEach((a: JsonAtom) => {
-      // TODO: atom type
-      atoms.push({id: id(), x: a.x * stepSize, y: a.y * stepSize, size: stepSize, type: AtomTypes.Mov});
-    });
+    b.atoms.forEach((a: JsonAtom) => atoms.push({id: id(), x: a.x, y: a.y, a: a.a}));
     b.vms.forEach((v: Vm) => {
       console.log(v);
     });

@@ -1,10 +1,11 @@
 import React from 'react';
 import { useRef } from 'react';
 import Konva from 'konva';
-import { AtomTypes, Modes } from '../enums/enums';
-import { store } from '../store/store';
+import { AtomTypes, Modes } from '../../enums/enums';
+import { store } from '../../store/store';
 import { Rect } from "react-konva";
-import Config from "../config";
+import Config from "../../config";
+import { getType } from '../../utils/atom';
 
 const ATOM_COLORS = {
   [AtomTypes.Mov]: Config.atoms.movColor,
@@ -18,20 +19,21 @@ type Props = {
   id: string,
   x: number,
   y: number,
-  size: number,
-  type: AtomTypes
+  a: number
 }
 export default function Atom(props: Props) {
-  const {x, y, size, type} = props;
-  const lineWidth = + Config.grid.lineWidth;
+  const {x, y, a, id} = props;
+  const lineWidth = Config.grid.lineWidth;
+  const stepSize = Config.grid.stepSize;
   const rectRef = useRef(null);
+  const type = getType(a);
 
   function onMouseup() {
     if (store.status.mode === Modes.Clear) {
       if (rectRef.current === null) { return }
       (rectRef.current as Konva.Rect).destroy();
       const atoms = store.sandbox.atoms;
-      atoms.splice(atoms.findIndex(a => a.id === props.id), 1);
+      atoms.splice(atoms.findIndex(a => a.id === id), 1);
       store.sandbox.atoms = [...atoms];
     }
   }
@@ -39,10 +41,10 @@ export default function Atom(props: Props) {
   return (
     <Rect
       ref={rectRef}
-      x={x + lineWidth}
-      y={y + lineWidth}
-      width={size - lineWidth * 2}
-      height={size - lineWidth * 2}
+      x={x * stepSize + lineWidth}
+      y={y * stepSize + lineWidth}
+      width={stepSize - lineWidth * 2}
+      height={stepSize - lineWidth * 2}
       strokeWidth={lineWidth}
       stroke={ATOM_COLORS[type]}
       fill={ATOM_COLORS[type]}
