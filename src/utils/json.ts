@@ -1,10 +1,10 @@
-import Config from "../../config";
-import { AtomTypes } from "../../enums/enums";
-import { Atom as JsonAtom, Block, Json, Vm } from "../../types/json";
-import { Atom } from "../../types/store";
-import { id } from "../../utils/utils";
+import Config from "../config";
+import { AtomTypes } from "../enums/enums";
+import { Atom as JsonAtom, Block, Json, Vm } from "../types/json";
+import { Atom } from "../types/store";
+import { id } from "./utils";
 
-export function convertAtoms(val: Json): Atom[] {
+export function toAtoms(val: Json): Atom[] {
   if (val.width !== Config.grid.cols || val.height !== Config.grid.rows) {
     console.error(`Invalid width/height of imported JSON. Required (w=${Config.grid.cols}, h=${Config.grid.rows}). Imported (w=${val.width}, h=${val.height})`);
     return [];

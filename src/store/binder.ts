@@ -3,7 +3,7 @@ import { store } from './store';
 import { isObject } from '../utils/utils';
 import { Changer } from './../types/store';
 
-interface IObj {
+type IObj = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [name: string]: any;
 }
