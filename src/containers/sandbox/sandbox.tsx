@@ -13,17 +13,16 @@ export default function Sandbox() {
   bind(store.status);
 
   const [size, setSize] = useState({w: 0, h: 0});
+  const [scale, setScale] = useState(1);
   const grid = Config.grid;
   const query = grid.query;
   const stageRef = useRef(null);
 
   function onResize() {
     const canvasEl = document.querySelector('#' + Config.grid.query) as HTMLElement;
-    if (stageRef.current === null) { return }
-    const scale = (stageRef.current as Konva.Stage).scaleX();
     setSize({
-      w: canvasEl.clientWidth * scale,
-      h: canvasEl.clientHeight * scale
+      w: canvasEl.clientWidth,
+      h: canvasEl.clientHeight
     });
   }
 
@@ -31,18 +30,18 @@ export default function Sandbox() {
     e.evt.preventDefault();
     if (stageRef.current === null) { return }
     const stage = stageRef.current as Konva.Stage;
-    let scale = stage.scaleX();
     const pointer = stage.getPointerPosition() as Vector2d;
     const toX = (pointer.x - stage.x()) / scale;
     const toY = (pointer.y - stage.y()) / scale;
 
     // Zoom in or zoom out?
-    scale = e?.evt?.deltaY > 0 ? scale / Config.zoomDivider : scale * Config.zoomDivider;
-    if (scale < Config.minZoom) { scale = Config.minZoom }
-    else if (scale > Config.maxZoom) { scale = Config.maxZoom }
+    let newScale = e?.evt?.deltaY > 0 ? scale / Config.zoomDivider : scale * Config.zoomDivider;
+    if (newScale < Config.minZoom) { newScale = Config.minZoom }
+    else if (newScale > Config.maxZoom) { newScale = Config.maxZoom }
 
-    stage.scale({ x: scale, y: scale });
-    stage.position({ x: pointer.x - toX * scale, y: pointer.y - toY * scale });
+    stage.scale({ x: newScale, y: newScale });
+    stage.position({ x: pointer.x - toX * newScale, y: pointer.y - toY * newScale });
+    setScale(newScale);
   }
 
   function onDestroy() {
