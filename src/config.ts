@@ -18,7 +18,8 @@ const Config = {
     fixColor: 'blue',
     splColor: 'green',
     ifColor: 'grey',
-    jobColor: 'yellow'
+    jobColor: 'yellow',
+    textColor: 'black'
   }
 }
 
