@@ -1,34 +1,25 @@
 import React from 'react';
 import { useRef } from 'react';
 import Konva from 'konva';
-import { AtomTypes, Modes } from '../../enums/enums';
+import { Rect, Text, Line } from "react-konva";
+import { Modes } from '../../enums/enums';
 import { store } from '../../store/store';
-import { Rect, Text } from "react-konva";
 import Config from "../../config";
-import { getType } from '../../utils/atom';
-import { ATOM_COLORS, ATOM_TEXTS, DEF_ATOMS } from '../../types/atoms';
+import { getLine, getType, nextDef } from '../../utils/atom';
+import { Atom as Props, ATOM_COLORS, ATOM_TEXTS, Dir } from '../../types/atom';
 
-type Props = {
-  id: string,
-  x: number,
-  y: number,
-  a: number
-}
 export default function Atom(props: Props) {
   const {x, y, a, id} = props;
   const lineWidth = Config.grid.lineWidth;
   const stepSize = Config.grid.stepSize;
+  const halfStep = stepSize / 2;
+  const type = getType(a);
   const rectRef = useRef(null);
   const textRef = useRef(null);
-  const type = getType(a);
-  const halfStep = stepSize / 2;
+  const nextColor = Config.atoms.nextColor;
   const textColor = Config.atoms.textColor;
 
-  function nextDefAtom(type: AtomTypes): number {
-    if (++type > AtomTypes.Job) { type = AtomTypes.Mov }
-    return DEF_ATOMS[type];
-  }
-
+  // TODO: refactor this
   function onMouseup() {
     if (store.status.mode === Modes.Clear) {
       if (rectRef.current === null || textRef.current === null) { return }
@@ -42,7 +33,7 @@ export default function Atom(props: Props) {
       const atoms = store.sandbox.atoms;
       const index = atoms.findIndex(a => a.id === id);
       if (index < 0) { return }
-      atoms[index] = { id, x: atoms[index].x, y: atoms[index].y, a: nextDefAtom(type) };
+      atoms[index] = { id, x: atoms[index].x, y: atoms[index].y, a: nextDef(type) };
       store.sandbox.atoms = [...atoms];
     }
   }
@@ -51,8 +42,8 @@ export default function Atom(props: Props) {
     <>
       <Rect
         ref={rectRef}
-        x={x * stepSize + lineWidth}
-        y={y * stepSize + lineWidth}
+        x={x + lineWidth}
+        y={y + lineWidth}
         width={stepSize - lineWidth * 2}
         height={stepSize - lineWidth * 2}
         strokeWidth={lineWidth}
@@ -61,14 +52,15 @@ export default function Atom(props: Props) {
         onMouseup={onMouseup}/>
       <Text
         ref={textRef}
-        x={x * stepSize + halfStep - 3.7}
-        y={y * stepSize + halfStep - 4}
+        x={x + halfStep - 3.7}
+        y={y + halfStep - 4}
         text={ATOM_TEXTS[type]}
         fontSize={10}
         fontFamily={'Calibri'}
         fill={textColor}
         onMouseup={onMouseup}
       />
+      {getLine(props, 1)}
     </>
   )
 }

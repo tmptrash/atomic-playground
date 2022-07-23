@@ -1,11 +1,8 @@
+import { Atom } from "./atom"
+
 /**
  * JSON related interfaces
  */
-export type Atom = {
-  a: number,
-  x: number,
-  y: number
-}
 export type Vm = {
   x: number,
   y: number,

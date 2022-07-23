@@ -14,12 +14,13 @@ const Config = {
     cols: 10
   },
   atoms: {
-    movColor: 'red',
-    fixColor: 'blue',
-    splColor: 'green',
-    ifColor: 'grey',
-    jobColor: 'yellow',
-    textColor: 'black'
+    movColor: '#cc4125',
+    fixColor: '#6fa8dc',
+    splColor: '#93c47d',
+    ifColor: '#efefef',
+    jobColor: '#e69138',
+    textColor: 'black',
+    nextColor: '#6fa8dc'
   }
 }
 

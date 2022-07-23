@@ -1,6 +1,6 @@
 import Config from "../config";
-import { Atom as JsonAtom, Block, Json, Vm } from "../types/json";
-import { Atom } from "../types/store";
+import { Atom } from "../types/atom";
+import { Block, Json, Vm } from "../types/json";
 import { id } from "./utils";
 
 export function toAtoms(val: Json): Atom[] {
@@ -9,9 +9,16 @@ export function toAtoms(val: Json): Atom[] {
     return [];
   }
 
+  const stepSize = Config.grid.stepSize;
   const atoms: Atom[] = [];
   val.blocks.forEach((b: Block) => {
-    b.atoms.forEach((a: JsonAtom) => atoms.push({id: id(), x: a.x, y: a.y, a: a.a}));
+    b.atoms.forEach((a: Atom) => {
+      a.id = id();
+      a.x *= stepSize;
+      a.y *= stepSize;
+      atoms.push(a);
+    });
+    // TODO: implement this
     b.vms.forEach((v: Vm) => {
       console.log(v);
     });

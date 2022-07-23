@@ -10,7 +10,7 @@ export default function Grid() {
   return (
     <>
       <Lines/>
-      {store.sandbox.atoms.map(a => <Atom key={a.id} id={a.id} x={a.x} y={a.y} a={a.a}/>)}
+      {store.sandbox.atoms.map(a => <Atom key={a.id} {...a}/>)}
     </>
   )
 }
