@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Upload from '../../components/upload/upload';
 import './status.scss';
-import Mode from '../../components/mode/mode';
+import Mode from '../../components/mode';
 
 export default function Status() {
   return (

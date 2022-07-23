@@ -4,9 +4,9 @@ import FormLabel from '@mui/material/FormLabel';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
-import { id } from '../../utils/utils';
-import { Modes } from '../../enums/enums';
-import { store } from '../../store/store';
+import { id } from '../utils/utils';
+import { Modes } from '../enums/enums';
+import { store } from '../store/store';
 
 export default function Mode() {
   const labelId = id();

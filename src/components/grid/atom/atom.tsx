@@ -1,12 +1,13 @@
 import React from 'react';
 import { useRef } from 'react';
 import Konva from 'konva';
-import { Rect, Text, Line } from "react-konva";
-import { Modes } from '../../enums/enums';
-import { store } from '../../store/store';
-import Config from "../../config";
-import { getLine, getType, nextDef } from '../../utils/atom';
-import { Atom as Props, ATOM_COLORS, ATOM_TEXTS, Dir } from '../../types/atom';
+import { Rect, Text } from "react-konva";
+import { Modes } from '../../../enums/enums';
+import { store } from '../../../store/store';
+import Config from "../../../config";
+import { getType, nextDef } from '../../../utils/atom';
+import { Atom as Props, ATOM_COLORS, ATOM_TEXTS } from '../../../types/atom';
+import { Bond } from './bond';
 
 export default function Atom(props: Props) {
   const {x, y, a, id} = props;
@@ -16,7 +17,6 @@ export default function Atom(props: Props) {
   const type = getType(a);
   const rectRef = useRef(null);
   const textRef = useRef(null);
-  const nextColor = Config.atoms.nextColor;
   const textColor = Config.atoms.textColor;
 
   // TODO: refactor this
@@ -60,7 +60,8 @@ export default function Atom(props: Props) {
         fill={textColor}
         onMouseup={onMouseup}
       />
-      {getLine(props, 1)}
+      {/* TODO: fix dir */}
+      <Bond atom={props} dir={1}/>
     </>
   )
 }
