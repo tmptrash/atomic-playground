@@ -7,7 +7,7 @@ import { store } from '../../../store/store';
 import Config from "../../../config";
 import { getType, nextDef } from '../../../utils/atom';
 import { Atom as Props, ATOM_COLORS, ATOM_TEXTS } from '../../../types/atom';
-import { Bond } from './bond';
+import { Bonds } from './bonds';
 
 export default function Atom(props: Props) {
   const {x, y, a, id} = props;
@@ -61,7 +61,7 @@ export default function Atom(props: Props) {
         onMouseup={onMouseup}
       />
       {/* TODO: fix dir */}
-      <Bond atom={props} dir={1}/>
+      <Bonds atom={props} dir={1}/>
     </>
   )
 }

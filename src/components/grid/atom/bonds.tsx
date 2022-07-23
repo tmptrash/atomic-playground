@@ -7,7 +7,7 @@ type Props = {
   atom: Atom,
   dir: Dir
 }
-export function Bond(props: Props) {
+export function Bonds(props: Props) {
   const { atom } = props;
   const halfStep = Config.grid.stepSize / 2;
   // TODO: implement this
