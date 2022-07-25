@@ -7,7 +7,6 @@ import { store } from '../../../store/store';
 import Config from "../../../config";
 import { getType, nextAtom } from '../../../utils/atom';
 import { Atom as Props, ATOM_COLORS, ATOM_TEXTS } from '../../../types/atom';
-import { Bonds } from './bonds';
 
 export default function Atom(atom: Props) {
   const {x, y, a, id} = atom;
@@ -62,9 +61,6 @@ export default function Atom(atom: Props) {
         fontFamily={'Calibri'}
         fill={textColor}
         onMouseup={onMouseup}/>
-
-      {/* Bonds and arrows of atom */}
-      <Bonds {...atom}/>
     </>
   )
 }

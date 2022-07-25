@@ -3,14 +3,18 @@ import Lines from './lines';
 import { store } from '../../store/store';
 import Atom from './atom/atom';
 import { bind } from '../../store/binder';
+import { Bonds } from './atom/bonds';
 
 export default function Grid() {
   bind(store.sandbox);
 
+  const atoms = store.sandbox.atoms;
+
   return (
     <>
       <Lines/>
-      {store.sandbox.atoms.map(a => <Atom key={a.id} {...a}/>)}
+      {atoms.map(a => <Atom key={a.id} {...a}/>)}
+      {atoms.map(a => <Bonds key={a.id} {...a}/>)}
     </>
   )
 }

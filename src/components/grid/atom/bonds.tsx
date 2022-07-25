@@ -13,15 +13,15 @@ const ATOMS = {
   [AtomTypes.Job]: drawMov
 }
 const BONDS_OFFS = {
-  [Dir.no]       : [ 0,  0,  0,  0],
-  [Dir.leftUp]   : [ 0,  0, -1, -1],
-  [Dir.up]       : [.5,  0,  0, -1],
-  [Dir.upRight]  : [ 1,  0,  1, -1],
-  [Dir.right]    : [ 1, .5,  1,  0],
-  [Dir.rightDown]: [ 1,  1,  1,  1],
-  [Dir.down]     : [.5,  1,  0,  1],
-  [Dir.downLeft] : [ 0,  1, -1,  1],
-  [Dir.left]     : [ 0, .5, -1,  0]
+  [Dir.no]       : [ 0,  0,   0,    0],
+  [Dir.leftUp]   : [.1, .1, -.2,  -.2],
+  [Dir.up]       : [.5, .1,  .5,  -.2],
+  [Dir.upRight]  : [.9, .1, 1.2, -1.2],
+  [Dir.right]    : [.9, .5, 1.2,   .5],
+  [Dir.rightDown]: [.9, .9, 1.2,  1.2],
+  [Dir.down]     : [.5, .9,  .5,  1.2],
+  [Dir.downLeft] : [.1, .9, -.2,  1.2],
+  [Dir.left]     : [.1, .5, -.2,   .5]
 }
 
 function getLinePoints(a: Atom, d: Dir, step: number): [number, number, number, number] {
