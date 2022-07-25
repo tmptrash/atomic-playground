@@ -1,14 +1,22 @@
 import { AtomTypes } from "../enums/enums";
-import { ATOMS } from "../types/atom";
+import { ATOMS, Dir } from "../types/atom";
 
-const ATOM_TYPE_MASK  = 0b1110000000000000;
-const ATOM_TYPE_SHIFT = 13;
+const ATOM_TYPE_MASK       = 0b1110000000000000;
+const ATOM_TYPE_SHIFT      = 13;
+const ATOM_HAS_VM_DIR_MASK = 0b0000001000000000;
+const ATOM_VM_DIR_MASK     = 0b0001110000000000;
+const ATOM_VM_DIR_SHIFT    = 10;
 
 export function getType(atom: number): AtomTypes {
   return (atom & ATOM_TYPE_MASK) >> ATOM_TYPE_SHIFT;
 }
 
-export function nextDef(type: AtomTypes): number {
+export function nextAtom(type: AtomTypes): number {
   if (++type > AtomTypes.Job) { type = AtomTypes.Mov }
   return ATOMS[type];
+}
+
+export function getVmDir(atom: number): Dir {
+  if (!(atom & ATOM_HAS_VM_DIR_MASK)) { return Dir.no }
+  return (atom & ATOM_VM_DIR_MASK) >> ATOM_VM_DIR_SHIFT;
 }

@@ -5,12 +5,12 @@ import { Rect, Text } from "react-konva";
 import { Modes } from '../../../enums/enums';
 import { store } from '../../../store/store';
 import Config from "../../../config";
-import { getType, nextDef } from '../../../utils/atom';
+import { getType, nextAtom } from '../../../utils/atom';
 import { Atom as Props, ATOM_COLORS, ATOM_TEXTS } from '../../../types/atom';
 import { Bonds } from './bonds';
 
-export default function Atom(props: Props) {
-  const {x, y, a, id} = props;
+export default function Atom(atom: Props) {
+  const {x, y, a, id} = atom;
   const lineWidth = Config.grid.lineWidth;
   const stepSize = Config.grid.stepSize;
   const halfStep = stepSize / 2;
@@ -33,13 +33,14 @@ export default function Atom(props: Props) {
       const atoms = store.sandbox.atoms;
       const index = atoms.findIndex(a => a.id === id);
       if (index < 0) { return }
-      atoms[index] = { id, x: atoms[index].x, y: atoms[index].y, a: nextDef(type) };
+      atoms[index] = { id, x: atoms[index].x, y: atoms[index].y, a: nextAtom(type) };
       store.sandbox.atoms = [...atoms];
     }
   }
 
   return (
     <>
+      {/* Atom rect */}
       <Rect
         ref={rectRef}
         x={x + lineWidth}
@@ -50,6 +51,8 @@ export default function Atom(props: Props) {
         stroke={ATOM_COLORS[type]}
         fill={ATOM_COLORS[type]}
         onMouseup={onMouseup}/>
+
+      {/* The letter in atom center (m-mov, s-spl,...) */}
       <Text
         ref={textRef}
         x={x + halfStep - 3.7}
@@ -58,10 +61,10 @@ export default function Atom(props: Props) {
         fontSize={10}
         fontFamily={'Calibri'}
         fill={textColor}
-        onMouseup={onMouseup}
-      />
-      {/* TODO: fix dir */}
-      <Bonds atom={props} dir={1}/>
+        onMouseup={onMouseup}/>
+
+      {/* Bonds and arrows of atom */}
+      <Bonds {...atom}/>
     </>
   )
 }
