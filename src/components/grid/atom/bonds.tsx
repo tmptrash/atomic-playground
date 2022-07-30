@@ -1,5 +1,5 @@
 import React from 'react';
-import { Line } from 'react-konva';
+import { Arrow } from 'react-konva';
 import Config from '../../../config';
 import { AtomTypes } from '../../../enums/enums';
 import { Atom, Dir } from '../../../types/atom';
@@ -14,14 +14,14 @@ const ATOMS = {
 }
 const BONDS_OFFS = {
   [Dir.no]       : [ 0,  0,   0,    0],
-  [Dir.leftUp]   : [.1, .1, -.2,  -.2],
-  [Dir.up]       : [.5, .1,  .5,  -.2],
-  [Dir.upRight]  : [.9, .1, 1.2, -1.2],
-  [Dir.right]    : [.9, .5, 1.2,   .5],
-  [Dir.rightDown]: [.9, .9, 1.2,  1.2],
-  [Dir.down]     : [.5, .9,  .5,  1.2],
-  [Dir.downLeft] : [.1, .9, -.2,  1.2],
-  [Dir.left]     : [.1, .5, -.2,   .5]
+  [Dir.leftUp]   : [.2, .2, -.2,  -.2],
+  [Dir.up]       : [.5, .2,  .5,  -.2],
+  [Dir.upRight]  : [.8, .2, 1.2, -1.2],
+  [Dir.right]    : [.8, .5, 1.2,   .5],
+  [Dir.rightDown]: [.8, .8, 1.2,  1.2],
+  [Dir.down]     : [.5, .8,  .5,  1.2],
+  [Dir.downLeft] : [.2, .8, -.2,  1.2],
+  [Dir.left]     : [.2, .5, -.2,   .5]
 }
 
 function getLinePoints(a: Atom, d: Dir, step: number): [number, number, number, number] {
@@ -36,10 +36,12 @@ function drawMov(a: Atom) {
   if (dir === Dir.no) { return <></> }
 
   return (
-    <Line
+    <Arrow
       points={getLinePoints(a, dir, step)}
       stroke={Config.atoms.nextColor}
       strokeWidth={1}
+      pointerLength={2}
+      pointerWidth={2}
     />
   )
 }
