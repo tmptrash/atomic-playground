@@ -20,7 +20,7 @@ const Config = {
     ifColor: '#efefef',
     jobColor: '#e69138',
     textColor: 'black',
-    nextColor: '#6fa8dc'
+    nextColor: '#3d85c6'
   }
 }
 
