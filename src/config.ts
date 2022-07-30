@@ -20,7 +20,10 @@ const Config = {
     ifColor: '#efefef',
     jobColor: '#e69138',
     textColor: 'black',
-    nextColor: '#3d85c6'
+    movDirColor: '#3d85c6'
+  },
+  vm: {
+    nextColor: '#6aa84f'
   }
 }
 

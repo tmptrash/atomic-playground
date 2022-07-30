@@ -3,14 +3,14 @@ import { Arrow } from 'react-konva';
 import Config from '../../../config';
 import { AtomTypes } from '../../../enums/enums';
 import { Atom, Dir } from '../../../types/atom';
-import { getType, getVmDir } from '../../../utils/atom';
+import { getType, getVmDir, getMovDir } from '../../../utils/atom';
 
 const ATOMS = {
   [AtomTypes.Mov]: drawMov,
-  [AtomTypes.Fix]: drawMov,
-  [AtomTypes.Spl]: drawMov,
-  [AtomTypes.If]:  drawMov,
-  [AtomTypes.Job]: drawMov
+  [AtomTypes.Fix]: drawEmpty,
+  [AtomTypes.Spl]: drawEmpty,
+  [AtomTypes.If]:  drawEmpty,
+  [AtomTypes.Job]: drawEmpty
 }
 const BONDS_OFFS = {
   [Dir.no]       : [ 0,  0,   0,    0],
@@ -31,19 +31,36 @@ function getLinePoints(a: Atom, d: Dir, step: number): [number, number, number, 
 
 function drawMov(a: Atom) {
   const step = Config.grid.stepSize;
-  const dir = getVmDir(a.a);
+  const vmDir = getVmDir(a.a);
+  const movDir = getMovDir(a.a);
 
-  if (dir === Dir.no) { return <></> }
+  if (vmDir === Dir.no) { return <></> }
 
   return (
-    <Arrow
-      points={getLinePoints(a, dir, step)}
-      stroke={Config.atoms.nextColor}
-      strokeWidth={1}
-      pointerLength={2}
-      pointerWidth={2}
-    />
+    <>
+      {/* next atom dir for VM */}
+      <Arrow
+        points={getLinePoints(a, vmDir, step)}
+        stroke={Config.vm.nextColor}
+        strokeWidth={1}
+        pointerLength={2}
+        pointerWidth={2}
+      />
+      {/* mov dir */}
+      <Arrow
+        points={getLinePoints(a, movDir, step)}
+        stroke={Config.atoms.movDirColor}
+        strokeWidth={1}
+        pointerLength={2}
+        pointerWidth={2}
+      />
+    </>
   )
+}
+
+// TODO: will be removed soon
+function drawEmpty() {
+  return <></>
 }
 
 export function Bonds(a: Atom) {
