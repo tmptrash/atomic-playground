@@ -3,10 +3,10 @@ import { AtomTypes } from '../../../../enums/enums';
 import { Atom } from '../../../../types/atom';
 import { BondArrows } from '../../../../types/bonds';
 import { getType } from '../../../../utils/atom';
-import mov from './mov';
+import Mov from './mov';
 
 const ATOMS = {
-  [AtomTypes.Mov]: mov,
+  [AtomTypes.Mov]: Mov,
   [AtomTypes.Fix]: drawEmpty,
   [AtomTypes.Spl]: drawEmpty,
   [AtomTypes.If]:  drawEmpty,
@@ -14,7 +14,8 @@ const ATOMS = {
 }
 
 // TODO: will be removed soon
-function drawEmpty(a: Atom, arrows: BondArrows) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function drawEmpty(_: {a: Atom, arrows: BondArrows}) {
   return <></>
 }
 
@@ -24,5 +25,5 @@ export function Bonds(a: Atom) {
     curArrows: [0, 0, 0, 0, 0, 0, 0, 0]
   };
 
-  return ATOMS[getType(a.a)](a, arrows);
+  return ATOMS[getType(a.a)]({a, arrows});
 }

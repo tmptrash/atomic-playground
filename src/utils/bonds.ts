@@ -1,3 +1,4 @@
+import Config from "../config";
 import { Atom, Dir } from "../types/atom";
 import { BondArrows, BONDS_DIRS, BONDS_OFFS, LinePoints } from "../types/bonds";
 
@@ -5,7 +6,8 @@ export function addBonds(dirs: Dir[], arrows: BondArrows) {
   dirs.forEach(dir => dir !== Dir.no && arrows.arrows[dir]++);
 }
 
-export function getLinePoints(a: Atom, d: Dir, step: number, arrows: BondArrows): LinePoints {
+export function getLinePoints(a: Atom, d: Dir, arrows: BondArrows): LinePoints {
+  const step = Config.grid.stepSize;
   const offs = BONDS_OFFS[d];
   const dirs = BONDS_DIRS[d];
   const i = d as number;
