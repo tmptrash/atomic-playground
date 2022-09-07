@@ -6,10 +6,15 @@ import { Modes } from '../../../enums/enums';
 import { store } from '../../../store/store';
 import Config from "../../../config";
 import { getType, nextAtom } from '../../../utils/atom';
-import { Atom as Props, ATOM_COLORS, ATOM_TEXTS } from '../../../types/atom';
+import { ATOM_COLORS, ATOM_TEXTS } from '../../../types/atom';
 
-export default function Atom(atom: Props) {
-  const {x, y, a, id} = atom;
+type Props = {
+  id: string,
+  a: number,
+  x: number,
+  y: number
+}
+export default function Atom({x, y, a, id}: Props) {
   const lineWidth = Config.grid.lineWidth;
   const stepSize = Config.grid.stepSize;
   const halfStep = stepSize / 2;

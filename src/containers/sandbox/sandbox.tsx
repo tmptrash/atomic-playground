@@ -4,16 +4,12 @@ import { Layer, Stage } from 'react-konva';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { Vector2d } from 'konva/lib/types';
 import Config from '../../config';
-import { bind } from '../../store/binder';
-import { store } from '../../store/store';
 import Grid from '../../components/grid/grid';
 import './sandbox.scss';
 
 export default function Sandbox() {
-  bind(store.status);
-
   const [size, setSize] = useState({w: 0, h: 0});
-  const [scale, setScale] = useState(1);
+  const [zoom, setZoom] = useState(1);
   const grid = Config.grid;
   const query = grid.query;
   const stageRef = useRef(null);
@@ -31,17 +27,17 @@ export default function Sandbox() {
     if (stageRef.current === null) { return }
     const stage = stageRef.current as Konva.Stage;
     const pointer = stage.getPointerPosition() as Vector2d;
-    const toX = (pointer.x - stage.x()) / scale;
-    const toY = (pointer.y - stage.y()) / scale;
+    const toX = (pointer.x - stage.x()) / zoom;
+    const toY = (pointer.y - stage.y()) / zoom;
 
     // Zoom in or zoom out?
-    let newScale = e?.evt?.deltaY > 0 ? scale / Config.zoomDivider : scale * Config.zoomDivider;
+    let newScale = e?.evt?.deltaY > 0 ? zoom / Config.zoomDivider : zoom * Config.zoomDivider;
     if (newScale < Config.minZoom) { newScale = Config.minZoom }
     else if (newScale > Config.maxZoom) { newScale = Config.maxZoom }
 
     stage.scale({ x: newScale, y: newScale });
     stage.position({ x: pointer.x - toX * newScale, y: pointer.y - toY * newScale });
-    setScale(newScale);
+    setZoom(newScale);
   }
 
   function onDestroy() {
