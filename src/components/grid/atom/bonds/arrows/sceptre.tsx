@@ -1,8 +1,8 @@
 import React from 'react';
 import { Arrow, Circle } from 'react-konva';
-import { Atom, Dir } from '../../../../types/atom';
-import { BondArrows } from '../../../../types/bonds';
-import { getLinePoints } from '../../../../utils/bonds';
+import { Atom, Dir } from '../../../../../types/atom';
+import { BondArrows } from '../../../../../types/bonds';
+import { getLinePoints } from '../../../../../utils/bonds';
 
 type Props = {
   a: Atom,

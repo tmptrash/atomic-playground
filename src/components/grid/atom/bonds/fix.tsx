@@ -2,26 +2,28 @@ import React from 'react';
 import { Atom } from "../../../../types/atom";
 import { BondArrows } from "../../../../types/bonds";
 import Config from '../../../../config';
-import { getMovDir, getVmDir } from "../../../../utils/atom";
+import { getBond1Dir, getVmDir } from "../../../../utils/atom";
 import { addBonds } from "../../../../utils/bonds";
 import Arrow from './arrows/arrow';
+import Sceptre from './arrows/sceptre';
 
 type Props = {
   a: Atom,
   arrows: BondArrows
 }
-export default function Mov({a, arrows}: Props) {
+export default function Fix({a, arrows}: Props) {
   const vmDir = getVmDir(a.a);
-  const movDir = getMovDir(a.a);
+  const bond1Dir = getBond1Dir(a.a);
 
-  addBonds([vmDir, movDir], arrows);
+  addBonds([vmDir, bond1Dir], arrows);
 
   return (
     <>
       {/* next atom dir for VM */}
       <Arrow a={a} dir={vmDir} color={Config.vm.nextColor} arrows={arrows}/>
-      {/* mov dir */}
-      <Arrow a={a} dir={movDir} color={Config.bonds.movDirColor} arrows={arrows}/>
+      {/* bond1 dir */}
+      <Sceptre a={a} dir={bond1Dir} color={Config.bonds.bond1Color} arrows={arrows}/>
+      {/* TODO: add bond2!!! */}
     </>
   )
 }

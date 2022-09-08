@@ -4,10 +4,11 @@ import { Atom } from '../../../../types/atom';
 import { BondArrows } from '../../../../types/bonds';
 import { getType } from '../../../../utils/atom';
 import Mov from './mov';
+import Fix from './fix';
 
 const ATOMS = {
   [AtomTypes.Mov]: Mov,
-  [AtomTypes.Fix]: drawEmpty,
+  [AtomTypes.Fix]: Fix,
   [AtomTypes.Spl]: drawEmpty,
   [AtomTypes.If]:  drawEmpty,
   [AtomTypes.Job]: drawEmpty

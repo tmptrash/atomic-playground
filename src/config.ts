@@ -13,14 +13,18 @@ const Config = {
     rows: 10,
     cols: 10
   },
+  bonds: {
+    movDirColor: '#3d85c6',
+    bond1Color: '',
+    bond2Color: ''
+  },
   atoms: {
     movColor: '#cc4125',
     fixColor: '#6fa8dc',
     splColor: '#93c47d',
     ifColor: '#efefef',
     jobColor: '#e69138',
-    textColor: 'black',
-    movDirColor: '#3d85c6'
+    textColor: 'black'
   },
   vm: {
     nextColor: '#6aa84f'
