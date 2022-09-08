@@ -16,29 +16,32 @@ type Props = {
 }
 export default function Atom({x, y, a, id}: Props) {
   const lineWidth = Config.grid.lineWidth;
+  const textColor = Config.atoms.textColor;
   const stepSize = Config.grid.stepSize;
   const halfStep = stepSize / 2;
   const type = getType(a);
   const rectRef = useRef(null);
   const textRef = useRef(null);
-  const textColor = Config.atoms.textColor;
 
-  // TODO: refactor this
+  function findAtom(found: (atomIndex: number, atoms: Props[]) => void) {
+    if (rectRef.current === null || textRef.current === null) { return }
+    const atomIndex = store.sandbox.atoms.findIndex(a => a.id === id);
+    atomIndex !== -1 && found(atomIndex, store.sandbox.atoms);
+  }
+
   function onMouseup() {
     if (store.status.mode === Modes.Clear) {
-      if (rectRef.current === null || textRef.current === null) { return }
-      (rectRef.current as Konva.Rect).destroy();
-      (textRef.current as Konva.Text).destroy();
-      const atoms = store.sandbox.atoms;
-      atoms.splice(atoms.findIndex(a => a.id === id), 1);
-      store.sandbox.atoms = [...atoms];
+      findAtom((atomIndex, atoms) => {
+        rectRef.current && (rectRef.current as Konva.Rect).destroy();
+        textRef.current && (textRef.current as Konva.Text).destroy();
+        atoms.splice(atomIndex, 1);
+        store.sandbox.atoms = [...atoms];
+      });
     } else if (store.status.mode === Modes.Edit) {
-      if (rectRef.current === null || textRef.current === null) { return }
-      const atoms = store.sandbox.atoms;
-      const index = atoms.findIndex(a => a.id === id);
-      if (index < 0) { return }
-      atoms[index] = { id, x: atoms[index].x, y: atoms[index].y, a: nextAtom(type) };
-      store.sandbox.atoms = [...atoms];
+      findAtom((atomIndex, atoms) => {
+        atoms[atomIndex] = { id, x: atoms[atomIndex].x, y: atoms[atomIndex].y, a: nextAtom(type) };
+        store.sandbox.atoms = [...atoms];
+      });
     }
   }
 
