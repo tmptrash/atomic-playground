@@ -6,8 +6,15 @@ import { Vector2d } from 'konva/lib/types';
 import Config from '../../config';
 import Grid from '../../components/grid/grid';
 import './sandbox.scss';
+import { bind } from '../../store/binder';
+import { store } from '../../store/store';
+import Atom from '../../components/grid/atom/atom';
+import { Bonds } from '../../components/grid/atom/bonds/bonds';
 
 export default function Sandbox() {
+  bind(store.sandbox);
+
+  const atoms = store.sandbox.atoms;
   const [size, setSize] = useState({w: 0, h: 0});
   const [zoom, setZoom] = useState(1);
   const grid = Config.grid;
@@ -63,6 +70,8 @@ export default function Sandbox() {
         onWheel={onWheel}>
         <Layer draggable={false} x={0} y={0}>
           <Grid/>
+          {atoms.map(a => <Atom key={a.id} {...a}/>)}
+          {atoms.map(a => <Bonds key={a.id} {...a}/>)}
         </Layer>
       </Stage>
     </div>
