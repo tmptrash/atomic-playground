@@ -9,6 +9,13 @@ type IObj = {
 }
 type StoreKey = [IObj, string];
 /**
+ * Returns a function, which is used to rerender binded component
+ */
+function useUpdate() {
+  const [, updateState] = React.useState({});
+  return () => updateState({});
+}
+/**
  * Binds a component to specified object in a store. Usage:
  * 
  * /// store.ts:
@@ -56,14 +63,7 @@ export function bind(obj: IObj, changers?: Changer[]) {
   })
 }
 /**
- * Returns a function, which is used to rerender binded component
- */
-function useUpdate() {
-  const [, updateState] = React.useState({});
-  return () => updateState({});
-}
-/**
- * Finds an object by it's reference inside othe robject
+ * Finds an object by it's reference inside other object
  * @return Found parent and the property with found object or false
  */
 function findDeep(obj: IObj, val: unknown): StoreKey | boolean {

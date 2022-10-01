@@ -4,12 +4,12 @@ import { Atom } from "./atom"
 export type Sandbox = {
   atoms: Atom[]
 }
-export type IStatus = {
+export type Status = {
   mode: Modes
 }
 export type Store = {
   sandbox: Sandbox,
-  status: IStatus
+  status: Status
 }
 
 export type Changer = (val: unknown, prop: string) => unknown;

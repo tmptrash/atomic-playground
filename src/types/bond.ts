@@ -1,10 +1,17 @@
-import { Dir } from './atom';
+import { Atom, Dir } from './atom';
 
 export type LinePoints = [number, number, number, number];
-
-export type BondArrows = {
-  arrows: [number, number, number, number, number, number, number, number],
-  curArrows: [number, number, number, number, number, number, number, number]
+export type Bonds = [number, number, number, number, number, number, number, number];
+export type BondData = {
+  type: 'Arrow' | 'Sceptre'
+  dir: Dir,
+  color: string
+};
+export type BondsState = {
+  atom: Atom,
+  bonds: Bonds,
+  curBonds: Bonds,
+  bondDatas: BondData[][]
 }
 // Offsets for only one bond
 export const BONDS_OFFS = {

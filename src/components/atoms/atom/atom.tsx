@@ -7,6 +7,7 @@ import { store } from '../../../store/store';
 import Config from "../../../config";
 import { getType, nextAtom } from '../../../utils/atom';
 import { ATOM_COLORS, ATOM_TEXTS } from '../../../types/atom';
+import { Atom as AtomType } from '../../../types/atom';
 
 type Props = {
   id: string,
@@ -23,7 +24,7 @@ export default function Atom({x, y, a, id}: Props) {
   const rectRef = useRef(null);
   const textRef = useRef(null);
 
-  function findAtom(found: (atomIndex: number, atoms: Props[]) => void) {
+  function findAtom(found: (atomIndex: number, atoms: AtomType[]) => void) {
     if (rectRef.current === null || textRef.current === null) { return }
     const atomIndex = store.sandbox.atoms.findIndex(a => a.id === id);
     atomIndex !== -1 && found(atomIndex, store.sandbox.atoms);

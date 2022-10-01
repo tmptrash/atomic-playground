@@ -1,18 +1,25 @@
 import Config from "../config";
+import { store } from "../store/store";
 import { Atom, Dir } from "../types/atom";
-import { BondArrows, BONDS_DIRS, BONDS_OFFS, LinePoints } from "../types/bonds";
+import { BondData, BondsState, BONDS_DIRS, BONDS_OFFS, LinePoints } from "../types/bond";
+import { getXYByDir } from "./atom";
 
-export function addBonds(dirs: Dir[], arrows: BondArrows) {
-  dirs.forEach(dir => dir !== Dir.no && arrows.arrows[dir]++);
+export function addBonds(bondDatas: BondData[], bonds: BondsState) {
+  bondDatas.forEach(bd => {
+    if (bd.dir !== Dir.no) {
+      bonds.bonds[bd.dir]++;
+      bonds.bondDatas[bd.dir].push(bd);
+    }
+  });
 }
 
-export function getLinePoints(a: Atom, d: Dir, arrows: BondArrows): LinePoints {
+export function getLinePoints(a: Atom, d: Dir, state: BondsState): LinePoints {
   const step = Config.grid.stepSize;
   const offs = BONDS_OFFS[d];
   const dirs = BONDS_DIRS[d];
   const i = d as number;
-  const arr = arrows.arrows;
-  const curArr = arrows.curArrows;
+  const arr = state.bonds;
+  const curArr = state.curBonds;
   const dist = step * .08;
   const v0 = (arr[i] - 1) * dist;
   const v1 = curArr[i] * dist * 2;
@@ -26,4 +33,11 @@ export function getLinePoints(a: Atom, d: Dir, arrows: BondArrows): LinePoints {
   curArr[i]++;
 
   return points;
+}
+
+export function findBonds(a: Atom, dir: Dir, bonds: BondsState[]): BondsState | null {
+  const [x, y] = getXYByDir(a, dir);
+  const nearAtom = store.sandbox.atoms.find(atom => atom.x === x && atom.y === y);
+  if (nearAtom === undefined) { return null }
+  return bonds.find(b => b.atom.id === nearAtom.id) || null;
 }

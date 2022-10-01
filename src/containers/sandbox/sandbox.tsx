@@ -8,8 +8,7 @@ import Grid from '../../components/grid/grid';
 import './sandbox.scss';
 import { bind } from '../../store/binder';
 import { store } from '../../store/store';
-import Atom from '../../components/grid/atom/atom';
-import { Bonds } from '../../components/grid/atom/bonds/bonds';
+import Atoms from '../../components/atoms/atoms';
 
 export default function Sandbox() {
   bind(store.sandbox);
@@ -57,7 +56,7 @@ export default function Sandbox() {
     window.addEventListener('resize', onResize);
     return onDestroy;
   })
-  
+
   return (
     <div id={Config.grid.query} className="sandbox">
       <Stage
@@ -70,8 +69,7 @@ export default function Sandbox() {
         onWheel={onWheel}>
         <Layer draggable={false} x={0} y={0}>
           <Grid/>
-          {atoms.map(a => <Atom key={a.id} {...a}/>)}
-          {atoms.map(a => <Bonds key={a.id} {...a}/>)}
+          <Atoms atoms={atoms}/>
         </Layer>
       </Stage>
     </div>

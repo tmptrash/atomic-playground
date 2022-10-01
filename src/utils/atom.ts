@@ -1,5 +1,7 @@
 import { AtomTypes } from "../enums/enums";
-import { ATOMS, Dir } from "../types/atom";
+import { Atom, ATOMS, Dir } from "../types/atom";
+
+const DIR_OFFS = [[-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0]];
 
 const ATOM_TYPE_MASK       = 0b1110000000000000;
 const ATOM_TYPE_SHIFT      = 13;
@@ -37,4 +39,9 @@ export function getBond1Dir(atom: number): Dir {
 
 export function getBond2Dir(atom: number): Dir {
   return (atom & ATOM_BOND2_DIR_MASK) >> ATOM_BOND2_DIR_SHIFT;
+}
+
+export function getXYByDir(a: Atom, dir: Dir): [number, number] {
+  const offs = DIR_OFFS[dir];
+  return [a.x + offs[0], a.y + offs[1]];
 }
