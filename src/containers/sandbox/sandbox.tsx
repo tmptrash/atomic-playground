@@ -4,7 +4,7 @@ import { Layer, Stage } from 'react-konva';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { Vector2d } from 'konva/lib/types';
 import Config from '../../config';
-import Grid from '../../components/grid/grid';
+import Grid from '../../components/grid';
 import './sandbox.scss';
 import { bind } from '../../store/binder';
 import { store } from '../../store/store';
@@ -16,8 +16,6 @@ export default function Sandbox() {
   const atoms = store.sandbox.atoms;
   const [size, setSize] = useState({w: 0, h: 0});
   const [zoom, setZoom] = useState(1);
-  const grid = Config.grid;
-  const query = grid.query;
   const stageRef = useRef(null);
 
   function onResize() {
@@ -32,29 +30,22 @@ export default function Sandbox() {
     e.evt.preventDefault();
     if (stageRef.current === null) { return }
     const stage = stageRef.current as Konva.Stage;
-    const pointer = stage.getPointerPosition() as Vector2d;
-    const toX = (pointer.x - stage.x()) / zoom;
-    const toY = (pointer.y - stage.y()) / zoom;
+    const pos = stage.getPointerPosition() as Vector2d;
 
     // Zoom in or zoom out?
-    let newScale = e?.evt?.deltaY > 0 ? zoom / Config.zoomDivider : zoom * Config.zoomDivider;
-    if (newScale < Config.minZoom) { newScale = Config.minZoom }
-    else if (newScale > Config.maxZoom) { newScale = Config.maxZoom }
+    let scale = e?.evt?.deltaY > 0 ? zoom / Config.zoomDivider : zoom * Config.zoomDivider;
+    if (scale < Config.minZoom) { scale = Config.minZoom }
+    else if (scale > Config.maxZoom) { scale = Config.maxZoom }
 
-    stage.scale({ x: newScale, y: newScale });
-    stage.position({ x: pointer.x - toX * newScale, y: pointer.y - toY * newScale });
-    setZoom(newScale);
-  }
-
-  function onDestroy() {
-    window.removeEventListener('resize', onResize);
+    stage.scale({ x: scale, y: scale });
+    stage.position({ x: pos.x - ((pos.x - stage.x()) / zoom) * scale, y: pos.y - ((pos.y - stage.y()) / zoom) * scale });
+    setZoom(scale);
   }
 
   useEffect(() => {
-    const canvasEl = document.querySelector('#' + query) as HTMLElement;
-    !size.w && setSize({w: canvasEl.clientWidth, h: canvasEl.clientHeight});
+    !size.w && onResize();
     window.addEventListener('resize', onResize);
-    return onDestroy;
+    return () => window.removeEventListener('resize', onResize);
   })
 
   return (
@@ -64,8 +55,8 @@ export default function Sandbox() {
         width={size.w}
         height={size.h}
         draggable={true}
-        x={grid.borderWidth}
-        y={grid.borderWidth}
+        x={Config.grid.borderWidth}
+        y={Config.grid.borderWidth}
         onWheel={onWheel}>
         <Layer draggable={false} x={0} y={0}>
           <Grid/>

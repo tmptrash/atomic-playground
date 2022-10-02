@@ -14,7 +14,7 @@ export const ATOM_BONDS = {
 }
 
 // TODO: will be removed soon
-// eslint-disable-next-line @typescript-eslint/no-empty-function
+// eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
 function drawEmpty(a: Atom, bonds: BondsState, allBonds: BondsState[]) {}
 
 function getMovBonds(a: Atom, bonds: BondsState) {
