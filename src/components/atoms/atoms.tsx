@@ -11,8 +11,8 @@ type Props = {
 }
 export default function Atoms({ atoms }: Props) {
   const zeros = Array(8).fill(0);
-  const states = atoms.map(a => ({
-    atom: a,
+  const states = atoms.map(atom => ({
+    atom,
     bonds: [...zeros],
     curBonds: [...zeros],
     bondDatas: zeros.map(() => []) as BondData[][]

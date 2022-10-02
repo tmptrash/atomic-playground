@@ -12,6 +12,7 @@ export default function Grid() {
 
   return (
     <>
+      {/* Outer border */}
       <Rect
         x={halfBorder}
         y={halfBorder}
@@ -19,6 +20,7 @@ export default function Grid() {
         height={ySize - halfBorder * 2}
         strokeWidth={grid.borderWidth}
         stroke={grid.fillColor}/>
+      {/* Background color with opacity */}
       <Rect
         x={0}
         y={0}
@@ -26,6 +28,7 @@ export default function Grid() {
         height={ySize}
         fill={grid.fillColor}
         opacity={grid.fillOpacity}/>
+      {/* Grid vertical lines */}
       {arr(grid.cols + 1).map((_, i) =>
         <Line
           key={i}
@@ -34,6 +37,7 @@ export default function Grid() {
           stroke={grid.linesColor}
           strokeWidth={grid.lineWidth}/>
       )}
+      {/* Grid horizontal lines */}
       {arr(grid.rows + 1).map((_, i) =>
         <Line
           key={i}
