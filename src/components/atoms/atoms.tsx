@@ -1,3 +1,11 @@
+/**
+ * Renders all atoms and inner bonds. Atom is just a colored square
+ * with a letter in the center. Bonds are colored arrows  of two types.
+ * This component uses clever approach of analyzing all bonds positions first
+ * and after that atoms will be rendered first and the bonds above them.
+ * We need such analysis because bonds are located not only around an atom,
+ * but also around near atoms.
+ */
 import React from 'react';
 import { Atom as AtomType } from '../../types/atom';
 import { BondData, BondsState } from '../../types/bond';

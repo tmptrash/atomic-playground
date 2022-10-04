@@ -8,14 +8,13 @@ import { addBonds, findBonds } from "../../../../utils/bonds";
 export const ATOM_BONDS = {
   [AtomTypes.Mov]: getMovBonds,
   [AtomTypes.Fix]: getFixBonds,
-  [AtomTypes.Spl]: drawEmpty,
-  [AtomTypes.If]:  drawEmpty,
-  [AtomTypes.Job]: drawEmpty
+  [AtomTypes.Spl]: noBonds,
+  [AtomTypes.If] : noBonds,
+  [AtomTypes.Job]: noBonds
 }
 
-// TODO: will be removed soon
 // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
-function drawEmpty(a: Atom, bonds: BondsState, allBonds: BondsState[]) {}
+function noBonds(a: Atom, bonds: BondsState, allBonds: BondsState[]) {}
 
 function getMovBonds(a: Atom, bonds: BondsState) {
   addBonds([
