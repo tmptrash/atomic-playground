@@ -17,9 +17,11 @@ export default function Mode() {
   const entries = Object.entries(AtomTypes);
   const atoms = entries.slice(0, entries.length / 2);
   const [atom, setAtom] = useState(atoms[0]);
+  const [mode, setMode] = useState(store.status.mode);
 
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
     store.status.mode = e.target.value as Modes;
+    setMode(store.status.mode);
   }
 
   function onAtom(event: SelectChangeEvent) {
@@ -37,12 +39,14 @@ export default function Mode() {
           <FormControlLabel value={Modes.Add} control={<Radio />} label="Add" />
         </RadioGroup>
       </FormControl>
-      <FormControl fullWidth sx={{mt: 2}}>
-        <InputLabel id={atomLabelId}>Atom</InputLabel>
-        <Select labelId={atomLabelId} id="demo-simple-select" value={atom[0]} label="Atom" onChange={onAtom}>
-          {atoms.map(a => <MenuItem key={a[1]} value={a[0]}>{a[1]}</MenuItem>)}
-        </Select>
-      </FormControl>
+      {
+        mode === Modes.Add ? <FormControl fullWidth sx={{mt: 2}}>
+          <InputLabel id={atomLabelId}>Atom</InputLabel>
+          <Select labelId={atomLabelId} id="demo-simple-select" value={atom[0]} label="Atom" onChange={onAtom}>
+            {atoms.map(a => <MenuItem key={a[1]} value={a[0]}>{a[1]}</MenuItem>)}
+          </Select>
+        </FormControl> : null
+      }
     </>
   )
 }

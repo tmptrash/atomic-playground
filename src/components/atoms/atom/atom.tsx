@@ -23,6 +23,11 @@ export default function Atom({x, y, a, id}: Props) {
   const type = getType(a);
   const rectRef = useRef(null);
   const textRef = useRef(null);
+  const modes = {
+    [Modes.Clear]: onClear,
+    [Modes.Edit]: onEdit,
+    [Modes.Add]: onAdd
+  }
 
   function findAtom(found: (atomIndex: number, atoms: AtomType[]) => void) {
     if (rectRef.current === null || textRef.current === null) { return }
@@ -30,20 +35,24 @@ export default function Atom({x, y, a, id}: Props) {
     atomIndex !== -1 && found(atomIndex, store.sandbox.atoms);
   }
 
+  function onClear(atomIndex: number, atoms: AtomType[]) {
+    rectRef.current && (rectRef.current as Konva.Rect).destroy();
+    textRef.current && (textRef.current as Konva.Text).destroy();
+    atoms.splice(atomIndex, 1);
+    store.sandbox.atoms = [...atoms];
+  }
+
+  function onEdit(atomIndex: number, atoms: AtomType[]) {
+    atoms[atomIndex] = { id, x: atoms[atomIndex].x, y: atoms[atomIndex].y, a: nextAtom(type) };
+    store.sandbox.atoms = [...atoms];
+  }
+
+  function onAdd(atomIndex: number, atoms: AtomType[]) {
+    // TODO:
+  }
+
   function onMouseup() {
-    if (store.status.mode === Modes.Clear) {
-      findAtom((atomIndex, atoms) => {
-        rectRef.current && (rectRef.current as Konva.Rect).destroy();
-        textRef.current && (textRef.current as Konva.Text).destroy();
-        atoms.splice(atomIndex, 1);
-        store.sandbox.atoms = [...atoms];
-      });
-    } else if (store.status.mode === Modes.Edit) {
-      findAtom((atomIndex, atoms) => {
-        atoms[atomIndex] = { id, x: atoms[atomIndex].x, y: atoms[atomIndex].y, a: nextAtom(type) };
-        store.sandbox.atoms = [...atoms];
-      });
-    }
+    findAtom(modes[store.status.mode]);
   }
 
   return (
