@@ -33,7 +33,7 @@ export default function Atoms({ atoms }: Props) {
   return (
     <>
       {atoms.map(a => <Atom key={a.id} {...a}/>)}
-      {atoms.map((a, i) => <Bonds key={i} a={a} state={states[i]}/>)}
+      {atoms.map((a, i) => <Bonds key={a.id} a={a} state={states[i]}/>)}
     </>
   )
 }

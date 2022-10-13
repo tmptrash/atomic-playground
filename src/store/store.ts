@@ -1,4 +1,4 @@
-import { Modes } from "../enums/enums";
+import { AtomTypes, Modes } from "../enums/enums";
 import { Store } from './../types/store';
 
 export const store: Store = {
@@ -6,6 +6,7 @@ export const store: Store = {
     atoms: []
   },
   status: {
-    mode: Modes.Edit
+    mode: Modes.Edit,
+    atom: AtomTypes.Mov
   }
 }

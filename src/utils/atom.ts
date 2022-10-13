@@ -1,4 +1,5 @@
 import { AtomTypes } from "../enums/enums";
+import { store } from "../store/store";
 import { Atom, ATOMS, Dir } from "../types/atom";
 
 const DIR_OFFS = [[-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0]];
@@ -44,4 +45,8 @@ export function getBond2Dir(atom: number): Dir {
 export function getXYByDir(a: Atom, dir: Dir): [number, number] {
   const offs = DIR_OFFS[dir];
   return [a.x + offs[0], a.y + offs[1]];
+}
+
+export function findAtomIdx(atomX: number, atomY: number): number {
+  return store.sandbox.atoms.findIndex(a => a.x === atomX && a.y === atomY);
 }
