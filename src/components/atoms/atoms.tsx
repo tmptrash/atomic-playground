@@ -6,34 +6,88 @@
  * We need such analysis because bonds are located not only around an atom,
  * but also around near atoms.
  */
-import React from 'react';
-import { Atom as AtomType } from '../../types/atom';
+import Konva from 'konva';
+import { Vector2d } from 'konva/lib/types';
+import React, { useEffect } from 'react';
+import Config from '../../config';
+import { Modes } from '../../enums/enums';
+import { store } from '../../store/store';
+import { Atom as AtomType, ATOMS } from '../../types/atom';
 import { BondData, BondsState } from '../../types/bond';
-import { getType } from '../../utils/atom';
+import { findAtomIdx, getType, nextAtom } from '../../utils/atom';
+import { id } from '../../utils/utils';
 import Atom from './atom/atom';
 import { ATOM_BONDS } from './atom/bonds/analyzer';
 import { Bonds } from './atom/bonds/bonds';
 
 type Props = {
-  atoms: AtomType[];
+  stage: Konva.Stage | null,
+  zoom: number
 }
-export default function Atoms({ atoms }: Props) {
+export default function Atoms({ stage, zoom }: Props) {
   const zeros = Array(8).fill(0);
-  const states = atoms.map(atom => ({
-    atom,
-    bonds: [...zeros],
-    curBonds: [...zeros],
-    bondDatas: zeros.map(() => []) as BondData[][]
-  })) as BondsState[];
+  const states = store.sandbox.atoms.map(atom => ({ atom, bonds: [...zeros], curBonds: [...zeros], bondDatas: zeros.map(() => []) as BondData[][] })) as BondsState[];
+  const modes = {
+    [Modes.Clear]: onClear,
+    [Modes.Edit]: onEdit,
+    [Modes.Add]: onAdd
+  }
   //
   // It's important to split creation of bonds, running atoms callbacks and drawing them
   //
-  atoms.forEach((a, i) => ATOM_BONDS[getType(a.a)](a, states[i], states));
+  store.sandbox.atoms.forEach((a, i) => ATOM_BONDS[getType(a.a)](a, states[i], states));
+
+  function onClear(x: number, y: number) {
+    const atomIndex = findAtomIdx(x, y);
+    if (atomIndex < 0) { return }
+    const atoms = store.sandbox.atoms;
+    atoms.splice(atomIndex, 1);
+    store.sandbox.atoms = [...atoms];
+  }
+
+  function onEdit(x: number, y: number) {
+    const atomIndex = findAtomIdx(x, y);
+    if (atomIndex < 0) { return }
+    const atoms = store.sandbox.atoms;
+    const a = atoms[atomIndex];
+    atoms[atomIndex] = { id: a.id, x: a.x, y: a.y, a: nextAtom(getType(a.a)) };
+    store.sandbox.atoms = [...atoms];
+  }
+
+  function onAdd(x: number, y: number) {
+    const atomIndex = findAtomIdx(x, y);
+    if (atomIndex >= 0) { return }
+    store.sandbox.atoms = [...store.sandbox.atoms, { id: id(), x, y, a: ATOMS[store.status.atom] }];
+  }
+
+  function getRelatedPos(): [number, number] {
+    if (stage === null) { return [-1, -1] }
+    const pos = stage.getPointerPosition() as Vector2d;
+    return [(pos.x - stage.position().x) / zoom, (pos.y - stage.position().y) / zoom];
+  }
+
+  function onMouseup() {
+    const [x, y] = getRelatedPos();
+    const stepSize = Config.grid.stepSize;
+    const [atomX, atomY] = [Math.floor(x / stepSize) * stepSize, Math.floor(y / stepSize) * stepSize];
+    if (atomX < 0 || atomY < 0 || atomX >= Config.grid.rows * stepSize || atomY >= Config.grid.cols * stepSize) { return }
+
+    modes[store.status.mode](atomX, atomY);
+  }
+
+  useEffect(() => {
+    if (stage) {
+      stage.on('mouseup', onMouseup);
+    }
+    return () => {
+      stage && stage.off('mouseup', onMouseup);
+    }
+  })
 
   return (
     <>
-      {atoms.map(a => <Atom key={a.id} {...a}/>)}
-      {atoms.map((a, i) => <Bonds key={a.id} a={a} state={states[i]}/>)}
+      {store.sandbox.atoms.map(a => <Atom key={a.id} {...a}/>)}
+      {store.sandbox.atoms.map((a, i) => <Bonds key={a.id} a={a} state={states[i]}/>)}
     </>
   )
 }
