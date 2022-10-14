@@ -10,8 +10,8 @@ import Arrow from './arrows/arrow';
 import Sceptre from './arrows/sceptre';
 
 const BONDS = {
-  Arrow: (a: Atom, bd: BondData, state: BondsState) => <Arrow key={id()} a={a} dir={bd.dir} color={bd.color} state={state}/>,
-  Sceptre: (a: Atom, bd: BondData, state: BondsState) => <Sceptre key={id()} a={a} dir={bd.dir} color={bd.color} state={state}/>
+  Arrow: (a: Atom, bd: BondData, state: BondsState) => <Arrow key={id()} a={a} {...bd} state={state}/>,
+  Sceptre: (a: Atom, bd: BondData, state: BondsState) => <Sceptre key={id()} a={a} {...bd} state={state}/>
 };
 
 type Props = {
