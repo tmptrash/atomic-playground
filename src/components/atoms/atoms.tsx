@@ -12,7 +12,7 @@ import React, { useEffect } from 'react';
 import Config from '../../config';
 import { Modes } from '../../enums/enums';
 import { store } from '../../store/store';
-import { Atom as AtomType, ATOMS } from '../../types/atom';
+import { ATOMS } from '../../types/atom';
 import { BondData, BondsState } from '../../types/bond';
 import { findAtomIdx, getType, nextAtom } from '../../utils/atom';
 import { id } from '../../utils/utils';
@@ -68,20 +68,15 @@ export default function Atoms({ stage, zoom }: Props) {
 
   function onMouseup() {
     const [x, y] = getRelatedPos();
-    const stepSize = Config.grid.stepSize;
-    const [atomX, atomY] = [Math.floor(x / stepSize) * stepSize, Math.floor(y / stepSize) * stepSize];
-    if (atomX < 0 || atomY < 0 || atomX >= Config.grid.rows * stepSize || atomY >= Config.grid.cols * stepSize) { return }
-
-    modes[store.status.mode](atomX, atomY);
+    const step = Config.grid.stepSize;
+    const [ax, ay] = [Math.floor(x / step) * step, Math.floor(y / step) * step];
+    if (ax < 0 || ay < 0 || ax >= Config.grid.rows * step || ay >= Config.grid.cols * step) { return }
+    modes[store.status.mode](ax, ay);
   }
 
   useEffect(() => {
-    if (stage) {
-      stage.on('mouseup', onMouseup);
-    }
-    return () => {
-      stage && stage.off('mouseup', onMouseup);
-    }
+    stage && stage.on('mouseup', onMouseup);
+    return () => {stage && stage.off('mouseup', onMouseup)}
   })
 
   return (
