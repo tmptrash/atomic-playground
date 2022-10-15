@@ -26,8 +26,8 @@ export default function Mode() {
 
   function onAtom(event: SelectChangeEvent) {
     const index = event.target.value;
-    setAtom([index, atoms[Number(index)][1]]);
-    store.status.atom = atoms[Number(index)][1] as AtomTypes;
+    setAtom([index, atoms[+index - 1][1]]);
+    store.status.atom = +index as AtomTypes;
   }
 
   return (
