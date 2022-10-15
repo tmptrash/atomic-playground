@@ -25,6 +25,7 @@ type Props = {
   zoom: number
 }
 export default function Atoms({ stage, zoom }: Props) {
+  let clickPos: Vector2d = {x: -1, y: -1};
   const zeros = Array(8).fill(0);
   const states = store.sandbox.atoms.map(atom => ({ atom, bonds: [...zeros], curBonds: [...zeros], bondDatas: zeros.map(() => []) as BondData[][] })) as BondsState[];
   const modes = {
@@ -66,7 +67,15 @@ export default function Atoms({ stage, zoom }: Props) {
     return [(pos.x - stage.position().x) / zoom, (pos.y - stage.position().y) / zoom];
   }
 
+  function onMousedown() {
+    if (!stage) { return }
+    clickPos = stage.position();
+  }
+
   function onMouseup() {
+    if (!stage) { return }
+    const pos = stage.position();
+    if (pos.x !== clickPos.x || pos.y !== clickPos.y) { return }
     const [x, y] = getRelatedPos();
     const step = Config.grid.stepSize;
     const [ax, ay] = [Math.floor(x / step) * step, Math.floor(y / step) * step];
@@ -74,9 +83,18 @@ export default function Atoms({ stage, zoom }: Props) {
     modes[store.status.mode](ax, ay);
   }
 
+  function onDestroy() {
+    if (!stage) { return }
+    stage.off('mouseup', onMouseup);
+    stage.off('mousedown', onMousedown);
+  }
+
   useEffect(() => {
-    stage && stage.on('mouseup', onMouseup);
-    return () => {stage && stage.off('mouseup', onMouseup)}
+    if (!stage) { return }
+    stage.on('mouseup', onMouseup);
+    stage.on('mousedown', onMousedown);
+
+    return onDestroy;
   })
 
   return (
