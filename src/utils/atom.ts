@@ -21,7 +21,7 @@ export function getType(atom: number): AtomTypes {
 }
 
 export function nextAtom(type: AtomTypes): number {
-  if (++type > AtomTypes.Job) { type = AtomTypes.Mov }
+  if (++type > AtomTypes.job) { type = AtomTypes.mov }
   return ATOMS[type];
 }
 

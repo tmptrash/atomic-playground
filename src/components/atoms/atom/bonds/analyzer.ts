@@ -6,11 +6,11 @@ import { getBond1Dir, getBond2Dir, getMovDir, getVmDir } from "../../../../utils
 import { addBonds, findBonds } from "../../../../utils/bonds";
 
 export const ATOM_BONDS = {
-  [AtomTypes.Mov]: getMovBonds,
-  [AtomTypes.Fix]: getFixBonds,
-  [AtomTypes.Spl]: noBonds,
-  [AtomTypes.If] : noBonds,
-  [AtomTypes.Job]: noBonds
+  [AtomTypes.mov]: getMovBonds,
+  [AtomTypes.fix]: getFixBonds,
+  [AtomTypes.spl]: noBonds,
+  [AtomTypes.con] : noBonds,
+  [AtomTypes.job]: noBonds
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars

@@ -15,6 +15,7 @@ export default function Mode() {
   const modeLabelId = id();
   const atomLabelId = id();
   const entries = Object.entries(AtomTypes);
+  // length/2 because Object.entries() returns 2 times bigger array
   const atoms = entries.slice(0, entries.length / 2);
   const [atom, setAtom] = useState(atoms[0]);
   const [mode, setMode] = useState(store.status.mode);
@@ -34,13 +35,13 @@ export default function Mode() {
     <>
       <FormControl>
         <FormLabel id={modeLabelId}>Atoms edit mode</FormLabel>
-        <RadioGroup row aria-labelledby={modeLabelId} defaultValue={Modes.Edit} name="group" onChange={onChange}>
-          <FormControlLabel value={Modes.Edit} control={<Radio />} label="Edit" />
-          <FormControlLabel value={Modes.Clear} control={<Radio />} label="Clear" />
-          <FormControlLabel value={Modes.Add} control={<Radio />} label="Add" />
+        <RadioGroup row aria-labelledby={modeLabelId} defaultValue={Modes.Add} name="group" onChange={onChange}>
+          <FormControlLabel value={Modes.Add} control={<Radio />} label="Add/Del" />
+          <FormControlLabel value={Modes.Edit} control={<Radio />} label="Type/Bond" />
         </RadioGroup>
       </FormControl>
       {
+        // dropdown with atom types
         mode === Modes.Add ? <FormControl fullWidth sx={{mt: 2}}>
           <InputLabel id={atomLabelId}>Atom</InputLabel>
           <Select labelId={atomLabelId} id="demo-simple-select" value={atom[0]} label="Atom" onChange={onAtom}>
