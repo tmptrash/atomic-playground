@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Radio from '@mui/material/Radio';
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Radio from '@mui/material/Radio'
+import Tooltip from '@mui/material/Tooltip'
+import InfoIcon from '@mui/icons-material/Info';
+import IconButton from '@mui/material/IconButton';
 import { id } from '../utils/utils';
 import { AtomTypes, Modes } from '../enums/enums';
 import { store } from '../store/store';
@@ -34,7 +37,14 @@ export default function Mode() {
   return (
     <>
       <FormControl>
-        <FormLabel id={modeLabelId}>Atoms edit mode</FormLabel>
+        <FormLabel id={modeLabelId}>
+          Atoms edit mode
+          <Tooltip title={<h3>Use left and right mouse buttons to achive different functions</h3>} placement="top-start">
+            <IconButton>
+              <InfoIcon />
+            </IconButton>
+          </Tooltip>
+        </FormLabel>
         <RadioGroup row aria-labelledby={modeLabelId} defaultValue={Modes.Add} name="group" onChange={onChange}>
           <FormControlLabel value={Modes.Add} control={<Radio />} label="Add/Del" />
           <FormControlLabel value={Modes.Edit} control={<Radio />} label="Type/Bond" />
