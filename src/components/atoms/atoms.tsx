@@ -14,7 +14,8 @@ import { Modes } from '../../enums/enums'
 import { store } from '../../store/store'
 import { ATOMS } from '../../types/atom'
 import { BondData, BondsState } from '../../types/bond'
-import { findAtomIdx, getType, nextAtom } from '../../utils/atom'
+import { findAtomIdx, nextAtom } from '../../utils/atom'
+import { type } from 'irma5/src/atom'
 import { id } from '../../utils/utils'
 import Atom from './atom/atom'
 import { ATOM_BONDS } from './atom/bonds/analyzer'
@@ -35,13 +36,13 @@ export default function Atoms({ stage, zoom }: Props) {
     // mouse button: 0 - left, 2 - right
     [`${Modes.Add}-0`]:  onAdd,
     [`${Modes.Add}-2`]:  onDel,
-    [`${Modes.Edit}-0`]: onEdit,
-    [`${Modes.Edit}-2`]: onEdit
+    [`${Modes.Edit}-0`]: onEditBond,
+    [`${Modes.Edit}-2`]: onEditType
   }
   //
   // It's important to split creation of bonds, running atoms callbacks and drawing them
   //
-  store.sandbox.atoms.forEach((a, i) => ATOM_BONDS[getType(a.a)](a, states[i], states))
+  store.sandbox.atoms.forEach((a, i) => ATOM_BONDS[type(a.a)](a, states[i], states))
   //
   // Turns off right mouse button context menu
   //
@@ -55,12 +56,21 @@ export default function Atoms({ stage, zoom }: Props) {
     store.sandbox.atoms = [...atoms]
   }
 
-  function onEdit(x: number, y: number) {
+  function onEditType(x: number, y: number) {
     const atomIndex = findAtomIdx(x, y)
     if (atomIndex < 0) { return }
     const atoms = store.sandbox.atoms
     const a = atoms[atomIndex]
-    atoms[atomIndex] = { id: a.id, x: a.x, y: a.y, a: nextAtom(getType(a.a)) }
+    atoms[atomIndex] = { id: a.id, x: a.x, y: a.y, a: nextAtom(type(a.a)) }
+    store.sandbox.atoms = [...atoms]
+  }
+
+  function onEditBond(x: number, y: number) {
+    const atomIndex = findAtomIdx(x, y)
+    if (atomIndex < 0) { return }
+    const atoms = store.sandbox.atoms
+    const a = atoms[atomIndex]
+    atoms[atomIndex] = { id: a.id, x: a.x, y: a.y, a: nextAtom(type(a.a)) }
     store.sandbox.atoms = [...atoms]
   }
 

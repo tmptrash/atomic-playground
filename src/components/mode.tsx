@@ -47,7 +47,7 @@ export default function Mode() {
         </FormLabel>
         <RadioGroup row aria-labelledby={modeLabelId} defaultValue={Modes.Add} name="group" onChange={onChange}>
           <FormControlLabel value={Modes.Add} control={<Radio />} label="Add/Del" />
-          <FormControlLabel value={Modes.Edit} control={<Radio />} label="Type/Bond" />
+          <FormControlLabel value={Modes.Edit} control={<Radio />} label="Bond/Type" />
         </RadioGroup>
       </FormControl>
       {

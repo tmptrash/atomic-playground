@@ -7,6 +7,10 @@
       "esnext"
     ],
     "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "src",
+    "declarationMap": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -17,10 +21,10 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
+    "src",
+    "irma5/src/irma5.d.ts"
   ]
 }
