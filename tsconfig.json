@@ -6,7 +6,6 @@
       "dom.iterable",
       "esnext"
     ],
-    "allowJs": true,
     "declaration": true,
     "emitDeclarationOnly": true,
     "outDir": "src",
@@ -24,7 +23,6 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src",
-    "irma5/src/irma5.d.ts"
+    "src"
   ]
 }

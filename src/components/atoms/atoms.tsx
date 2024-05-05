@@ -21,7 +21,6 @@ import Atom from './atom/atom'
 import { ATOM_BONDS } from './atom/bonds/analyzer'
 import { Bonds } from './atom/bonds/bonds'
 import { KonvaEventObject } from 'konva/lib/Node'
-import { EventType } from '@testing-library/react'
 
 type ModeKey = `${Modes.Add}-0` | `${Modes.Add}-2` | `${Modes.Edit}-0` | `${Modes.Edit}-2`
 type Props = {
