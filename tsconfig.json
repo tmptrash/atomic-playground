@@ -24,6 +24,7 @@
     "jsx": "react-jsx"
   },
   "include": [
+    "./node_modules/irma5/types/**/*.ts",
     "src"
   ]
 }

@@ -5,10 +5,10 @@ import { KonvaEventObject } from 'konva/lib/Node';
 import { Vector2d } from 'konva/lib/types';
 import Config from '../../config';
 import Grid from '../../components/grid';
-import './sandbox.scss';
 import { bind } from '../../store/binder';
 import { store } from '../../store/store';
 import Atoms from '../../components/atoms/atoms';
+import './sandbox.scss';
 
 export default function Sandbox() {
   bind(store.sandbox);

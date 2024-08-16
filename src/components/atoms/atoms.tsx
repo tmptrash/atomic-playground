@@ -9,13 +9,13 @@
 import Konva from 'konva'
 import { Vector2d } from 'konva/lib/types'
 import React, { useEffect } from 'react'
+import { type } from 'irma5/src/atom'
 import Config from '../../config'
 import { Modes } from '../../enums/enums'
 import { store } from '../../store/store'
 import { ATOMS } from '../../types/atom'
 import { BondData, BondsState } from '../../types/bond'
 import { findAtomIdx, nextAtom } from '../../utils/atom'
-import { type } from 'irma5/src/atom'
 import { id } from '../../utils/utils'
 import Atom from './atom/atom'
 import { ATOM_BONDS } from './atom/bonds/analyzer'
@@ -116,7 +116,7 @@ export default function Atoms({ stage, zoom }: Props) {
     stage.on('mouseup', onMouseup)
     stage.on('mousedown', onMousedown)
     return onDestroy
-  })
+  }, [])
 
   return (
     <>

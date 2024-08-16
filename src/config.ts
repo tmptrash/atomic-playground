@@ -14,16 +14,19 @@ const Config = {
     cols: 10
   },
   bonds: {
-    movDirColor: '#3d85c6',
-    bond1Color: '',
-    bond2Color: ''
+    vmDirColor:  '#6aa84f',
+    movDirColor: '#cc4125',
+    bond1Color:  '#6aa84f',
+    bond2Color:  '#3d85c6',
+    bondIfColor: '#cc4125'
   },
   atoms: {
-    movColor: '#cc4125',
-    fixColor: '#6fa8dc',
-    splColor: '#93c47d',
-    ifColor: '#efefef',
-    jobColor: '#e69138',
+    movColor:  '#cc4125',
+    fixColor:  '#3d85c6',
+    splColor:  '#6aa84f',
+    ifColor:   '#efefef',
+    jobColor:  '#e69138',
+    repColor:  '#9900ff',
     textColor: 'black'
   },
   vm: {
