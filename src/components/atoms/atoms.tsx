@@ -6,6 +6,10 @@
  * We need such analysis because bonds are located not only around an atom,
  * but also around near atoms.
  */
+// TODO: move this code to atom.tsx
+// TODO: should be two modes:
+// TODO:   1. atoms: left - change atom;           right - del atom
+// TODO:   2. bones: left - change bond direction; right - change bond type (vm, mov, if, then,...)
 import Konva from 'konva'
 import { Vector2d } from 'konva/lib/types'
 import React, { useEffect } from 'react'
@@ -22,7 +26,7 @@ import { ATOM_BONDS } from './atom/bonds/analyzer'
 import { Bonds } from './atom/bonds/bonds'
 import { KonvaEventObject } from 'konva/lib/Node'
 
-type ModeKey = `${Modes.Add}-0` | `${Modes.Add}-2` | `${Modes.Edit}-0` | `${Modes.Edit}-2`
+type ModeKey = `${Modes.Atoms}-0` | `${Modes.Atoms}-2` | `${Modes.Bonds}-0` | `${Modes.Bonds}-2`
 type Props = {
   stage: Konva.Stage | null,
   zoom: number
@@ -33,10 +37,10 @@ export default function Atoms({ stage, zoom }: Props) {
   const states = store.sandbox.atoms.map(atom => ({ atom, bonds: [...zeros], curBonds: [...zeros], bondDatas: zeros.map(() => []) as BondData[][] })) as BondsState[]
   const modes = {
     // mouse button: 0 - left, 2 - right
-    [`${Modes.Add}-0`]:  onAdd,
-    [`${Modes.Add}-2`]:  onDel,
-    [`${Modes.Edit}-0`]: onEditBond,
-    [`${Modes.Edit}-2`]: onEditType
+    [`${Modes.Atoms}-0`]:  onAdd,
+    [`${Modes.Atoms}-2`]:  onDel,
+    [`${Modes.Bonds}-0`]: onEditBond,
+    [`${Modes.Bonds}-2`]: onEditType
   }
   //
   // It's important to split creation of bonds, running atoms callbacks and drawing them

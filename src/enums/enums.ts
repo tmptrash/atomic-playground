@@ -8,6 +8,6 @@ export enum AtomTypes {
 }
 
 export enum Modes {
-  Add = 'add/del',
-  Edit = 'type/bond'
+  Atoms = 'atoms',
+  Bonds = 'bonds'
 }

@@ -6,7 +6,7 @@ export const store: Store = {
     atoms: []
   },
   status: {
-    mode: Modes.Add,
+    mode: Modes.Atoms,
     atom: AtomTypes.mov
   }
 }
