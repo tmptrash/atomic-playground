@@ -37,8 +37,8 @@ export default function Atoms({ stage, zoom }: Props) {
   const states = store.sandbox.atoms.map(atom => ({ atom, bonds: [...zeros], curBonds: [...zeros], bondDatas: zeros.map(() => []) as BondData[][] })) as BondsState[]
   const modes = {
     // mouse button: 0 - left, 2 - right
-    [`${Modes.Atoms}-0`]:  onAdd,
-    [`${Modes.Atoms}-2`]:  onDel,
+    [`${Modes.Atoms}-0`]: onAdd,
+    [`${Modes.Atoms}-2`]: onDel,
     [`${Modes.Bonds}-0`]: onEditBond,
     [`${Modes.Bonds}-2`]: onEditType
   }
@@ -120,7 +120,7 @@ export default function Atoms({ stage, zoom }: Props) {
     stage.on('mouseup', onMouseup)
     stage.on('mousedown', onMousedown)
     return onDestroy
-  }, [])
+  }, [stage, zoom])
 
   return (
     <>
