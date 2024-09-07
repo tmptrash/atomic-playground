@@ -5,7 +5,7 @@ const Config = {
   grid: {
     linesColor: 'aaa',
     fillColor: '#2980B9',
-    lineWidth: .1,
+    lineWidth: .3,
     fillOpacity: .15,
     borderWidth: 4,
     stepSize: 40,

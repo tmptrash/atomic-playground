@@ -14,7 +14,7 @@ export const ATOM_COLORS = {
   [AtomTypes.mov]: Config.atoms.movColor,
   [AtomTypes.fix]: Config.atoms.fixColor,
   [AtomTypes.spl]: Config.atoms.splColor,
-  [AtomTypes.con] : Config.atoms.ifColor,
+  [AtomTypes.con]: Config.atoms.ifColor,
   [AtomTypes.job]: Config.atoms.jobColor,
   [AtomTypes.rep]: Config.atoms.repColor
 }

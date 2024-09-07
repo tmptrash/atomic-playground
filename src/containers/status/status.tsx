@@ -5,8 +5,12 @@ import './status.scss'
 import Mode from '../../components/mode'
 import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography'
+import { bind } from '../../store/binder'
+import { store } from '../../store/store'
 
 export default function Status() {
+  bind(store.status)
+  
   return (
     <div className="status">
       <Box sx={{ m: 2 }}>

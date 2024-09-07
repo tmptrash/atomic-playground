@@ -20,8 +20,8 @@ export function getType(atom: number): AtomTypes {
 }
 
 export function nextAtom(type: AtomTypes): number {
-  if (++type > AtomTypes.job) { type = AtomTypes.mov }
-  return ATOMS[type];
+  if (++type > AtomTypes.rep) { type = AtomTypes.mov }
+  return type;
 }
 
 export function getVmDir(atom: number): Dir {

@@ -37,6 +37,7 @@ export default function Atoms({ stage, zoom }: Props) {
   const states = store.sandbox.atoms.map(atom => ({ atom, bonds: [...zeros], curBonds: [...zeros], bondDatas: zeros.map(() => []) as BondData[][] })) as BondsState[]
   const modes = {
     // mouse button: 0 - left, 2 - right
+    [`${Modes.Atoms}-0-ctrl`]: onChange,
     [`${Modes.Atoms}-0`]: onAdd,
     [`${Modes.Atoms}-2`]: onDel,
     [`${Modes.Bonds}-0`]: onEditBond,
@@ -50,6 +51,16 @@ export default function Atoms({ stage, zoom }: Props) {
   // Turns off right mouse button context menu
   //
   window.oncontextmenu = () => false
+
+  function onChange(x: number, y: number) {
+    store.status.atom = nextAtom(store.status.atom)
+  }
+
+  function onAdd(x: number, y: number) {
+    const atomIndex = findAtomIdx(x, y)
+    if (atomIndex >= 0) { return }
+    store.sandbox.atoms = [...store.sandbox.atoms, { id: id(), x, y, a: ATOMS[store.status.atom] }]
+  }
 
   function onDel(x: number, y: number) {
     const atomIndex = findAtomIdx(x, y)
@@ -77,12 +88,6 @@ export default function Atoms({ stage, zoom }: Props) {
     store.sandbox.atoms = [...atoms]
   }
 
-  function onAdd(x: number, y: number) {
-    const atomIndex = findAtomIdx(x, y)
-    if (atomIndex >= 0) { return }
-    store.sandbox.atoms = [...store.sandbox.atoms, { id: id(), x, y, a: ATOMS[store.status.atom] }]
-  }
-
   function getRelatedPos(): [number, number] {
     if (stage === null) { return [-1, -1] }
     const pos = stage.getPointerPosition() as Vector2d
@@ -106,7 +111,7 @@ export default function Atoms({ stage, zoom }: Props) {
   }
 
   function getModeByMouse(e: MouseEvent): ModeKey {
-    return `${store.status.mode}-${e.button}` as ModeKey
+    return `${store.status.mode}-${e.button}${e.ctrlKey ? '-ctrl' : ''}` as ModeKey
   }
 
   function onDestroy() {

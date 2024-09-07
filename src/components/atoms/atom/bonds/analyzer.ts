@@ -9,8 +9,9 @@ export const ATOM_BONDS = {
   [AtomTypes.mov]: getMovBonds,
   [AtomTypes.fix]: getFixBonds,
   [AtomTypes.spl]: noBonds,
-  [AtomTypes.con] : noBonds,
-  [AtomTypes.job]: noBonds
+  [AtomTypes.con]: noBonds,
+  [AtomTypes.job]: noBonds,
+  [AtomTypes.rep]: noBonds
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
