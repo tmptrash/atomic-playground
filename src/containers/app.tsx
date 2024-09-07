@@ -4,10 +4,8 @@ import Status from './status/status'
 import './app.scss'
 
 export default function App() {
-  return (
-    <div className="contaner">
-      <Sandbox/>
-      <Status/>
-    </div>
-  )
+  return <div className="contaner">
+    <Sandbox/>
+    <Status/>
+  </div>
 }

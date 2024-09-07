@@ -1,24 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Konva from 'konva';
-import { Layer, Stage } from 'react-konva';
-import { KonvaEventObject } from 'konva/lib/Node';
-import { Vector2d } from 'konva/lib/types';
-import Config from '../../config';
-import Grid from '../../components/grid';
-import { bind } from '../../store/binder';
-import { store } from '../../store/store';
-import Atoms from '../../components/atoms/atoms';
-import './sandbox.scss';
+import React, { useEffect, useRef, useState } from 'react'
+import Konva from 'konva'
+import { Layer, Stage } from 'react-konva'
+import { KonvaEventObject } from 'konva/lib/Node'
+import { Vector2d } from 'konva/lib/types'
+import Config from '../../config'
+import Grid from '../../components/grid'
+import { bind } from '../../store/binder'
+import { store } from '../../store/store'
+import Atoms from '../../components/atoms/atoms'
+import './sandbox.scss'
 
 export default function Sandbox() {
-  bind(store.sandbox);
+  bind(store.sandbox)
 
-  const [size, setSize] = useState({w: 0, h: 0});
-  const [zoom, setZoom] = useState(1);
-  const stageRef = useRef(null);
+  const [size, setSize] = useState({w: 0, h: 0})
+  const [zoom, setZoom] = useState(1)
+  const stageRef = useRef(null)
 
   function onResize() {
-    const canvasEl = document.querySelector('#' + Config.grid.query) as HTMLElement;
+    const canvasEl = document.querySelector('#' + Config.grid.query) as HTMLElement
     setSize({
       w: canvasEl.clientWidth,
       h: canvasEl.clientHeight
@@ -26,26 +26,26 @@ export default function Sandbox() {
   }
 
   function onWheel(e: KonvaEventObject<WheelEvent>) {
-    e.evt.preventDefault();
+    e.evt.preventDefault()
     if (stageRef.current === null) { return }
-    const stage = stageRef.current as Konva.Stage;
-    const pos = stage.getPointerPosition() as Vector2d;
+    const stage = stageRef.current as Konva.Stage
+    const pos = stage.getPointerPosition() as Vector2d
 
     // Zoom in or zoom out?
-    let scale = e?.evt?.deltaY > 0 ? zoom / Config.zoomDivider : zoom * Config.zoomDivider;
+    let scale = e?.evt?.deltaY > 0 ? zoom / Config.zoomDivider : zoom * Config.zoomDivider
     if (scale < Config.minZoom) { scale = Config.minZoom }
     else if (scale > Config.maxZoom) { scale = Config.maxZoom }
 
-    stage.scale({ x: scale, y: scale });
-    stage.position({ x: pos.x - ((pos.x - stage.x()) / zoom) * scale, y: pos.y - ((pos.y - stage.y()) / zoom) * scale });
-    setZoom(scale);
+    stage.scale({ x: scale, y: scale })
+    stage.position({ x: pos.x - ((pos.x - stage.x()) / zoom) * scale, y: pos.y - ((pos.y - stage.y()) / zoom) * scale })
+    setZoom(scale)
   }
 
   useEffect(() => {
-    !size.w && onResize();
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  })
+    !size.w && onResize()
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
 
   return (
     <div id={Config.grid.query} className="sandbox">

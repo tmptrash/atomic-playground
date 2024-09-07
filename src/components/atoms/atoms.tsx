@@ -108,7 +108,5 @@ export default function Atoms({ stage, zoom }: Props) {
     return onDestroy
   }, [stage, zoom])
 
-  return <>
-    {store.sandbox.atoms.map(a => <Atom key={a.id} {...a}/>)}
-  </>
+  return <>{store.sandbox.atoms.map(a => <Atom key={a.id} {...a}/>)}</>
 }
