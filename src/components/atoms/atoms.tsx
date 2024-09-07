@@ -7,9 +7,6 @@
  * but also around near atoms.
  */
 // TODO: move this code to atom.tsx
-// TODO: should be two modes:
-// TODO:   1. atoms: left - change atom;           right - del atom
-// TODO:   2. bones: left - change bond direction; right - change bond type (vm, mov, if, then,...)
 import Konva from 'konva'
 import { Vector2d } from 'konva/lib/types'
 import React, { useEffect } from 'react'
