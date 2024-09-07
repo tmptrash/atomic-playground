@@ -26,9 +26,8 @@ import { ATOM_BONDS } from './atom/bonds/analyzer'
 import { Bonds } from './atom/bonds/bonds'
 import { KonvaEventObject } from 'konva/lib/Node'
 
-type ModeKey = `${Modes.Atoms}-0` | `${Modes.Atoms}-2` | `${Modes.Bonds}-0` | `${Modes.Bonds}-2`
 type Props = {
-  stage: Konva.Stage | null,
+  stage: Konva.Stage,
   zoom: number
 }
 export default function Atoms({ stage, zoom }: Props) {
@@ -52,7 +51,7 @@ export default function Atoms({ stage, zoom }: Props) {
   //
   window.oncontextmenu = () => false
 
-  function onChange(x: number, y: number) {
+  function onChange() {
     store.status.atom = nextAtom(store.status.atom)
   }
 
@@ -89,18 +88,15 @@ export default function Atoms({ stage, zoom }: Props) {
   }
 
   function getRelatedPos(): [number, number] {
-    if (stage === null) { return [-1, -1] }
     const pos = stage.getPointerPosition() as Vector2d
     return [(pos.x - stage.position().x) / zoom, (pos.y - stage.position().y) / zoom]
   }
 
   function onMousedown() {
-    if (!stage) { return }
     clickPos = stage.position()
   }
 
   function onMouseup(e: KonvaEventObject<MouseEvent>): void {
-    if (!stage) { return }
     const pos = stage.position()
     if (pos.x !== clickPos.x || pos.y !== clickPos.y) { return }
     const [x, y] = getRelatedPos()
@@ -110,18 +106,16 @@ export default function Atoms({ stage, zoom }: Props) {
     modes[getModeByMouse(e.evt)](ax, ay)
   }
 
-  function getModeByMouse(e: MouseEvent): ModeKey {
-    return `${store.status.mode}-${e.button}${e.ctrlKey ? '-ctrl' : ''}` as ModeKey
+  function getModeByMouse(e: MouseEvent): string {
+    return `${store.status.mode}-${e.button}${e.ctrlKey ? '-ctrl' : ''}`
   }
 
   function onDestroy() {
-    if (!stage) { return }
     stage.off('mouseup', onMouseup)
     stage.off('mousedown', onMousedown)
   }
 
   useEffect(() => {
-    if (!stage) { return }
     stage.on('mouseup', onMouseup)
     stage.on('mousedown', onMousedown)
     return onDestroy

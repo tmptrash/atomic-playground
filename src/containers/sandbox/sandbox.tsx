@@ -59,7 +59,7 @@ export default function Sandbox() {
         onWheel={onWheel}>
         <Layer draggable={false} x={0} y={0}>
           <Grid/>
-          <Atoms stage={stageRef?.current} zoom={zoom}/>
+          {stageRef?.current && <Atoms stage={stageRef.current} zoom={zoom}/>}
         </Layer>
       </Stage>
     </div>
