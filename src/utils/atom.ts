@@ -15,6 +15,7 @@ const ATOM_BOND2_DIR_MASK  = 0b0000000000111000
 const ATOM_BOND2_DIR_SHIFT = 3
 const ATOM_BOND3_MASK      = 0b0000000000001111
 
+// TODO: remove this, because this code is already in irma5 package (check other funcs)
 export function getType(atom: number): AtomTypes {
   return (atom & ATOM_TYPE_MASK) >> ATOM_TYPE_SHIFT;
 }

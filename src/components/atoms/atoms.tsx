@@ -6,7 +6,6 @@
  * We need such analysis because bonds are located not only around an atom,
  * but also around near atoms.
  */
-// TODO: move this code to atom.tsx
 import Konva from 'konva'
 import { Vector2d } from 'konva/lib/types'
 import React, { useEffect } from 'react'
@@ -15,12 +14,9 @@ import Config from '../../config'
 import { Modes } from '../../enums/enums'
 import { store } from '../../store/store'
 import { ATOMS } from '../../types/atom'
-import { BondData, BondsState } from '../../types/bond'
 import { findAtomIdx, nextAtom } from '../../utils/atom'
 import { id } from '../../utils/utils'
 import Atom from './atom/atom'
-import { ATOM_BONDS } from './atom/bonds/analyzer'
-import { Bonds } from './atom/bonds/bonds'
 import { KonvaEventObject } from 'konva/lib/Node'
 
 type Props = {
@@ -29,8 +25,6 @@ type Props = {
 }
 export default function Atoms({ stage, zoom }: Props) {
   let clickPos: Vector2d = {x: -1, y: -1}
-  const zeros = Array(8).fill(0)
-  const states = store.sandbox.atoms.map(atom => ({ atom, bonds: [...zeros], curBonds: [...zeros], bondDatas: zeros.map(() => []) as BondData[][] })) as BondsState[]
   const modes = {
     // mouse button: 0 - left, 2 - right
     [`${Modes.Atoms}-0-ctrl`]: onChange,
@@ -39,10 +33,6 @@ export default function Atoms({ stage, zoom }: Props) {
     [`${Modes.Bonds}-0`]: onEditBond,
     [`${Modes.Bonds}-2`]: onEditType
   }
-  //
-  // It's important to split creation of bonds, running atoms callbacks and drawing them
-  //
-  store.sandbox.atoms.forEach((a, i) => ATOM_BONDS[type(a.a)](a, states[i], states))
   //
   // Turns off right mouse button context menu
   //
@@ -118,10 +108,7 @@ export default function Atoms({ stage, zoom }: Props) {
     return onDestroy
   }, [stage, zoom])
 
-  return (
-    <>
-      {store.sandbox.atoms.map(a => <Atom key={a.id} {...a}/>)}
-      {store.sandbox.atoms.map((a, i) => <Bonds key={a.id} a={a} state={states[i]}/>)}
-    </>
-  )
+  return <>
+    {store.sandbox.atoms.map(a => <Atom key={a.id} {...a}/>)}
+  </>
 }
