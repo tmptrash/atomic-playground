@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { store } from './store';
 import { isObject } from '../utils/utils';
 import { Changer } from './../types/store';
@@ -43,11 +43,13 @@ export function bind(obj: IObj, changers?: Changer[]) {
   if (ret === false) { throw new Error(`Storage doesn't contain specified object "${JSON.stringify(obj)}"`) }
   const [parent, key] = ret as StoreKey;
 
-  React.useEffect(() => () => {
+  // TODO: check how many time this effects are calling?
+  useEffect(() => () => {
     parent[key] = parent[key].old;
     delete parent[key].old;
   });
-  React.useEffect(() => {
+
+  useEffect(() => {
     if (parent[key].old) { throw new Error(`Current store property "${key}" is already user in other component`) }
     parent[key].old = parent[key];
     parent[key] = new Proxy(parent[key], {
