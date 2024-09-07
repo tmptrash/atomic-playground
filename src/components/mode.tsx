@@ -18,7 +18,9 @@ export default function Mode() {
     <FormControl>
       <RadioGroup aria-labelledby={id()} defaultValue={Modes.Atoms} name="group" onChange={onChange}>
         <FormControlLabel value={Modes.Atoms} control={<Radio />} label="Atoms" />
-        <Typography variant="body2" sx={{ ml: 2 }}>Current atom: {AtomNames[store.status.atom]}</Typography>
+        <Typography variant="body2" sx={{ ml: 2 }}>
+          Current atom: <span style={{ color: 'blue' }}>{AtomNames[store.status.atom]}</span>
+        </Typography>
         <br/>
         <Box style={{ color: 'grey' }} sx={{ ml: 2 }}>
           <Typography variant="body2">LMB + ctrl - change atom</Typography>
