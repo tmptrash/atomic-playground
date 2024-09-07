@@ -9,9 +9,9 @@ import { ATOM_COLORS, ATOM_TEXTS } from '../../../types/atom';
 // import { BondData, BondsState } from '../../../types/bond';
 
 type Props = {
-  a: number,
-  x: number,
+  x: number
   y: number
+  a: number
 }
 export default function Atom({x, y, a}: Props) {
   const lineWidth = Config.grid.lineWidth;
