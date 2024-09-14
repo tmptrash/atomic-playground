@@ -1,4 +1,4 @@
-let idValue = 0;
+let idValue = 0
 /**
  * Generates unique string id's within entire app
  */

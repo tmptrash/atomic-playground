@@ -22,7 +22,7 @@ export default function Sandbox() {
     setSize({
       w: canvasEl.clientWidth,
       h: canvasEl.clientHeight
-    });
+    })
   }
 
   function onWheel(e: KonvaEventObject<WheelEvent>) {

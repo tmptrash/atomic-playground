@@ -1,4 +1,5 @@
 export enum AtomTypes {
+  no  = 0,
   mov = 1,
   fix = 2,
   spl = 3,

@@ -1,5 +1,5 @@
-import Config from "../config";
-import { AtomTypes } from "../enums/enums";
+import Config from "../config"
+import { AtomTypes } from "../enums/enums"
 
 export const ATOMS = {
   [AtomTypes.mov]: 0b0010000000000000,
@@ -8,7 +8,7 @@ export const ATOMS = {
   [AtomTypes.con]: 0b1000000000000000,
   [AtomTypes.job]: 0b1010000000000000,
   [AtomTypes.rep]: 0b1100000000000000
-};
+}
 
 export const ATOM_COLORS = {
   [AtomTypes.mov]: Config.atoms.movColor,
@@ -26,7 +26,7 @@ export const ATOM_TEXTS = {
   [AtomTypes.con]: 'i',
   [AtomTypes.job]: 'j',
   [AtomTypes.rep]: 'r'
-};
+}
 
 export enum Dir {
   no = 8,

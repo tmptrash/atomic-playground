@@ -25,7 +25,7 @@ type Props = {
 }
 export default function Atoms({ stage, zoom }: Props) {
   let clickPos: Vector2d = {x: -1, y: -1}
-  const modes = {
+  const MODES = {
     // mouse button: 0 - left, 2 - right
     [`${Modes.Atoms}-0-ctrl`]: onChange,
     [`${Modes.Atoms}-0`]: onAdd,
@@ -88,9 +88,9 @@ export default function Atoms({ stage, zoom }: Props) {
     if (pos.x !== clickPos.x || pos.y !== clickPos.y) { return }
     const [x, y] = getRelatedPos()
     const step = Config.grid.stepSize
-    const [ax, ay] = [Math.floor(x / step) * step, Math.floor(y / step) * step];
+    const [ax, ay] = [Math.floor(x / step) * step, Math.floor(y / step) * step]
     if (ax < 0 || ay < 0 || ax >= Config.grid.rows * step || ay >= Config.grid.cols * step) { return }
-    modes[getModeByMouse(e.evt)](ax, ay)
+    MODES[getModeByMouse(e.evt)](ax, ay)
   }
 
   function getModeByMouse(e: MouseEvent): string {
@@ -108,5 +108,5 @@ export default function Atoms({ stage, zoom }: Props) {
     return onDestroy
   }, [stage, zoom])
 
-  return <>{store.sandbox.atoms.map(a => <Atom key={a.id} {...a}/>)}</>
+  return <>{store.sandbox.atoms.map(a => <Atom key={a.id} a={a}/>)}</>
 }

@@ -21,12 +21,12 @@ const Config = {
     bondIfColor: '#cc4125'
   },
   atoms: {
-    movColor:  '#cc4125',
-    fixColor:  '#3d85c6',
-    splColor:  '#6aa84f',
+    movColor:  '#e6b8af',
+    fixColor:  '#9fc5e8',
+    splColor:  '#b6d7a8',
     ifColor:   '#efefef',
-    jobColor:  '#e69138',
-    repColor:  '#9900ff',
+    jobColor:  '#f9cb9c',
+    repColor:  '#b4a7d6',
     textColor: 'black'
   },
   vm: {
@@ -34,4 +34,4 @@ const Config = {
   }
 }
 
-export default Config;
+export default Config

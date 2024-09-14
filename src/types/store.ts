@@ -13,4 +13,4 @@ export type Store = {
   status: Status
 }
 
-export type Changer = (val: unknown, prop: string) => unknown;
+export type Changer = (val: unknown, prop: string) => unknown

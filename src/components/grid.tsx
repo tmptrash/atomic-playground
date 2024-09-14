@@ -1,14 +1,14 @@
 import React from 'react'
 import { Line, Rect } from 'react-konva'
-import Config from '../config';
-import { arr } from '../utils/utils';
+import Config from '../config'
+import { arr } from '../utils/utils'
 
 export default function Grid() {
-  const grid = Config.grid;
-  const stepSize = grid.stepSize;
-  const xSize = grid.cols * grid.stepSize;
-  const ySize = grid.rows * grid.stepSize;
-  const halfBorder = -grid.borderWidth / 2;
+  const grid = Config.grid
+  const stepSize = grid.stepSize
+  const xSize = grid.cols * grid.stepSize
+  const ySize = grid.rows * grid.stepSize
+  const halfBorder = -grid.borderWidth / 2
 
   return (
     <>

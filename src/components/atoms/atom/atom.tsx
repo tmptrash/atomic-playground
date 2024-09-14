@@ -1,24 +1,22 @@
-import React from 'react';
-import { type as getType } from 'irma5/src/atom'
-import { Rect, Text } from "react-konva";
-import Config from "../../../config";
-import { ATOM_COLORS, ATOM_TEXTS } from '../../../types/atom';
-// import { Bonds } from './bonds/bonds'
-// import { store } from '../../../store/store';
-// import { ATOM_BONDS } from './bonds/analyzer';
-// import { BondData, BondsState } from '../../../types/bond';
+import React from 'react'
+import { type } from 'irma5/src/atom'
+import { Rect, Text } from "react-konva"
+import Config from "../../../config"
+import { ATOM_COLORS, ATOM_TEXTS, Atom as AtomType } from '../../../types/atom'
+import { Bonds } from './bonds/bonds'
+// import { store } from '../../../store/store'
+// import { ATOM_BONDS } from './bonds/analyzer'
+// import { BondData, BondsState } from '../../../types/bond'
 
 type Props = {
-  x: number
-  y: number
-  a: number
+  a: AtomType
 }
-export default function Atom({x, y, a}: Props) {
-  const lineWidth = Config.grid.lineWidth;
-  const textColor = Config.atoms.textColor;
-  const stepSize = Config.grid.stepSize;
-  const halfStep = stepSize / 2;
-  const type = getType(a);
+export default function Atom({a}: Props) {
+  const lineWidth = Config.grid.lineWidth
+  const textColor = Config.atoms.textColor
+  const stepSize = Config.grid.stepSize
+  const halfStep = stepSize / 2
+  const typ = type(a.a)
   //const zeros = Array(8).fill(0)
   //const states = store.sandbox.atoms.map(atom => ({ atom, bonds: [...zeros], curBonds: [...zeros], bondDatas: zeros.map(() => []) as BondData[][] })) as BondsState[]
   //
@@ -29,23 +27,23 @@ export default function Atom({x, y, a}: Props) {
   return <>
     {/* Atom rect */}
     <Rect
-      x={x + lineWidth}
-      y={y + lineWidth}
+      x={a.x + lineWidth}
+      y={a.y + lineWidth}
       width={stepSize - lineWidth * 2}
       height={stepSize - lineWidth * 2}
       strokeWidth={lineWidth}
-      stroke={ATOM_COLORS[type]}
-      fill={ATOM_COLORS[type]}/>
+      stroke={ATOM_COLORS[typ]}
+      fill={ATOM_COLORS[typ]}/>
 
     {/* The letter in atom center (m-mov, s-spl,...) */}
     <Text
-      x={x + halfStep - 3.7}
-      y={y + halfStep - 4}
-      text={ATOM_TEXTS[type]}
+      x={a.x + halfStep - 3.7}
+      y={a.y + halfStep - 4}
+      text={ATOM_TEXTS[typ]}
       fontSize={10}
       fontFamily={'Calibri'}
       fill={textColor}
     />
-    {/* {store.sandbox.atoms.map((a, i) => <Bonds key={a.id} a={a} state={states[i]}/>)} */}
+    <Bonds atom={a}/>
   </>
 }

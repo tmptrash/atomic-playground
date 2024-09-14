@@ -1,43 +1,57 @@
-import Config from "../config";
-import { store } from "../store/store";
-import { Atom, Dir } from "../types/atom";
-import { BondData, BondsState, BONDS_DIRS, BONDS_OFFS, LinePoints } from "../types/bond";
-import { getXYByDir } from "./atom";
+import Config from "../config"
+import { store } from "../store/store"
+import { Atom, Dir } from "../types/atom"
+import { BondData, BondsState, BONDS_DIRS, BONDS_OFFS, LinePoints } from "../types/bond"
+import { getXYByDir } from "./atom"
 
+// TODO: remove this
 export function addBonds(bondDatas: BondData[], bonds: BondsState) {
   bondDatas.forEach(bd => {
     if (bd.dir !== Dir.no) {
-      bonds.bonds[bd.dir]++;
-      bonds.bondDatas[bd.dir].push(bd);
+      bonds.bonds[bd.dir]++
+      bonds.bondDatas[bd.dir].push(bd)
     }
-  });
+  })
 }
 
-export function getLinePoints(a: Atom, d: Dir, state: BondsState): LinePoints {
-  const step = Config.grid.stepSize;
-  const offs = BONDS_OFFS[d];
-  const dirs = BONDS_DIRS[d];
-  const i = d as number;
-  const arr = state.bonds;
-  const curArr = state.curBonds;
-  const dist = step * .08;
-  const v0 = (arr[i] - 1) * dist;
-  const v1 = curArr[i] * dist * 2;
-  
-  const points: LinePoints = [
-    a.x + offs[0] * step - v0 * dirs[0] + v1 * dirs[0], // a.x + offs[0] * step - (arr[i] - 1) * dist * dirs[0] + curArr[i] * dist * 2 * dirs[0],
-    a.y + offs[1] * step - v0 * dirs[1] + v1 * dirs[1], // a.y + offs[1] * step - (arr[i] - 1) * dist * dirs[1] + curArr[i] * dist * 2 * dirs[1]
-    a.x + offs[2] * step - v0 * dirs[0] + v1 * dirs[0], // a.x + offs[2] * step - (arr[i] - 1) * dist * dirs[0] + curArr[i] * dist * 2 * dirs[0]
-    a.y + offs[3] * step - v0 * dirs[1] + v1 * dirs[1]  // a.y + offs[3] * step - (arr[i] - 1) * dist * dirs[1] + curArr[i] * dist * 2 * dirs[1]
-  ];
-  curArr[i]++;
+export function getLinePoints(x: number, y: number, d: Dir, bondIdx: number, bonds: number): LinePoints {
+  const step = Config.grid.stepSize
+  const offs = BONDS_OFFS[d]
+  const lineWidth = Config.grid.lineWidth * 3
 
-  return points;
+  // two bonds. use: two additional coordinates to move them
+  if (bonds === 2) return [
+    x + offs[0] * step + offs[4 + bondIdx],
+    y + offs[1] * step + offs[5 + bondIdx],
+    x + offs[2] * step + offs[4 + bondIdx] + lineWidth,
+    y + offs[3] * step + offs[5 + bondIdx] + lineWidth
+  ]
+  // three bonds. use: two additional coordinates and x0,y0,x1,y1 in the middle
+  if (bonds === 3) return [
+    x + offs[0] * step + bondIdx === 2 ? 0 : offs[4 + bondIdx],
+    y + offs[1] * step + bondIdx === 2 ? 0 : offs[5 + bondIdx],
+    x + offs[2] * step + bondIdx === 2 ? 0 : offs[4 + bondIdx] + lineWidth,
+    y + offs[3] * step + bondIdx === 2 ? 0 : offs[5 + bondIdx] + lineWidth
+  ]
+  // four bonds. use: first with additional coords & the same * 2, second with additional coords & the same * 2
+  if (bonds === 4) return [
+    x + offs[0] * step + bondIdx < 2 ? offs[4 + bondIdx] : offs[4 + bondIdx - 2] * 2,
+    y + offs[1] * step + bondIdx < 2 ? offs[5 + bondIdx] : offs[5 + bondIdx - 2] * 2,
+    x + offs[2] * step + bondIdx < 2 ? offs[4 + bondIdx] : offs[4 + bondIdx - 2] * 2 + lineWidth,
+    y + offs[3] * step + bondIdx < 2 ? offs[5 + bondIdx] : offs[5 + bondIdx - 2] * 2 + lineWidth
+  ]
+  // only one bond. use: x0,y0,x1,y1
+  return [
+    x + offs[0] * step,
+    y + offs[1] * step,
+    x + offs[2] * step + lineWidth,
+    y + offs[3] * step + lineWidth
+  ]
 }
 
 export function findBonds(a: Atom, dir: Dir, bonds: BondsState[]): BondsState | null {
-  const [x, y] = getXYByDir(a, dir);
-  const nearAtom = store.sandbox.atoms.find(atom => atom.x === x && atom.y === y);
+  const [x, y] = getXYByDir(a, dir)
+  const nearAtom = store.sandbox.atoms.find(atom => atom.x === x && atom.y === y)
   if (nearAtom === undefined) { return null }
-  return bonds.find(b => b.atom.id === nearAtom.id) || null;
+  return bonds.find(b => b.atom.id === nearAtom.id) || null
 }
