@@ -28,6 +28,9 @@ export const BONDS_OFFS = {
   [Dir.downLeft] : [.2, .8, -.2,  1.2, -.1,   0,   0, -.1],
   [Dir.left]     : [.2, .5, -.2,   .5,   0, -.1,   0,  .1]
 }
+//
+// Bond types depending on atom type
+//
 export const BOND_TYPES = [
   [],                                           // no atom
   [setVmDir, setB1Dir],                         // mov 
