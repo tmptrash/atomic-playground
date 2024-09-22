@@ -1,4 +1,5 @@
 import { Atom, Dir } from './atom'
+import { setVmDir, setB1Dir, setB2Dir, setB3Dir, setIfDir, setThenDir, setElseDir } from 'irma5/src/atom'
 
 export type LinePoints = [number, number, number, number]
 // TODO: remove these types
@@ -27,10 +28,14 @@ export const BONDS_OFFS = {
   [Dir.downLeft] : [.2, .8, -.2,  1.2, -.1,   0,   0, -.1],
   [Dir.left]     : [.2, .5, -.2,   .5,   0, -.1,   0,  .1]
 }
-// TODO: i'm here!
 export const BOND_TYPES = [
-  [], // no atom
-  [b1Dir], // mov 
+  [],                                           // no atom
+  [setVmDir, setB1Dir],                         // mov 
+  [setVmDir, setB1Dir, setB2Dir],               // fix
+  [setVmDir, setB1Dir, setB2Dir],               // spl
+  [setIfDir, setThenDir, setElseDir, setB3Dir], // con
+  [setVmDir, setB1Dir],                         // job
+  [setVmDir, setB1Dir, setB2Dir]                // rep
 ]
 //
 // Describes direction of the next arrow within one direction.
