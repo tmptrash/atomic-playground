@@ -4,6 +4,7 @@ import { Rect, Text } from "react-konva"
 import Config from "../../../config"
 import { ATOM_COLORS, ATOM_TEXTS, Atom as AtomType } from '../../../types/atom'
 import { Bonds } from './bonds/bonds'
+// TODO: remove all related structures
 // import { store } from '../../../store/store'
 // import { ATOM_BONDS } from './bonds/analyzer'
 // import { BondData, BondsState } from '../../../types/bond'
