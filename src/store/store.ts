@@ -1,4 +1,5 @@
 import { AtomTypes, Modes } from "../enums/enums"
+import { Dir } from "../types/atom"
 import { Store } from './../types/store'
 
 export const store: Store = {
@@ -7,6 +8,7 @@ export const store: Store = {
   },
   status: {
     mode: Modes.Atoms,
-    atom: AtomTypes.mov
+    atom: AtomTypes.mov,
+    dir: Dir.up
   }
 }

@@ -19,6 +19,11 @@ import { id } from '../../utils/utils'
 import Atom from './atom/atom'
 import { KonvaEventObject } from 'konva/lib/Node'
 
+//
+// Turns off right mouse button context menu
+//
+window.oncontextmenu = () => false
+
 type Props = {
   stage: Konva.Stage,
   zoom: number
@@ -30,13 +35,9 @@ export default function Atoms({ stage, zoom }: Props) {
     [`${Modes.Atoms}-0-ctrl`]: onChange,
     [`${Modes.Atoms}-0`]: onAdd,
     [`${Modes.Atoms}-2`]: onDel,
-    [`${Modes.Bonds}-0`]: onEditBond,
+    [`${Modes.Bonds}-0`]: onDir,
     [`${Modes.Bonds}-2`]: onEditType
   }
-  //
-  // Turns off right mouse button context menu
-  //
-  window.oncontextmenu = () => false
 
   function onChange() {
     store.status.atom = nextAtom(store.status.atom)
@@ -65,7 +66,7 @@ export default function Atoms({ stage, zoom }: Props) {
     store.sandbox.atoms = [...atoms]
   }
 
-  function onEditBond(x: number, y: number) {
+  function onDir(x: number, y: number) {
     const atomIndex = findAtomIdx(x, y)
     if (atomIndex < 0) { return }
     const atoms = store.sandbox.atoms

@@ -23,8 +23,8 @@ function noBonds(a: Atom) {}
 function getMovBonds(a: Atom) {
   const vmDir = getVmDir(a.a)
   const bonds = vmDir === Dir.no ? 1 : 2
-  const lines = [<Arrow key={0} x={a.x} y={a.y} dir={getMovDir(a.a)} color={Config.bonds.movDirColor} bondIdx={0} bonds={bonds}/>]
-  bonds > 1 && lines.push(<Arrow key={1} x={a.x} y={a.y} dir={vmDir} color={Config.vm.nextColor} bondIdx={1} bonds={bonds}/>)
+  const lines = [<Arrow key={0} a={a} dir={getMovDir(a.a)} color={Config.bonds.movDirColor} bondIdx={0} bonds={bonds}/>]
+  bonds > 1 && lines.push(<Arrow key={1} a={a} dir={vmDir} color={Config.vm.nextColor} bondIdx={1} bonds={bonds}/>)
   return lines
 }
 

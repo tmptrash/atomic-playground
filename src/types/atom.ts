@@ -10,6 +10,7 @@ export const ATOMS = {
   [AtomTypes.rep]: 0b1100000000000000
 }
 
+// TODO: do we need this? can we use config directly?
 export const ATOM_COLORS = {
   [AtomTypes.mov]: Config.atoms.movColor,
   [AtomTypes.fix]: Config.atoms.fixColor,
