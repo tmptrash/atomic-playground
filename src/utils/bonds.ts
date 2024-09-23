@@ -1,7 +1,7 @@
 import Config from "../config"
 import { store } from "../store/store"
 import { Atom, Dir } from "../types/atom"
-import { BondData, BondsState, BONDS_DIRS, BONDS_OFFS, LinePoints } from "../types/bond"
+import { BondData, BondsState, BONDS_OFFS, LinePoints } from "../types/bond"
 import { getXYByDir } from "./atom"
 
 // TODO: remove this

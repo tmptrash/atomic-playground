@@ -1,5 +1,5 @@
 import { AtomTypes, Modes } from "../enums/enums"
-import { Atom, Dir } from "./atom"
+import { Atom } from "./atom"
 
 export type Sandbox = {
   atoms: Atom[]
@@ -7,7 +7,7 @@ export type Sandbox = {
 export type Status = {
   mode: Modes,
   atom: AtomTypes,
-  dir: Dir
+  bondIdx: number
 }
 export type Store = {
   sandbox: Sandbox,

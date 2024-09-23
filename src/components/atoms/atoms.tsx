@@ -13,11 +13,12 @@ import { type } from 'irma5/src/atom'
 import Config from '../../config'
 import { Modes } from '../../enums/enums'
 import { store } from '../../store/store'
-import { ATOMS } from '../../types/atom'
-import { findAtomIdx, nextAtom } from '../../utils/atom'
+import { ATOMS, Dir } from '../../types/atom'
+import { findAtom, findAtomIdx, nextAtom } from '../../utils/atom'
 import { id } from '../../utils/utils'
 import Atom from './atom/atom'
 import { KonvaEventObject } from 'konva/lib/Node'
+import { BOND_GET_TYPES, BOND_SET_TYPES } from '../../types/bond'
 
 //
 // Turns off right mouse button context menu
@@ -58,20 +59,22 @@ export default function Atoms({ stage, zoom }: Props) {
   }
 
   function onEditType(x: number, y: number) {
-    const atomIndex = findAtomIdx(x, y)
-    if (atomIndex < 0) { return }
+    const { a, i } = findAtom(x, y)
+    if (!i) return
     const atoms = store.sandbox.atoms
-    const a = atoms[atomIndex]
-    atoms[atomIndex] = { id: a.id, x: a.x, y: a.y, a: nextAtom(type(a.a)) }
+    atoms[i] = { id: a.id, x: a.x, y: a.y, a: nextAtom(type(a.a)) }
     store.sandbox.atoms = [...atoms]
   }
 
   function onDir(x: number, y: number) {
-    const atomIndex = findAtomIdx(x, y)
-    if (atomIndex < 0) { return }
+    const { a, i } = findAtom(x, y)
+    if (i === undefined || !a.a) return
     const atoms = store.sandbox.atoms
-    const a = atoms[atomIndex]
-    atoms[atomIndex] = { id: a.id, x: a.x, y: a.y, a: nextAtom(type(a.a)) }
+    const t = type(a.a)
+    let d = (BOND_GET_TYPES[t][store.status.bondIdx] || BOND_GET_TYPES[t][0])(a.a) + 1
+    if (d > Dir.leftUp) { d = Dir.up }
+    a.a = (BOND_SET_TYPES[t][store.status.bondIdx] || BOND_SET_TYPES[t][0])(a.a, d)
+    atoms[i] = a
     store.sandbox.atoms = [...atoms]
   }
 

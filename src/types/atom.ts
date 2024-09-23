@@ -31,14 +31,14 @@ export const ATOM_TEXTS = {
 
 export enum Dir {
   no = 8,
-  leftUp = 0,
-  up = 1,
-  upRight = 2,
-  right = 3,
-  rightDown = 4,
-  down = 5,
-  downLeft = 6,
-  left = 7
+  up = 0,
+  upRight = 1,
+  right = 2,
+  rightDown = 3,
+  down = 4,
+  downLeft = 5,
+  left = 6,
+  leftUp = 7
 }
 
 export type Atom = {

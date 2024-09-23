@@ -9,6 +9,6 @@ export const store: Store = {
   status: {
     mode: Modes.Atoms,
     atom: AtomTypes.mov,
-    dir: Dir.up
+    bondIdx: 0
   }
 }

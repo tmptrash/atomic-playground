@@ -1,5 +1,6 @@
 import { Atom, Dir } from './atom'
-import { setVmDir, setB1Dir, setB2Dir, setB3Dir, setIfDir, setThenDir, setElseDir } from 'irma5/src/atom'
+import { vmDir, b1Dir, b2Dir, ifDir, thenDir, elseDir, b3Dir, setVmDir, setB1Dir, 
+  setB2Dir, setB3Dir, setIfDir, setThenDir, setElseDir } from 'irma5/src/atom'
 
 export type LinePoints = [number, number, number, number]
 // TODO: remove these types
@@ -19,19 +20,19 @@ export type BondsState = {
 // Offsets for only one bond
 export const BONDS_OFFS = {
   [Dir.no]       : [ 0,  0,   0,    0,   0,   0,   0,   0],
-  [Dir.leftUp]   : [.2, .2,   0,    0,  .1,   0,   0,  .1],
   [Dir.up]       : [.5, .2,  .5,  -.2,  .1,   0, -.1,   0],
   [Dir.upRight]  : [.8, .2, 1.2,  -.2,   0,  .1, -.1,   0],
   [Dir.right]    : [.8, .5, 1.2,   .5,   0,  .1,   0, -.1],
   [Dir.rightDown]: [.8, .8, 1.2,  1.2,   0, -.1, -.1,   0],
   [Dir.down]     : [.5, .8,  .5,  1.2, -.1,   0,  .1,   0],
   [Dir.downLeft] : [.2, .8, -.2,  1.2, -.1,   0,   0, -.1],
-  [Dir.left]     : [.2, .5, -.2,   .5,   0, -.1,   0,  .1]
+  [Dir.left]     : [.2, .5, -.2,   .5,   0, -.1,   0,  .1],
+  [Dir.leftUp]   : [.2, .2,   0,    0,  .1,   0,   0,  .1]
 }
 //
-// Bond types depending on atom type
+// Bond setter types depending on atom type
 //
-export const BOND_TYPES = [
+export const BOND_SET_TYPES = [
   [],                                           // no atom
   [setVmDir, setB1Dir],                         // mov 
   [setVmDir, setB1Dir, setB2Dir],               // fix
@@ -41,18 +42,30 @@ export const BOND_TYPES = [
   [setVmDir, setB1Dir, setB2Dir]                // rep
 ]
 //
+// Bond getter types depending on atom type
+//
+export const BOND_GET_TYPES = [
+  [],                                           // no atom
+  [vmDir, b1Dir],                               // mov 
+  [vmDir, b1Dir, b2Dir],                        // fix
+  [vmDir, b1Dir, b2Dir],                        // spl
+  [ifDir, thenDir, elseDir, b3Dir],             // con
+  [vmDir, b1Dir],                               // job
+  [vmDir, b1Dir, b2Dir]                         // rep
+]
+//
 // Describes direction of the next arrow within one direction.
 // e.g.: Two arrows up means that x = 1 (increase left to right), y = 0
 //
 // TODO: remove it
 export const BONDS_DIRS = {
   [Dir.no]       : [ 0,  0],
-  [Dir.leftUp]   : [ 1, -1],
   [Dir.up]       : [ 1,  0],
   [Dir.upRight]  : [ 1,  1],
   [Dir.right]    : [ 0,  1],
   [Dir.rightDown]: [-1,  1],
   [Dir.down]     : [-1,  0],
   [Dir.downLeft] : [-1, -1],
-  [Dir.left]     : [ 0, -1]
+  [Dir.left]     : [ 0, -1],
+  [Dir.leftUp]   : [ 1, -1]
 }
