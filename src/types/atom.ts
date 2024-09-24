@@ -30,7 +30,7 @@ export const ATOM_TEXTS = {
 }
 
 export enum Dir {
-  no = 8,
+  no = -1,
   up = 0,
   upRight = 1,
   right = 2,

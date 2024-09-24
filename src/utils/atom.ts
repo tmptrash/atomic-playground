@@ -4,42 +4,9 @@ import { Atom, Dir } from "../types/atom"
 
 const DIR_OFFS = [[-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0]]
 
-const ATOM_TYPE_MASK       = 0b1110000000000000
-const ATOM_TYPE_SHIFT      = 13
-const ATOM_HAS_VM_DIR_MASK = 0b0000001000000000
-const ATOM_VM_DIR_MASK     = 0b0001111000000000
-const ATOM_VM_DIR_SHIFT    = 9
-const ATOM_BOND1_DIR_MASK  = 0b0000000111000000
-const ATOM_BOND1_DIR_SHIFT = 6
-const ATOM_BOND2_DIR_MASK  = 0b0000000000111000
-const ATOM_BOND2_DIR_SHIFT = 3
-const ATOM_BOND3_MASK      = 0b0000000000001111
-
-// TODO: remove this, because this code is already in irma5 package (check other funcs)
-export function getType(atom: number): AtomTypes {
-  return (atom & ATOM_TYPE_MASK) >> ATOM_TYPE_SHIFT
-}
-
 export function nextAtom(type: AtomTypes): number {
   if (++type > AtomTypes.rep) { type = AtomTypes.mov }
   return type
-}
-
-export function getVmDir(atom: number): Dir {
-  if (!(atom & ATOM_HAS_VM_DIR_MASK)) { return Dir.no }
-  return (atom & ATOM_VM_DIR_MASK) >> ATOM_VM_DIR_SHIFT
-}
-
-export function getMovDir(atom: number): Dir {
-  return (atom & ATOM_BOND1_DIR_MASK) >> ATOM_BOND1_DIR_SHIFT
-}
-
-export function getBond1Dir(atom: number): Dir {
-  return (atom & ATOM_BOND1_DIR_MASK) >> ATOM_BOND1_DIR_SHIFT
-}
-
-export function getBond2Dir(atom: number): Dir {
-  return (atom & ATOM_BOND2_DIR_MASK) >> ATOM_BOND2_DIR_SHIFT
 }
 
 export function getXYByDir(a: Atom, dir: Dir): [number, number] {

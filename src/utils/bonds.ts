@@ -21,24 +21,24 @@ export function getLinePoints(x: number, y: number, d: Dir, bondIdx: number, bon
 
   // two bonds. use: two additional coordinates to move them
   if (bonds === 2) return [
-    x + offs[0] * step + offs[4 + bondIdx],
-    y + offs[1] * step + offs[5 + bondIdx],
-    x + offs[2] * step + offs[4 + bondIdx] + lineWidth,
-    y + offs[3] * step + offs[5 + bondIdx] + lineWidth
+    x + offs[0] * step + offs[4 + bondIdx * 2] * step,
+    y + offs[1] * step + offs[5 + bondIdx * 2] * step,
+    x + offs[2] * step + offs[4 + bondIdx * 2] * step,
+    y + offs[3] * step + offs[5 + bondIdx * 2] * step
   ]
   // three bonds. use: two additional coordinates and x0,y0,x1,y1 in the middle
   if (bonds === 3) return [
-    x + offs[0] * step + bondIdx === 2 ? 0 : offs[4 + bondIdx],
-    y + offs[1] * step + bondIdx === 2 ? 0 : offs[5 + bondIdx],
-    x + offs[2] * step + bondIdx === 2 ? 0 : offs[4 + bondIdx] + lineWidth,
-    y + offs[3] * step + bondIdx === 2 ? 0 : offs[5 + bondIdx] + lineWidth
+    x + offs[0] * step + bondIdx === 2 ? 0 : offs[4 + bondIdx * 2],
+    y + offs[1] * step + bondIdx === 2 ? 0 : offs[5 + bondIdx * 2],
+    x + offs[2] * step + bondIdx === 2 ? 0 : offs[4 + bondIdx * 2] + lineWidth,
+    y + offs[3] * step + bondIdx === 2 ? 0 : offs[5 + bondIdx * 2] + lineWidth
   ]
   // four bonds. use: first with additional coords & the same * 2, second with additional coords & the same * 2
   if (bonds === 4) return [
-    x + offs[0] * step + bondIdx < 2 ? offs[4 + bondIdx] : offs[4 + bondIdx - 2] * 2,
-    y + offs[1] * step + bondIdx < 2 ? offs[5 + bondIdx] : offs[5 + bondIdx - 2] * 2,
-    x + offs[2] * step + bondIdx < 2 ? offs[4 + bondIdx] : offs[4 + bondIdx - 2] * 2 + lineWidth,
-    y + offs[3] * step + bondIdx < 2 ? offs[5 + bondIdx] : offs[5 + bondIdx - 2] * 2 + lineWidth
+    x + offs[0] * step + bondIdx < 2 ? offs[4 + bondIdx * 2] : offs[4 + bondIdx - 2] * 2,
+    y + offs[1] * step + bondIdx < 2 ? offs[5 + bondIdx * 2] : offs[5 + bondIdx - 2] * 2,
+    x + offs[2] * step + bondIdx < 2 ? offs[4 + bondIdx * 2] : offs[4 + bondIdx - 2] * 2 + lineWidth,
+    y + offs[3] * step + bondIdx < 2 ? offs[5 + bondIdx * 2] : offs[5 + bondIdx - 2] * 2 + lineWidth
   ]
   // only one bond. use: x0,y0,x1,y1
   return [
