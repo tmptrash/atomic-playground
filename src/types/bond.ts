@@ -20,14 +20,14 @@ export type BondsState = {
 // Offsets for only one bond
 export const BONDS_OFFS = {
   [Dir.no]       : [ 0,  0,   0,    0,   0,   0,   0,   0],
-  [Dir.up]       : [.5, .2,  .5,  -.2,  .1,   0, -.1,   0],
-  [Dir.upRight]  : [.8, .2, 1.2,  -.2,   0,  .1, -.1,   0],
-  [Dir.right]    : [.8, .5, 1.2,   .5,   0,  .1,   0, -.1],
-  [Dir.rightDown]: [.8, .8, 1.2,  1.2,   0, -.1, -.1,   0],
-  [Dir.down]     : [.5, .8,  .5,  1.2, -.1,   0,  .1,   0],
-  [Dir.downLeft] : [.2, .8, -.2,  1.2, -.1,   0,   0, -.1],
-  [Dir.left]     : [.2, .5, -.2,   .5,   0, -.1,   0,  .1],
-  [Dir.leftUp]   : [.2, .2,   0,    0,  .1,   0,   0,  .1]
+  [Dir.up]       : [.5, .3,  .5,  .03,  .1,   0, -.1,   0],
+  [Dir.upRight]  : [.7, .3, .97,  .03,   0,  .1, -.1,   0],
+  [Dir.right]    : [.7, .5, .97,   .5,   0,  .1,   0, -.1],
+  [Dir.rightDown]: [.7, .7, .97,  .97,   0, -.1, -.1,   0],
+  [Dir.down]     : [.5, .7,  .5,  .97, -.1,   0,  .1,   0],
+  [Dir.downLeft] : [.3, .7, .03,  .97, -.1,   0,   0, -.1],
+  [Dir.left]     : [.3, .5, .03,   .5,   0, -.1,   0,  .1],
+  [Dir.leftUp]   : [.3, .3, .03,  .03,  .1,   0,   0,  .1]
 }
 //
 // Bond setter types depending on atom type

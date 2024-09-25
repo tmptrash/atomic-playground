@@ -44,8 +44,8 @@ export function getLinePoints(x: number, y: number, d: Dir, bondIdx: number, bon
   return [
     x + offs[0] * step,
     y + offs[1] * step,
-    x + offs[2] * step + lineWidth,
-    y + offs[3] * step + lineWidth
+    x + offs[2] * step,
+    y + offs[3] * step
   ]
 }
 
