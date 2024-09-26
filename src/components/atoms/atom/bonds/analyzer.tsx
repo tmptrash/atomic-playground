@@ -6,8 +6,8 @@ import { Atom, Dir } from "../../../../types/atom"
 import Arrow from "./arrows/arrow"
 import Sceptre from './arrows/sceptre'
 
-export type ArrowType = 'arrow' | 'sceptre'
-export interface IBond {
+type ArrowType = 'arrow' | 'sceptre'
+interface IBond {
   a: Atom
   d: Dir
   col: string
@@ -54,16 +54,12 @@ function getMovBonds(a: Atom) {
     {a, d: vmDir(a.a), col: Config.vm.nextColor, type: 'arrow'},
     {a, d: b1Dir(a.a), col: Config.bonds.movDirColor, type: 'arrow'}
   ])
-  // const vmd = vmDir(a.a)
-  // const movd = b1Dir(a.a)
-  // const bonds = vmd !== Dir.no && vmd === movd ? 2 : 1
-  // const lines = [<Arrow key={0} a={a} dir={movd} color={Config.bonds.movDirColor} bondIdx={0} bonds={bonds}/>]
-  // vmd !== Dir.no && lines.push(<Arrow key={1} a={a} dir={vmd} color={Config.vm.nextColor} bondIdx={vmd === movd ? 1 : 0} bonds={bonds}/>)
-  // return lines
 }
 
 function getFixBonds(a: Atom) {
-  const vmd = vmDir(a.a)
-  const bond1Dir = b1Dir(a.a)
-  const bond2Dir = b2Dir(a.a)
+  return getArrows([
+    {a, d: vmDir(a.a), col: Config.vm.nextColor, type: 'arrow'},
+    {a, d: b1Dir(a.a), col: Config.bonds.bond1Color, type: 'sceptre'},
+    {a, d: b2Dir(a.a), col: Config.bonds.bond2Color, type: 'sceptre'}
+  ])
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Arrow, Circle } from 'react-konva'
+import { Arrow, Circle, Line } from 'react-konva'
 import { Atom, Dir } from '../../../../../types/atom'
 import { getLinePoints } from '../../../../../utils/bonds'
 
@@ -16,7 +16,7 @@ export default function Sceptre({a, dir, color, bondIdx, bonds}: Props) {
 
   return (
     <>
-      <Arrow
+      <Line
         points={points}
         stroke={color}
         strokeWidth={1}
@@ -26,7 +26,7 @@ export default function Sceptre({a, dir, color, bondIdx, bonds}: Props) {
       <Circle
         x={points[2]}
         y={points[3]}
-        radius={10}
+        radius={1}
         fill={color}
         stroke={color}
         strokeWidth={1}
