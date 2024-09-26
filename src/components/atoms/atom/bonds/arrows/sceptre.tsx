@@ -1,19 +1,19 @@
 import React from 'react'
 import { Arrow, Circle } from 'react-konva'
 import { Atom, Dir } from '../../../../../types/atom'
-import { BondsState } from '../../../../../types/bond'
 import { getLinePoints } from '../../../../../utils/bonds'
 
 type Props = {
   a: Atom,
   dir: Dir,
   color: string,
-  state: BondsState
+  bondIdx: number
+  bonds: number
 }
-export default function Sceptre({a, dir, color, state}: Props) {
-  const points = getLinePoints(a, dir, state)
+export default function Sceptre({a, dir, color, bondIdx, bonds}: Props) {
+  if (dir === Dir.no) return <></>
+  const points = getLinePoints(a.x, a.y, dir, bondIdx, bonds)
 
-  if (dir === Dir.no) { return <></> }
   return (
     <>
       <Arrow

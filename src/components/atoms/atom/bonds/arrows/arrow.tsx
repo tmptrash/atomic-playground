@@ -11,7 +11,7 @@ type Props = {
   bonds: number
 }
 export default function Arrow({a, dir, color, bondIdx, bonds}: Props) {
-  if (dir === Dir.no) { return <></> }
+  if (dir === Dir.no) return <></>
 
   return (
     <KonvaArrow
