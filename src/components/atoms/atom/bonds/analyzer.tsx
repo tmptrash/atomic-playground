@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 import { vmDir, b1Dir, b2Dir } from 'irma5/src/atom'
 import Config from "../../../../config"
 import { AtomTypes } from "../../../../enums/enums"
@@ -9,11 +9,15 @@ import { findAtomIdx, getXYByDir } from '../../../../utils/atom'
 import { store } from '../../../../store/store'
 
 type ArrowType = 'arrow' | 'sceptre'
-interface IBond {
+export interface IBond {
   a: Atom
   d: Dir
   col: string
   type: ArrowType
+}
+
+export interface IBonds {
+  [id: string]: IBond[]
 }
 
 export const ATOM_BONDS = {
@@ -29,7 +33,7 @@ export const ATOM_BONDS = {
 // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
 function noBonds(a: Atom) {}
 
-function getArrows(bonds: IBond[]) {
+export function getArrows(bonds: IBond[]) {
   const dirMap = {}
   const arrows: React.ReactElement[] = []
   // calc amount of bonds on all directions. [0] - index, [1] - amount
@@ -51,28 +55,35 @@ function getArrows(bonds: IBond[]) {
   return arrows
 }
 
-function getMovBonds(a: Atom) {
-  return getArrows([
+function getMovBonds(a: Atom, bonds: IBonds) {
+  const id = a.id
+  !bonds[id] && (bonds[id] = [])
+  bonds[id] = [
+    ...bonds[id], 
     {a, d: vmDir(a.a), col: Config.vm.nextColor, type: 'arrow'},
     {a, d: b1Dir(a.a), col: Config.bonds.movDirColor, type: 'arrow'}
-  ])
+  ]
 }
 
-function getFixBonds(a: Atom) {
+function getFixBonds(a: Atom, bonds: IBonds) {
+  const id = a.id
+  !bonds[id] && (bonds[id] = [])
   const b1d = b1Dir(a.a)
-  const bonds: IBond[] = [
+  bonds[id] = [
+    ...bonds[id],
     {a, d: vmDir(a.a), col: Config.vm.nextColor, type: 'arrow'},
     {a, d: b1d, col: Config.bonds.bond1Color, type: 'sceptre'}
   ]
   // find near atom
   const [x, y] = getXYByDir(a, b1d)
   const atomIdx = findAtomIdx(x, y)
-  atomIdx >= 0 && bonds.push({
-    a: store.sandbox.atoms[atomIdx],
-    d: b2Dir(a.a),
-    col: Config.bonds.bond2Color,
-    type: 'sceptre'
-  })
-  
-  return getArrows(bonds)
+  if (atomIdx >= 0) {
+    const atoms = store.sandbox.atoms
+    bonds[atoms[atomIdx].id].push({
+      a: atoms[atomIdx],
+      d: b2Dir(a.a),
+      col: Config.bonds.bond2Color,
+      type: 'sceptre'
+    })
+  }
 }

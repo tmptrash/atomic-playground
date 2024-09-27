@@ -20,6 +20,7 @@ import Atom from './atom/atom'
 import { KonvaEventObject } from 'konva/lib/Node'
 import { BOND_GET_TYPES, BOND_SET_TYPES } from '../../types/bond'
 import { Bonds } from './atom/bonds/bonds'
+import { ATOM_BONDS } from './atom/bonds/analyzer'
 
 //
 // Turns off right mouse button context menu
@@ -41,6 +42,11 @@ export default function Atoms({ stage, zoom }: Props) {
     [`${Modes.Bonds}-2`]: onEditType
   }
   const atoms = store.sandbox.atoms
+  const bonds = {}
+  // we have to collect all bonds before rendering them to exclude 
+  // collisions and z-index issues. it happend when we render fix and
+  // spl atoms, which put their bonds outside of it's atoms
+  atoms.forEach(a => ATOM_BONDS[type(a.a)](a, bonds))
 
   function onChange() {
     store.status.atom = nextAtom(store.status.atom)
@@ -116,6 +122,6 @@ export default function Atoms({ stage, zoom }: Props) {
 
   return <>
     <>{atoms.map(a => <Atom key={a.id} atom={a}/>)}</>
-    <>{atoms.map(a => <Bonds key={a.id} atom={a}/>)}</>
+    <>{Object.values(bonds).map((v, i) => <Bonds key={i} bonds={v}/>)}</>
   </>
 }
