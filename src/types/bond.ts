@@ -1,22 +1,9 @@
-import { Atom, Dir } from './atom'
+import { Dir } from './atom'
 import { vmDir, b1Dir, b2Dir, ifDir, thenDir, elseDir, b3Dir, setVmDir, setB1Dir, 
   setB2Dir, setB3Dir, setIfDir, setThenDir, setElseDir } from 'irma5/src/atom'
 
 export type LinePoints = [number, number, number, number]
-// TODO: remove these types
-export type Bonds = [number, number, number, number, number, number, number, number]
-export type BondData = {
-  type: 'Arrow' | 'Sceptre'
-  dir: Dir,
-  color: string
-}
-// TODO: remove it
-export type BondsState = {
-  atom: Atom,
-  bonds: Bonds,
-  curBonds: Bonds,
-  bondDatas: BondData[][]
-}
+
 // Offsets for only one bond
 export const BONDS_OFFS = {
   [Dir.no]       : [ 0,  0,   0,    0,   0,   0,   0,   0],
@@ -53,19 +40,3 @@ export const BOND_GET_TYPES = [
   [vmDir, b1Dir],                               // job
   [vmDir, b1Dir, b2Dir]                         // rep
 ]
-//
-// Describes direction of the next arrow within one direction.
-// e.g.: Two arrows up means that x = 1 (increase left to right), y = 0
-//
-// TODO: remove it
-export const BONDS_DIRS = {
-  [Dir.no]       : [ 0,  0],
-  [Dir.up]       : [ 1,  0],
-  [Dir.upRight]  : [ 1,  1],
-  [Dir.right]    : [ 0,  1],
-  [Dir.rightDown]: [-1,  1],
-  [Dir.down]     : [-1,  0],
-  [Dir.downLeft] : [-1, -1],
-  [Dir.left]     : [ 0, -1],
-  [Dir.leftUp]   : [ 1, -1]
-}

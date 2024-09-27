@@ -19,6 +19,7 @@ import { id } from '../../utils/utils'
 import Atom from './atom/atom'
 import { KonvaEventObject } from 'konva/lib/Node'
 import { BOND_GET_TYPES, BOND_SET_TYPES } from '../../types/bond'
+import { Bonds } from './atom/bonds/bonds'
 
 //
 // Turns off right mouse button context menu
@@ -39,6 +40,7 @@ export default function Atoms({ stage, zoom }: Props) {
     [`${Modes.Bonds}-0`]: onDir,
     [`${Modes.Bonds}-2`]: onEditType
   }
+  const atoms = store.sandbox.atoms
 
   function onChange() {
     store.status.atom = nextAtom(store.status.atom)
@@ -112,5 +114,8 @@ export default function Atoms({ stage, zoom }: Props) {
     return onDestroy
   }, [stage, zoom])
 
-  return <>{store.sandbox.atoms.map(a => <Atom key={a.id} a={a}/>)}</>
+  return <>
+    <>{atoms.map(a => <Atom key={a.id} atom={a}/>)}</>
+    <>{atoms.map(a => <Bonds key={a.id} atom={a}/>)}</>
+  </>
 }

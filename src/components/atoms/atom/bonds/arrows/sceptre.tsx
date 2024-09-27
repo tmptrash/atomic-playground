@@ -26,7 +26,7 @@ export default function Sceptre({a, dir, color, bondIdx, bonds}: Props) {
       <Circle
         x={points[2]}
         y={points[3]}
-        radius={1}
+        radius={.8}
         fill={color}
         stroke={color}
         strokeWidth={1}

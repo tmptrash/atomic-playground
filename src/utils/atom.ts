@@ -1,8 +1,9 @@
+import Config from "../config"
 import { AtomTypes } from "../enums/enums"
 import { store } from "../store/store"
 import { Atom, Dir } from "../types/atom"
 
-const DIR_OFFS = [[-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0]]
+const DIR_OFFS = [[0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1]]
 
 export function nextAtom(type: AtomTypes): number {
   if (++type > AtomTypes.rep) { type = AtomTypes.mov }
@@ -11,7 +12,8 @@ export function nextAtom(type: AtomTypes): number {
 
 export function getXYByDir(a: Atom, dir: Dir): [number, number] {
   const offs = DIR_OFFS[dir]
-  return [a.x + offs[0], a.y + offs[1]]
+  const step = Config.grid.stepSize
+  return [a.x + offs[0] * step, a.y + offs[1] * step]
 }
 
 export function findAtomIdx(atomX: number, atomY: number): number {

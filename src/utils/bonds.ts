@@ -1,18 +1,6 @@
 import Config from "../config"
-import { store } from "../store/store"
-import { Atom, Dir } from "../types/atom"
-import { BondData, BondsState, BONDS_OFFS, LinePoints } from "../types/bond"
-import { getXYByDir } from "./atom"
-
-// TODO: remove this
-export function addBonds(bondDatas: BondData[], bonds: BondsState) {
-  bondDatas.forEach(bd => {
-    if (bd.dir !== Dir.no) {
-      bonds.bonds[bd.dir]++
-      bonds.bondDatas[bd.dir].push(bd)
-    }
-  })
-}
+import { Dir } from "../types/atom"
+import { BONDS_OFFS, LinePoints } from "../types/bond"
 
 export function getLinePoints(x: number, y: number, d: Dir, bondIdx: number, bonds: number): LinePoints {
   const step = Config.grid.stepSize
@@ -46,11 +34,4 @@ export function getLinePoints(x: number, y: number, d: Dir, bondIdx: number, bon
     x + offs[2] * step,
     y + offs[3] * step
   ]
-}
-
-export function findBonds(a: Atom, dir: Dir, bonds: BondsState[]): BondsState | null {
-  const [x, y] = getXYByDir(a, dir)
-  const nearAtom = store.sandbox.atoms.find(atom => atom.x === x && atom.y === y)
-  if (nearAtom === undefined) { return null }
-  return bonds.find(b => b.atom.id === nearAtom.id) || null
 }

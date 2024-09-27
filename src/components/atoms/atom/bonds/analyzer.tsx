@@ -5,6 +5,8 @@ import { AtomTypes } from "../../../../enums/enums"
 import { Atom, Dir } from "../../../../types/atom"
 import Arrow from "./arrows/arrow"
 import Sceptre from './arrows/sceptre'
+import { findAtomIdx, getXYByDir } from '../../../../utils/atom'
+import { store } from '../../../../store/store'
 
 type ArrowType = 'arrow' | 'sceptre'
 interface IBond {
@@ -57,9 +59,20 @@ function getMovBonds(a: Atom) {
 }
 
 function getFixBonds(a: Atom) {
-  return getArrows([
+  const b1d = b1Dir(a.a)
+  const bonds: IBond[] = [
     {a, d: vmDir(a.a), col: Config.vm.nextColor, type: 'arrow'},
-    {a, d: b1Dir(a.a), col: Config.bonds.bond1Color, type: 'sceptre'},
-    {a, d: b2Dir(a.a), col: Config.bonds.bond2Color, type: 'sceptre'}
-  ])
+    {a, d: b1d, col: Config.bonds.bond1Color, type: 'sceptre'}
+  ]
+  // find near atom
+  const [x, y] = getXYByDir(a, b1d)
+  const atomIdx = findAtomIdx(x, y)
+  atomIdx >= 0 && bonds.push({
+    a: store.sandbox.atoms[atomIdx],
+    d: b2Dir(a.a),
+    col: Config.bonds.bond2Color,
+    type: 'sceptre'
+  })
+  
+  return getArrows(bonds)
 }
