@@ -79,7 +79,9 @@ function getFixBonds(a: Atom, bonds: IBonds) {
   const atomIdx = findAtomIdx(x, y)
   if (atomIdx >= 0) {
     const atoms = store.sandbox.atoms
-    bonds[atoms[atomIdx].id].push({
+    const id = atoms[atomIdx].id
+    !bonds[id] && (bonds[id] = [])
+    bonds[id].push({
       a: atoms[atomIdx],
       d: b2Dir(a.a),
       col: Config.bonds.bond2Color,
