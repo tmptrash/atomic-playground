@@ -21,7 +21,6 @@ export interface IBonds {
 }
 
 export const ATOM_BONDS = {
-  [AtomTypes.no ]: noBonds,
   [AtomTypes.mov]: movBonds,
   [AtomTypes.fix]: fixSplBonds,
   [AtomTypes.spl]: fixSplBonds,
@@ -29,9 +28,6 @@ export const ATOM_BONDS = {
   [AtomTypes.job]: jobBonds,
   [AtomTypes.rep]: repBonds
 }
-
-// eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
-function noBonds(a: Atom) {}
 
 export function getArrows(bonds: IBond[]) {
   const dirMap = {}

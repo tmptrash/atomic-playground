@@ -1,4 +1,4 @@
-import { Dir } from './atom'
+import { Atom, Dir } from './atom'
 import { vmDir, b1Dir, b2Dir, ifDir, thenDir, elseDir, b3Dir, setVmDir, setB1Dir, 
   setB2Dir, setB3Dir, setIfDir, setThenDir, setElseDir } from 'irma5/src/atom'
 
@@ -16,27 +16,24 @@ export const BONDS_OFFS = {
   [Dir.left]     : [.3, .5, .03,   .5,   0, -.1,   0,  .1],
   [Dir.leftUp]   : [.3, .3, .03,  .03,  .1,   0,   0,  .1]
 }
-//
-// Bond setter types depending on atom type
-//
-export const BOND_SET_TYPES = [
-  [],                                           // no atom
-  [setVmDir, setB1Dir],                         // mov 
-  [setVmDir, setB1Dir, setB2Dir],               // fix
-  [setVmDir, setB1Dir, setB2Dir],               // spl
-  [setIfDir, setThenDir, setElseDir, setB3Dir], // con
-  [setVmDir, setB1Dir],                         // job
-  [setVmDir, setB1Dir, setB2Dir]                // rep
+export type Bond = [(a: number) => number, (a: number, d: number) => number, string]
+export type BondType = [
+  [],
+  [Bond, Bond],
+  [Bond, Bond, Bond],
+  [Bond, Bond, Bond],
+  [Bond, Bond, Bond, Bond],
+  [Bond, Bond],
+  [Bond, Bond, Bond]
 ]
+// Bond getter & setter types depending on atom type
 //
-// Bond getter types depending on atom type
-//
-export const BOND_GET_TYPES = [
-  [],                                           // no atom
-  [vmDir, b1Dir],                               // mov 
-  [vmDir, b1Dir, b2Dir],                        // fix
-  [vmDir, b1Dir, b2Dir],                        // spl
-  [ifDir, thenDir, elseDir, b3Dir],             // con
-  [vmDir, b1Dir],                               // job
-  [vmDir, b1Dir, b2Dir]                         // rep
+export const BOND_TYPES: BondType = [
+  /* no  */[],
+  /* mov */[[vmDir, setVmDir, 'next atom dir'], [b1Dir, setB1Dir, 'move dir']], 
+  /* fix */[[vmDir, setVmDir, 'next atom dir'], [b1Dir, setB1Dir, 'atom 1 dir'], [b2Dir, setB2Dir, 'atom 2 dir']],
+  /* spl */[[vmDir, setVmDir, 'next atom dir'], [b1Dir, setB1Dir, 'atom 1 dir'], [b2Dir, setB2Dir, 'atom 2 dir']],
+  /* con */[[ifDir, setIfDir, 'if dir'], [thenDir, setThenDir, 'then dir'], [elseDir, setElseDir, 'else dir'], [b3Dir, setB3Dir, 'compare if dir']],
+  /* job */[[vmDir, setVmDir, 'next atom dir'], [b1Dir, setB1Dir, 'new VM dir']],
+  /* rep */[[vmDir, setVmDir, 'next atom dir'], [b1Dir, setB1Dir, 'arom 1 dir'], [b2Dir, setB2Dir, 'atom 2 dir']]
 ]

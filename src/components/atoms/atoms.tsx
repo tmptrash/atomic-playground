@@ -18,7 +18,7 @@ import { findAtom, findAtomIdx, nextAtom } from '../../utils/atom'
 import { id } from '../../utils/utils'
 import Atom from './atom/atom'
 import { KonvaEventObject } from 'konva/lib/Node'
-import { BOND_GET_TYPES, BOND_SET_TYPES } from '../../types/bond'
+import { BOND_TYPES } from '../../types/bond'
 import { Bonds } from './atom/bonds/bonds'
 import { ATOM_BONDS, IBonds } from './atom/bonds/analyzer'
 
@@ -35,30 +35,30 @@ export default function Atoms({ stage, zoom }: Props) {
   let clickPos: Vector2d = {x: -1, y: -1}
   const MODES = {
     // mouse button: 0 - left, 2 - right
-    [`${Modes.Atoms}-0-ctrl`]: onChange,
-    [`${Modes.Atoms}-0`]: onAdd,
-    [`${Modes.Atoms}-2`]: onDel,
+    [`${Modes.Atoms}-0-ctrl`]: onNextAtom,
+    [`${Modes.Atoms}-0`]: onAddAtom,
+    [`${Modes.Atoms}-2`]: onDelAtom,
     [`${Modes.Bonds}-0`]: onDir,
-    [`${Modes.Bonds}-2`]: onEditType
+    [`${Modes.Bonds}-2`]: onType
   }
   const atoms = store.sandbox.atoms
   const bonds: IBonds = {}
   // we have to collect all bonds before rendering them to exclude 
   // collisions and z-index issues. it happend when we render fix and
   // spl atoms, which put their bonds outside of it's atoms
-  atoms.forEach(a => ATOM_BONDS[type(a.a)](a, bonds))
+  atoms.forEach(a => ATOM_BONDS?.[type(a.a)]?.(a, bonds))
 
-  function onChange() {
+  function onNextAtom() {
     store.status.atom = nextAtom(store.status.atom)
   }
 
-  function onAdd(x: number, y: number) {
+  function onAddAtom(x: number, y: number) {
     const atomIndex = findAtomIdx(x, y)
     if (atomIndex >= 0) { return }
     store.sandbox.atoms = [...store.sandbox.atoms, { id: id(), x, y, a: ATOMS[store.status.atom] }]
   }
 
-  function onDel(x: number, y: number) {
+  function onDelAtom(x: number, y: number) {
     const atomIndex = findAtomIdx(x, y)
     if (atomIndex < 0) { return }
     const atoms = store.sandbox.atoms
@@ -66,7 +66,7 @@ export default function Atoms({ stage, zoom }: Props) {
     store.sandbox.atoms = [...atoms]
   }
 
-  function onEditType(x: number, y: number) {
+  function onType(x: number, y: number) {
     const { a, i } = findAtom(x, y)
     if (!i) return
     const atoms = store.sandbox.atoms
@@ -79,9 +79,9 @@ export default function Atoms({ stage, zoom }: Props) {
     if (i === undefined || !a.a) return
     const atoms = store.sandbox.atoms
     const t = type(a.a)
-    let d = (BOND_GET_TYPES[t][store.status.bondIdx] || BOND_GET_TYPES[t][0])(a.a) + 1
+    let d = (BOND_TYPES[t]?.[store.status.bondIdx]?.[0] || BOND_TYPES[t]?.[0]?.[0])?.(a.a) + 1
     if (d > Dir.leftUp) { d = Dir.up }
-    a.a = (BOND_SET_TYPES[t][store.status.bondIdx] || BOND_SET_TYPES[t][0])(a.a, d)
+    a.a = (BOND_TYPES[t]?.[store.status.bondIdx]?.[1] || BOND_TYPES[t]?.[0]?.[1])?.(a.a, d)
     atoms[i] = a
     store.sandbox.atoms = [...atoms]
   }

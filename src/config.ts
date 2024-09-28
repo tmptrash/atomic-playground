@@ -3,7 +3,7 @@ const Config = {
   maxZoom: 20,
   zoomDivider: 1.03,
   grid: {
-    linesColor: 'aaa',
+    linesColor: '#aaa',
     fillColor: '#2980B9',
     lineWidth: .3,
     fillOpacity: .15,
