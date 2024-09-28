@@ -1,5 +1,5 @@
 import React from 'react'
-import { vmDir, b1Dir, b2Dir } from 'irma5/src/atom'
+import { ifDir, thenDir, elseDir, vmDir, b1Dir, b2Dir } from 'irma5/src/atom'
 import Config from "../../../../config"
 import { AtomTypes } from "../../../../enums/enums"
 import { Atom, Dir } from "../../../../types/atom"
@@ -22,11 +22,11 @@ export interface IBonds {
 
 export const ATOM_BONDS = {
   [AtomTypes.no ]: noBonds,
-  [AtomTypes.mov]: getMovBonds,
-  [AtomTypes.fix]: getFixBonds,
-  [AtomTypes.spl]: noBonds,
-  [AtomTypes.con]: noBonds,
-  [AtomTypes.job]: noBonds,
+  [AtomTypes.mov]: movBonds,
+  [AtomTypes.fix]: fixSplBonds,
+  [AtomTypes.spl]: fixSplBonds,
+  [AtomTypes.con]: conBonds,
+  [AtomTypes.job]: jobBonds,
   [AtomTypes.rep]: noBonds
 }
 
@@ -55,7 +55,7 @@ export function getArrows(bonds: IBond[]) {
   return arrows
 }
 
-function getMovBonds(a: Atom, bonds: IBonds) {
+function movBonds(a: Atom, bonds: IBonds) {
   const id = a.id
   !bonds[id] && (bonds[id] = [])
   bonds[id] = [
@@ -65,8 +65,8 @@ function getMovBonds(a: Atom, bonds: IBonds) {
   ]
 }
 
-function getFixBonds(a: Atom, bonds: IBonds) {
-  const id = a.id
+function fixSplBonds(a: Atom, bonds: IBonds) {
+  let id = a.id
   !bonds[id] && (bonds[id] = [])
   const b1d = b1Dir(a.a)
   bonds[id] = [
@@ -74,18 +74,39 @@ function getFixBonds(a: Atom, bonds: IBonds) {
     {a, d: vmDir(a.a), col: Config.vm.nextColor, type: 'arrow'},
     {a, d: b1d, col: Config.bonds.bond1Color, type: 'sceptre'}
   ]
+
   // find near atom
   const [x, y] = getXYByDir(a, b1d)
   const atomIdx = findAtomIdx(x, y)
-  if (atomIdx >= 0) {
-    const atoms = store.sandbox.atoms
-    const id = atoms[atomIdx].id
-    !bonds[id] && (bonds[id] = [])
-    bonds[id].push({
-      a: atoms[atomIdx],
-      d: b2Dir(a.a),
-      col: Config.bonds.bond2Color,
-      type: 'sceptre'
-    })
-  }
+  if (atomIdx < 0) return
+  const atoms = store.sandbox.atoms
+  id = atoms[atomIdx].id
+  !bonds[id] && (bonds[id] = [])
+  bonds[id].push({
+    a: atoms[atomIdx],
+    d: b2Dir(a.a),
+    col: Config.bonds.bond2Color,
+    type: 'sceptre'
+  })
+}
+
+function conBonds(a: Atom, bonds: IBonds) {
+  const id = a.id
+  !bonds[id] && (bonds[id] = [])
+  bonds[id] = [
+    ...bonds[id], 
+    {a, d: ifDir(a.a), col: Config.bonds.bondIfColor, type: 'sceptre'},
+    {a, d: thenDir(a.a), col: Config.bonds.bond1Color, type: 'sceptre'},
+    {a, d: elseDir(a.a), col: Config.bonds.bond2Color, type: 'sceptre'}
+  ]
+}
+
+function jobBonds(a: Atom, bonds: IBonds) {
+  const id = a.id
+  !bonds[id] && (bonds[id] = [])
+  bonds[id] = [
+    ...bonds[id], 
+    {a, d: vmDir(a.a), col: Config.vm.nextColor, type: 'arrow'},
+    {a, d: b1Dir(a.a), col: Config.bonds.bond1Color, type: 'sceptre'}
+  ]
 }
