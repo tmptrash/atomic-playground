@@ -27,7 +27,7 @@ export const ATOM_BONDS = {
   [AtomTypes.spl]: fixSplBonds,
   [AtomTypes.con]: conBonds,
   [AtomTypes.job]: jobBonds,
-  [AtomTypes.rep]: noBonds
+  [AtomTypes.rep]: repBonds
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
@@ -108,5 +108,16 @@ function jobBonds(a: Atom, bonds: IBonds) {
     ...bonds[id], 
     {a, d: vmDir(a.a), col: Config.vm.nextColor, type: 'arrow'},
     {a, d: b1Dir(a.a), col: Config.bonds.bond1Color, type: 'sceptre'}
+  ]
+}
+
+function repBonds(a: Atom, bonds: IBonds) {
+  const id = a.id
+  !bonds[id] && (bonds[id] = [])
+  bonds[id] = [
+    ...bonds[id], 
+    {a, d: vmDir(a.a), col: Config.vm.nextColor, type: 'arrow'},
+    {a, d: b1Dir(a.a), col: Config.bonds.bond1Color, type: 'sceptre'},
+    {a, d: b2Dir(a.a), col: Config.bonds.bond2Color, type: 'sceptre'}
   ]
 }
