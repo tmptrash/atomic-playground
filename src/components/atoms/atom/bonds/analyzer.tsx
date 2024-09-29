@@ -14,7 +14,7 @@ export interface IBond {
   d: Dir
   col: string
   type: ArrowType
-  needId?: boolean
+  id?: string
 }
 
 export interface IBonds {
@@ -43,7 +43,7 @@ export function getArrows(bonds: IBond[]) {
       a = <Arrow key={i} a={b.a} dir={b.d} color={b.col} bondIdx={dirMap[b.d][0]++} bonds={dirMap[b.d][1]}/>
       break
     case 'sceptre':
-      a = <Sceptre key={i} a={b.a} dir={b.d} color={b.col} bondIdx={dirMap[b.d][0]++} bonds={dirMap[b.d][1]} needId={b.needId}/>
+      a = <Sceptre key={i} a={b.a} dir={b.d} color={b.col} bondIdx={dirMap[b.d][0]++} bonds={dirMap[b.d][1]} id={b.id}/>
       break
     }
     a && arrows.push(a)
@@ -69,7 +69,7 @@ function fixSplBonds(a: Atom, bonds: IBonds) {
   bonds[id] = [
     ...bonds[id],
     {a, d: vmDir(a.a), col: Config.vm.nextColor, type: 'arrow'},
-    {a, d: b1d, col: Config.bonds.bond1Color, type: 'sceptre', needId: true}
+    {a, d: b1d, col: Config.bonds.bond1Color, type: 'sceptre', id: a.id}
   ]
 
   // find near atom
@@ -84,7 +84,7 @@ function fixSplBonds(a: Atom, bonds: IBonds) {
     d: b2Dir(a.a),
     col: Config.bonds.bond2Color,
     type: 'sceptre',
-    needId: true
+    id: a.id
   })
 }
 
@@ -115,7 +115,7 @@ function repBonds(a: Atom, bonds: IBonds) {
   bonds[id] = [
     ...bonds[id], 
     {a, d: vmDir(a.a), col: Config.vm.nextColor, type: 'arrow'},
-    {a, d: b1Dir(a.a), col: Config.bonds.bond1Color, type: 'sceptre', needId: true},
-    {a, d: b2Dir(a.a), col: Config.bonds.bond2Color, type: 'sceptre', needId: true}
+    {a, d: b1Dir(a.a), col: Config.bonds.bond1Color, type: 'sceptre', id: a.id},
+    {a, d: b2Dir(a.a), col: Config.bonds.bond2Color, type: 'sceptre', id: a.id}
   ]
 }

@@ -22,10 +22,10 @@ export function getLinePoints(x: number, y: number, d: Dir, bondIdx: number, bon
   ]
   // four bonds. use: first with additional coords & the same * 2, second with additional coords & the same * 2
   if (bonds === 4) return [
-    x + offs[0] * step + (bondIdx < 2 ? offs[4 + bondIdx * 2] * step : offs[4 + bondIdx - 2] * 2 * step),
-    y + offs[1] * step + (bondIdx < 2 ? offs[5 + bondIdx * 2] * step : offs[5 + bondIdx - 2] * 2 * step),
-    x + offs[2] * step + (bondIdx < 2 ? offs[4 + bondIdx * 2] * step : offs[4 + bondIdx - 2] * 2 * step),
-    y + offs[3] * step + (bondIdx < 2 ? offs[5 + bondIdx * 2] * step : offs[5 + bondIdx - 2] * 2 * step)
+    x + offs[0] * step + (bondIdx < 2 ? offs[4] * (bondIdx + .5) * step : offs[6] * (bondIdx - 1.5) * step),
+    y + offs[1] * step + (bondIdx < 2 ? offs[5] * (bondIdx + .5) * step : offs[7] * (bondIdx - 1.5) * step),
+    x + offs[2] * step + (bondIdx < 2 ? offs[4] * (bondIdx + .5) * step : offs[6] * (bondIdx - 1.5) * step),
+    y + offs[3] * step + (bondIdx < 2 ? offs[5] * (bondIdx + .5) * step : offs[7] * (bondIdx - 1.5) * step)
   ]
   // only one bond. use: x0,y0,x1,y1
   return [

@@ -13,9 +13,9 @@ type Props = {
   color: string,
   bondIdx: number
   bonds: number
-  needId?: boolean
+  id?: string
 }
-export default function Sceptre({a, dir, color, bondIdx, bonds, needId = false}: Props) {
+export default function Sceptre({a, dir, color, bondIdx, bonds, id: id = ''}: Props) {
   if (dir === Dir.no) return <></>
   const points = getLinePoints(a.x, a.y, dir, bondIdx, bonds)
 
@@ -42,10 +42,10 @@ export default function Sceptre({a, dir, color, bondIdx, bonds, needId = false}:
         stroke={color}
         strokeWidth={1}
       />
-      {needId && <Text
+      {id && <Text
         x={points[0] - a.id.length * .6 + DIR_OFFS[dir][0] * -2}
         y={points[1] + DIR_OFFS[dir][1] * -2 + getFontHeight(dir)}
-        text={a.id}
+        text={id}
         fontSize={2}
         fontStyle={'normal'}
         fontFamily={'Monospace'}
