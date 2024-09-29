@@ -11,7 +11,7 @@ import { Vector2d } from 'konva/lib/types'
 import React, { useEffect } from 'react'
 import { type } from 'irma5/src/atom'
 import Config from '../../config'
-import { Modes } from '../../enums/enums'
+import { AtomTypes, Modes } from '../../enums/enums'
 import { store } from '../../store/store'
 import { ATOMS, Dir } from '../../types/atom'
 import { findAtom, findAtomIdx, nextAtom } from '../../utils/atom'
@@ -85,7 +85,7 @@ export default function Atoms({ stage, zoom }: Props) {
     // only for next VM dir, which is has 4 bits we may set "no bond" state
     // for all other 3 bits bonds it's impossible to remove it
     //
-    d > Dir.leftUp && (d = bondIdx === 0 ? Dir.no : Dir.up)
+    d > Dir.leftUp && (d = bondIdx === 0 && t !== AtomTypes.con ? Dir.no : Dir.up)
     a.a = (BOND_TYPES[t]?.[bondIdx]?.[1] || BOND_TYPES[t]?.[0]?.[1])?.(a.a, d)
     atoms[i] = a
     store.sandbox.atoms = [...atoms]
@@ -124,7 +124,7 @@ export default function Atoms({ stage, zoom }: Props) {
     stage.on('mousedown', onMousedown)
     return onDestroy
   }, [stage, zoom])
-  
+
   return <>
     <>{atoms.map(a => <Atom key={a.id} atom={a}/>)}</>
     <>{Object.values(bonds).map((v, i) => <Bonds key={i} bonds={v}/>)}</>
