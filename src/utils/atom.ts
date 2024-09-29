@@ -3,7 +3,7 @@ import { AtomTypes } from "../enums/enums"
 import { store } from "../store/store"
 import { Atom, Dir } from "../types/atom"
 
-const DIR_OFFS = [[0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1]]
+export const DIR_OFFS = [[0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1]]
 
 export function nextAtom(type: AtomTypes): number {
   if (++type > AtomTypes.rep) { type = AtomTypes.mov }

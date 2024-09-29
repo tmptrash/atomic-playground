@@ -1,7 +1,11 @@
 import React from 'react'
-import { Arrow, Circle, Line } from 'react-konva'
+import { Text, Circle, Line } from 'react-konva'
 import { Atom, Dir } from '../../../../../types/atom'
 import { getLinePoints } from '../../../../../utils/bonds'
+import Config from '../../../../../config'
+import { DIR_OFFS } from '../../../../../utils/atom'
+
+const LETTER_HEIGHT = 1.4
 
 type Props = {
   a: Atom,
@@ -9,10 +13,17 @@ type Props = {
   color: string,
   bondIdx: number
   bonds: number
+  needId?: boolean
 }
-export default function Sceptre({a, dir, color, bondIdx, bonds}: Props) {
+export default function Sceptre({a, dir, color, bondIdx, bonds, needId = false}: Props) {
   if (dir === Dir.no) return <></>
   const points = getLinePoints(a.x, a.y, dir, bondIdx, bonds)
+
+  function getFontHeight(dir: Dir) {
+    if (dir === Dir.up) return -LETTER_HEIGHT
+    if (dir === Dir.left || dir === Dir.right) return -LETTER_HEIGHT / 2
+    return 0
+  }
 
   return (
     <>
@@ -31,6 +42,15 @@ export default function Sceptre({a, dir, color, bondIdx, bonds}: Props) {
         stroke={color}
         strokeWidth={1}
       />
+      {needId && <Text
+        x={points[0] - a.id.length * .6 + DIR_OFFS[dir][0] * -2}
+        y={points[1] + DIR_OFFS[dir][1] * -2 + getFontHeight(dir)}
+        text={a.id}
+        fontSize={2}
+        fontStyle={'normal'}
+        fontFamily={'Monospace'}
+        fill={Config.atoms.textColor}
+      />}
     </>
   )
 }

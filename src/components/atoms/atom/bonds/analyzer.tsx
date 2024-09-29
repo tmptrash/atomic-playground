@@ -14,6 +14,7 @@ export interface IBond {
   d: Dir
   col: string
   type: ArrowType
+  needId?: boolean
 }
 
 export interface IBonds {
@@ -35,14 +36,14 @@ export function getArrows(bonds: IBond[]) {
   // calc amount of bonds on all directions. [0] - index, [1] - amount
   bonds.forEach(({ d }) => {!dirMap[d] && (dirMap[d] = [0,0]), ++dirMap[d][1]})
   // create arrows according to bonds and amount on all derections
-  bonds.forEach((d, i) => {
+  bonds.forEach((b, i) => {
     let a: React.ReactElement
-    switch (d.type) {
+    switch (b.type) {
     case 'arrow':
-      a = <Arrow key={i} a={d.a} dir={d.d} color={d.col} bondIdx={dirMap[d.d][0]++} bonds={dirMap[d.d][1]}/>
+      a = <Arrow key={i} a={b.a} dir={b.d} color={b.col} bondIdx={dirMap[b.d][0]++} bonds={dirMap[b.d][1]}/>
       break
     case 'sceptre':
-      a = <Sceptre key={i} a={d.a} dir={d.d} color={d.col} bondIdx={dirMap[d.d][0]++} bonds={dirMap[d.d][1]}/>
+      a = <Sceptre key={i} a={b.a} dir={b.d} color={b.col} bondIdx={dirMap[b.d][0]++} bonds={dirMap[b.d][1]} needId={b.needId}/>
       break
     }
     a && arrows.push(a)
@@ -68,7 +69,7 @@ function fixSplBonds(a: Atom, bonds: IBonds) {
   bonds[id] = [
     ...bonds[id],
     {a, d: vmDir(a.a), col: Config.vm.nextColor, type: 'arrow'},
-    {a, d: b1d, col: Config.bonds.bond1Color, type: 'sceptre'}
+    {a, d: b1d, col: Config.bonds.bond1Color, type: 'sceptre', needId: true}
   ]
 
   // find near atom
@@ -82,7 +83,8 @@ function fixSplBonds(a: Atom, bonds: IBonds) {
     a: atoms[atomIdx],
     d: b2Dir(a.a),
     col: Config.bonds.bond2Color,
-    type: 'sceptre'
+    type: 'sceptre',
+    needId: true
   })
 }
 
@@ -113,7 +115,7 @@ function repBonds(a: Atom, bonds: IBonds) {
   bonds[id] = [
     ...bonds[id], 
     {a, d: vmDir(a.a), col: Config.vm.nextColor, type: 'arrow'},
-    {a, d: b1Dir(a.a), col: Config.bonds.bond1Color, type: 'sceptre'},
-    {a, d: b2Dir(a.a), col: Config.bonds.bond2Color, type: 'sceptre'}
+    {a, d: b1Dir(a.a), col: Config.bonds.bond1Color, type: 'sceptre', needId: true},
+    {a, d: b2Dir(a.a), col: Config.bonds.bond2Color, type: 'sceptre', needId: true}
   ]
 }

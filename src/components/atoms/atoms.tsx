@@ -81,8 +81,10 @@ export default function Atoms({ stage, zoom }: Props) {
     const t = type(a.a)
     const bondIdx = store.status.bondIdx
     let d = (BOND_TYPES[t]?.[bondIdx]?.[0] || BOND_TYPES[t]?.[0]?.[0])?.(a.a) + 1
+    //
     // only for next VM dir, which is has 4 bits we may set "no bond" state
     // for all other 3 bits bonds it's impossible to remove it
+    //
     d > Dir.leftUp && (d = bondIdx === 0 ? Dir.no : Dir.up)
     a.a = (BOND_TYPES[t]?.[bondIdx]?.[1] || BOND_TYPES[t]?.[0]?.[1])?.(a.a, d)
     atoms[i] = a
@@ -122,7 +124,7 @@ export default function Atoms({ stage, zoom }: Props) {
     stage.on('mousedown', onMousedown)
     return onDestroy
   }, [stage, zoom])
-
+  
   return <>
     <>{atoms.map(a => <Atom key={a.id} atom={a}/>)}</>
     <>{Object.values(bonds).map((v, i) => <Bonds key={i} bonds={v}/>)}</>

@@ -1,4 +1,4 @@
-import { Atom, Dir } from './atom'
+import { Dir } from './atom'
 import { vmDir, b1Dir, b2Dir, ifDir, thenDir, elseDir, b3Dir, setVmDir, setB1Dir, 
   setB2Dir, setB3Dir, setIfDir, setThenDir, setElseDir } from 'irma5/src/atom'
 
