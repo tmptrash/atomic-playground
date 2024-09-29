@@ -38,8 +38,8 @@ export default function Atoms({ stage, zoom }: Props) {
     [`${Modes.Atoms}-0-ctrl`]: onNextAtom,
     [`${Modes.Atoms}-0`]: onAddAtom,
     [`${Modes.Atoms}-2`]: onDelAtom,
-    [`${Modes.Bonds}-0`]: onDir,
-    [`${Modes.Bonds}-2`]: onType
+    [`${Modes.Bonds}-0`]: onNextDir,
+    [`${Modes.Bonds}-2`]: onNextType
   }
   const atoms = store.sandbox.atoms
   const bonds: IBonds = {}
@@ -66,17 +66,17 @@ export default function Atoms({ stage, zoom }: Props) {
     store.sandbox.atoms = [...atoms]
   }
 
-  function onType(x: number, y: number) {
+  function onNextType(x: number, y: number) {
     const { a, i } = findAtom(x, y)
-    if (!i) return
-    const atoms = store.sandbox.atoms
-    atoms[i] = { id: a.id, x: a.x, y: a.y, a: nextAtom(type(a.a)) }
-    store.sandbox.atoms = [...atoms]
+    if (i < 0) return
+    const t = type(a.a)
+    const bondTypes = BOND_TYPES[t]
+    ++store.status.bondIdx >= bondTypes.length && (store.status.bondIdx = 0)
   }
 
-  function onDir(x: number, y: number) {
+  function onNextDir(x: number, y: number) {
     const { a, i } = findAtom(x, y)
-    if (i === undefined || !a.a) return
+    if (i < 0 || !a) return
     const atoms = store.sandbox.atoms
     const t = type(a.a)
     let d = (BOND_TYPES[t]?.[store.status.bondIdx]?.[0] || BOND_TYPES[t]?.[0]?.[0])?.(a.a) + 1

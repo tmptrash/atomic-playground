@@ -22,7 +22,7 @@ export function findAtomIdx(atomX: number, atomY: number): number {
 
 export function findAtom(x: number, y: number) {
   const atomIndex = findAtomIdx(x, y)
-  if (atomIndex < 0) return {}
+  if (atomIndex < 0) return {a: {a: 0} as Atom, i: -1}
   const atoms = store.sandbox.atoms
   return {
     a: atoms[atomIndex],

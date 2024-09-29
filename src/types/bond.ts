@@ -30,10 +30,10 @@ export type BondType = [
 //
 export const BOND_TYPES: BondType = [
   /* no  */[],
-  /* mov */[[vmDir, setVmDir, 'next atom dir'], [b1Dir, setB1Dir, 'move dir']], 
-  /* fix */[[vmDir, setVmDir, 'next atom dir'], [b1Dir, setB1Dir, 'atom 1 dir'], [b2Dir, setB2Dir, 'atom 2 dir']],
-  /* spl */[[vmDir, setVmDir, 'next atom dir'], [b1Dir, setB1Dir, 'atom 1 dir'], [b2Dir, setB2Dir, 'atom 2 dir']],
+  /* mov */[[vmDir, setVmDir, 'next atom bond'], [b1Dir, setB1Dir, 'move dir']], 
+  /* fix */[[vmDir, setVmDir, 'next atom bond'], [b1Dir, setB1Dir, 'atom 1 dir'], [b2Dir, setB2Dir, 'atom 2 dir']],
+  /* spl */[[vmDir, setVmDir, 'next atom bond'], [b1Dir, setB1Dir, 'atom 1 dir'], [b2Dir, setB2Dir, 'atom 2 dir']],
   /* con */[[ifDir, setIfDir, 'if dir'], [thenDir, setThenDir, 'then dir'], [elseDir, setElseDir, 'else dir'], [b3Dir, setB3Dir, 'compare if dir']],
-  /* job */[[vmDir, setVmDir, 'next atom dir'], [b1Dir, setB1Dir, 'new VM dir']],
-  /* rep */[[vmDir, setVmDir, 'next atom dir'], [b1Dir, setB1Dir, 'arom 1 dir'], [b2Dir, setB2Dir, 'atom 2 dir']]
+  /* job */[[vmDir, setVmDir, 'next atom bond'], [b1Dir, setB1Dir, 'new VM dir']],
+  /* rep */[[vmDir, setVmDir, 'next atom bond'], [b1Dir, setB1Dir, 'arom 1 dir'], [b2Dir, setB2Dir, 'atom 2 dir']]
 ]
