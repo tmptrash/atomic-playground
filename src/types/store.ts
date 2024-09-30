@@ -3,14 +3,15 @@ import { Atom } from "./atom"
 
 export type Sandbox = {
   atoms: Atom[]
+  curAtom: Atom
 }
 export type Status = {
-  mode: Modes,
-  atom: AtomTypes,
+  mode: Modes
+  atom: AtomTypes
   bondIdx: number
 }
 export type Store = {
-  sandbox: Sandbox,
+  sandbox: Sandbox
   status: Status
 }
 

@@ -111,6 +111,8 @@ export default function Atoms({ stage, zoom }: Props) {
     const step = Config.grid.stepSize
     const [ax, ay] = [Math.floor(x / step) * step, Math.floor(y / step) * step]
     if (ax < 0 || ay < 0 || ax >= Config.grid.rows * step || ay >= Config.grid.cols * step) { return }
+    const { a } = findAtom(ax, ay)
+    store.sandbox.curAtom = a
     MODES[getModeByMouse(e.evt)](ax, ay)
   }
 

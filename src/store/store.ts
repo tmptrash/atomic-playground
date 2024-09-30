@@ -1,9 +1,11 @@
 import { AtomTypes, Modes } from "../enums/enums"
+import { Atom } from "../types/atom"
 import { Store } from './../types/store'
 
 export const store: Store = {
   sandbox: {
-    atoms: []
+    atoms: [],
+    curAtom: {a: 0} as Atom
   },
   status: {
     mode: Modes.Atoms,
