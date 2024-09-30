@@ -1,5 +1,5 @@
 import React from 'react'
-import { ifDir, thenDir, elseDir, vmDir, b1Dir, b2Dir } from 'irma5/src/atom'
+import { ifDir, thenDir, elseDir, vmDir, b1Dir, b2Dir, b3Dir } from 'irma5/src/atom'
 import Config from "../../../../config"
 import { AtomTypes } from "../../../../enums/enums"
 import { Atom, Dir } from "../../../../types/atom"
@@ -93,9 +93,10 @@ function conBonds(a: Atom, bonds: IBonds) {
   !bonds[id] && (bonds[id] = [])
   bonds[id] = [
     ...bonds[id], 
-    {a, d: ifDir(a.a), col: Config.bonds.bondIfColor, type: 'sceptre'},
+    {a, d: ifDir(a.a), col: Config.bonds.bondIfColor, type: 'sceptre', id: a.id},
     {a, d: thenDir(a.a), col: Config.bonds.bond1Color, type: 'sceptre'},
-    {a, d: elseDir(a.a), col: Config.bonds.bond2Color, type: 'sceptre'}
+    {a, d: elseDir(a.a), col: Config.bonds.bond2Color, type: 'sceptre'},
+    {a, d: b3Dir(a.a), col: Config.bonds.vmDirColor, type: 'sceptre', id: a.id}
   ]
 }
 

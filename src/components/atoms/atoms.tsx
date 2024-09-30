@@ -43,7 +43,7 @@ export default function Atoms({ stage, zoom }: Props) {
   }
   const atoms = store.sandbox.atoms
   const bonds: IBonds = {}
-  // we have to collect all bonds before rendering them to exclude 
+  // we have to collect all bonds before rendering them to exclude
   // collisions and z-index issues. it happend when we render fix and
   // spl atoms, which put their bonds outside of it's atoms
   atoms.forEach(a => ATOM_BONDS?.[type(a.a)]?.(a, bonds))
@@ -76,16 +76,20 @@ export default function Atoms({ stage, zoom }: Props) {
 
   function onNextDir(x: number, y: number) {
     const { a, i } = findAtom(x, y)
-    if (i < 0 || !a) return
+    if (i < 0 || !a.a) return
     const atoms = store.sandbox.atoms
     const t = type(a.a)
     const bondIdx = store.status.bondIdx
     let d = (BOND_TYPES[t]?.[bondIdx]?.[0] || BOND_TYPES[t]?.[0]?.[0])?.(a.a) + 1
     //
-    // only for next VM dir, which is has 4 bits we may set "no bond" state
-    // for all other 3 bits bonds it's impossible to remove it
+    // only for next VM dir & bond 3 in con atom, which are have 4 bits we may set
+    // "no bond" state for all other 3 bits bonds it's impossible to remove it
     //
-    d > Dir.leftUp && (d = bondIdx === 0 && t !== AtomTypes.con ? Dir.no : Dir.up)
+    if (d > Dir.leftUp) {
+      // VM dir or bond 3 of con atom
+      if (bondIdx === 0 && t !== AtomTypes.con || t === AtomTypes.con && bondIdx === 3) d = Dir.no
+      else d = Dir.up
+    }
     a.a = (BOND_TYPES[t]?.[bondIdx]?.[1] || BOND_TYPES[t]?.[0]?.[1])?.(a.a, d)
     atoms[i] = a
     store.sandbox.atoms = [...atoms]

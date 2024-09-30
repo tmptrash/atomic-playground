@@ -26,6 +26,7 @@ export type BondType = [
   [Bond, Bond],
   [Bond, Bond, Bond]
 ]
+//
 // Bond getter & setter types depending on atom type
 //
 export const BOND_TYPES: BondType = [
