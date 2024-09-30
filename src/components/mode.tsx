@@ -3,7 +3,6 @@ import FormControl from '@mui/material/FormControl'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
-import { type } from 'irma5/src/atom'
 import { id } from '../utils/utils'
 import { AtomNames, Modes } from '../enums/enums'
 import { store } from '../store/store'
@@ -12,8 +11,6 @@ import { Box } from '@mui/material'
 import { BOND_TYPES } from '../types/bond'
 
 export default function Mode() {
-  const t = type(store.sandbox.curAtom.a)
-
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
     store.status.mode = e.target.value as Modes
   }
@@ -33,7 +30,7 @@ export default function Mode() {
         </Box>
         <FormControlLabel value={Modes.Bonds} control={<Radio />} label="Bonds" />
         <Typography variant="body2" sx={{ ml: 2 }}>
-          Current bond: <span style={{ color: 'blue' }}>{BOND_TYPES[t]?.[store.status.bondIdx]?.[2]}</span>
+          Current bond: <span style={{ color: 'blue' }}>{BOND_TYPES[store.status.curAtom]?.[store.status.bondIdx]?.[2]}</span>
         </Typography>
         <br/>
         <Box style={{ color: 'grey' }} sx={{ ml: 2 }}>

@@ -3,11 +3,11 @@ import { Atom } from "./atom"
 
 export type Sandbox = {
   atoms: Atom[]
-  curAtom: Atom
 }
 export type Status = {
   mode: Modes
   atom: AtomTypes
+  curAtom: AtomTypes
   bondIdx: number
 }
 export type Store = {
