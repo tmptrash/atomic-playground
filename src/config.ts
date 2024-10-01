@@ -31,7 +31,7 @@ const Config = {
   },
   vm: {
     nextColor: '#6aa84f',
-    color:     '#e69138',
+    color:     '#b45f06',
     energy: 10
   }
 }
