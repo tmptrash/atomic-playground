@@ -1,11 +1,11 @@
 import React from 'react'
 import Box from '@mui/material/Box'
 import Upload from './upload/upload'
-import Mode from '../mode'
 import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography'
 import { bind } from '../../store/binder'
 import { store } from '../../store/store'
+import Edit from './edit'
 
 export default function Status() {
   bind(store.status)
@@ -19,7 +19,7 @@ export default function Status() {
       <Divider/>
       <Box sx={{ m: 2 }}>
         <Typography variant="caption" sx={{ display: 'block', mb: 2 }}>Edit atoms and bones</Typography>
-        <Mode/>
+        <Edit/>
       </Box>
       <Divider/>
     </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Line, Rect } from 'react-konva'
-import Config from '../config'
-import { arr } from '../utils'
+import Config from '../../config'
+import { arr } from '../../utils'
 
 export default function Grid() {
   const grid = Config.grid

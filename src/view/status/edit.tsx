@@ -5,11 +5,11 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
 import Typography from '@mui/material/Typography'
 import { Box } from '@mui/material'
-import { id } from '../utils'
-import { AtomIndexes, EditModes, BOND_TYPES } from '../types'
-import { store } from '../store/store'
+import { id } from '../../utils'
+import { AtomIndexes, EditModes, BOND_TYPES } from '../../types'
+import { store } from '../../store/store'
 
-export default function Mode() {
+export default function Edit() {
   const bond = BOND_TYPES[store.status.curAtom]?.[store.status.bondIdx]?.[2]
 
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
