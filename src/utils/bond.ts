@@ -1,10 +1,9 @@
 import Config from "../config"
-import { Dir } from "../types/atom"
-import { BONDS_OFFS, LinePoints } from "../types/bond"
+import { BONDS_OFFS, LinePoints, Dir } from "../types"
 
 export function getLinePoints(x: number, y: number, d: Dir, bondIdx: number, bonds: number): LinePoints {
   const step = Config.grid.stepSize
-  const offs = BONDS_OFFS[d]
+  const offs = BONDS_OFFS[d] as number[]
 
   // two bonds. use: two additional coordinates to move them
   if (bonds === 2) return [

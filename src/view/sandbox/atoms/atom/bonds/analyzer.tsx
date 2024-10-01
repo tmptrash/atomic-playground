@@ -2,8 +2,8 @@ import React from 'react'
 import { ifDir, thenDir, elseDir, vmDir, b1Dir, b2Dir, b3Dir } from 'irma5/src/atom'
 import Config from "../../../../../config"
 import { AtomIndexes, Atom, Dir } from "../../../../../types"
-import Arrow from "./arrows/arrow"
-import Sceptre from './arrows/sceptre'
+import Arrow from "./arrow"
+import Sceptre from './sceptre'
 import { findAtomIdx, getXYByDir } from '../../../../../utils/atom'
 import { store } from '../../../../../store/store'
 

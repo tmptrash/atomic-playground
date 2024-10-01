@@ -1,8 +1,6 @@
 import Config from "../config"
-import { AtomIndexes, Atom, Dir } from "../types"
+import { AtomIndexes, Atom, Dir, DIR_OFFS } from "../types"
 import { store } from "../store/store"
-
-export const DIR_OFFS = [[0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1]]
 
 export function nextAtom(type: AtomIndexes): number {
   if (++type > AtomIndexes.rep) { type = AtomIndexes.mov }

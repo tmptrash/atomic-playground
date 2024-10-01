@@ -1,6 +1,19 @@
 import { vmDir, b1Dir, b2Dir, ifDir, thenDir, elseDir, b3Dir, setVmDir, setB1Dir, 
   setB2Dir, setB3Dir, setIfDir, setThenDir, setElseDir } from 'irma5/src/atom'
 
+export type LinePoints = [number, number, number, number]
+export type DirKeys = {[key in Dir]: unknown}
+export type Bond = [(a: number) => number, (a: number, d: number) => number, string]
+export type BondType = [
+  [],
+  [Bond, Bond],
+  [Bond, Bond, Bond],
+  [Bond, Bond, Bond],
+  [Bond, Bond, Bond, Bond],
+  [Bond, Bond],
+  [Bond, Bond, Bond]
+]
+
 export enum Dir {
   no = -1,
   up = 0,
@@ -13,10 +26,11 @@ export enum Dir {
   leftUp = 7
 }
 
-export type LinePoints = [number, number, number, number]
-
-// Offsets for only one bond
-export const BONDS_OFFS = {
+export const DIR_OFFS = [[0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1]]
+//
+// Offsets for one...four bonds
+//
+export const BONDS_OFFS: DirKeys = {
   [Dir.no]       : [ 0,  0,   0,    0,   0,   0,   0,   0],
   [Dir.up]       : [.5, .3,  .5,  .03,  .1,   0, -.1,   0],
   [Dir.upRight]  : [.7, .3, .97,  .03,   0,  .1, -.1,   0],
@@ -27,16 +41,6 @@ export const BONDS_OFFS = {
   [Dir.left]     : [.3, .5, .03,   .5,   0, -.1,   0,  .1],
   [Dir.leftUp]   : [.3, .3, .03,  .03,  .1,   0,   0,  .1]
 }
-export type Bond = [(a: number) => number, (a: number, d: number) => number, string]
-export type BondType = [
-  [],
-  [Bond, Bond],
-  [Bond, Bond, Bond],
-  [Bond, Bond, Bond],
-  [Bond, Bond, Bond, Bond],
-  [Bond, Bond],
-  [Bond, Bond, Bond]
-]
 //
 // Bond getter & setter types depending on atom type
 //
