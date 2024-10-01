@@ -1,12 +1,13 @@
-import { AtomTypes, EditModes, Atom } from "./atom"
+import { EditModes } from "."
+import { AtomIndexes, Atom } from "./atom"
 
 export type Sandbox = {
   atoms: Atom[]
 }
 export type Status = {
   mode: EditModes
-  atom: AtomTypes
-  curAtom: AtomTypes
+  atom: AtomIndexes
+  curAtom: AtomIndexes
   bondIdx: number
 }
 export type Store = {

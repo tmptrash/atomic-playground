@@ -1,8 +1,12 @@
-let idValue = 0
+export * from './atom'
+export * from './bond'
+export * from './json'
+
+let _id = 0
 /**
  * Generates unique string id's within entire app
  */
-export function id() { return (++idValue).toString() }
+export function id() { return (++_id).toString() }
 /**
  * Checks if specified value is an object
  */

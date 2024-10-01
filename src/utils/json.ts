@@ -1,7 +1,7 @@
 import Config from "../config"
 import { Atom } from "../types/atom"
 import { Block, Json, Vm } from "../types/json"
-import { id } from "./utils"
+import { id } from "."
 
 export function toAtoms(val: Json): Atom[] {
   if (val.width !== Config.grid.cols || val.height !== Config.grid.rows) {

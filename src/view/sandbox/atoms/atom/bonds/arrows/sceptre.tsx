@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, Circle, Line } from 'react-konva'
-import { Atom, Dir } from '../../../../../../types/atom'
-import { getLinePoints } from '../../../../../../utils/bonds'
+import { Atom, Dir } from '../../../../../../types'
+import { getLinePoints } from '../../../../../../utils/bond'
 import Config from '../../../../../../config'
 import { DIR_OFFS } from '../../../../../../utils/atom'
 
@@ -49,7 +49,7 @@ export default function Sceptre({a, dir, color, bondIdx, bonds, id: id = ''}: Pr
         fontSize={2}
         fontStyle={'normal'}
         fontFamily={'Monospace'}
-        fill={Config.atoms.textColor}
+        fill={Config.textColor}
       />}
     </>
   )

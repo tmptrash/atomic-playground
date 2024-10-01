@@ -1,6 +1,17 @@
-import { Dir } from './atom'
 import { vmDir, b1Dir, b2Dir, ifDir, thenDir, elseDir, b3Dir, setVmDir, setB1Dir, 
   setB2Dir, setB3Dir, setIfDir, setThenDir, setElseDir } from 'irma5/src/atom'
+
+export enum Dir {
+  no = -1,
+  up = 0,
+  upRight = 1,
+  right = 2,
+  rightDown = 3,
+  down = 4,
+  downLeft = 5,
+  left = 6,
+  leftUp = 7
+}
 
 export type LinePoints = [number, number, number, number]
 

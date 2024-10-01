@@ -1,4 +1,4 @@
-import { AtomTypes, EditModes, Store } from "../types"
+import { AtomIndexes, EditModes, Store } from "../types"
 
 export const store: Store = {
   sandbox: {
@@ -6,8 +6,8 @@ export const store: Store = {
   },
   status: {
     mode: EditModes.Atoms,
-    atom: AtomTypes.mov,
-    curAtom: AtomTypes.no,
+    atom: AtomIndexes.mov,
+    curAtom: AtomIndexes.no,
     bondIdx: 0
   }
 }

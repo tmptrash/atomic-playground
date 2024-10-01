@@ -1,11 +1,11 @@
 import Config from "../config"
-import { AtomTypes, Atom, Dir } from "../types"
+import { AtomIndexes, Atom, Dir } from "../types"
 import { store } from "../store/store"
 
 export const DIR_OFFS = [[0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1]]
 
-export function nextAtom(type: AtomTypes): number {
-  if (++type > AtomTypes.rep) { type = AtomTypes.mov }
+export function nextAtom(type: AtomIndexes): number {
+  if (++type > AtomIndexes.rep) { type = AtomIndexes.mov }
   return type
 }
 

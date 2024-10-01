@@ -12,10 +12,10 @@ import React, { useEffect } from 'react'
 import { KonvaEventObject } from 'konva/lib/Node'
 import { type } from 'irma5/src/atom'
 import Config from '../../../config'
-import { AtomTypes, EditModes, ATOMS, Dir, BOND_TYPES } from '../../../types'
+import { AtomIndexes, EditModes, ATOMS, Dir, BOND_TYPES } from '../../../types'
 import { store } from '../../../store/store'
 import { findAtom, findAtomIdx, nextAtom } from '../../../utils/atom'
-import { id } from '../../../utils/utils'
+import { id } from '../../../utils'
 import Atom from './atom/atom'
 import { Bonds } from './atom/bonds/bonds'
 import { ATOM_BONDS, IBonds } from './atom/bonds/analyzer'
@@ -67,8 +67,8 @@ export default function Atoms({ stage, zoom }: Props) {
   function onNextType(x: number, y: number) {
     const { a, i } = findAtom(x, y)
     if (i < 0) return
-    const t = type(a.a)
-    const bondTypes = BOND_TYPES[t]
+    const typ = type(a.a)
+    const bondTypes = BOND_TYPES[typ]
     ++store.status.bondIdx >= bondTypes.length && (store.status.bondIdx = 0)
   }
 
@@ -76,20 +76,20 @@ export default function Atoms({ stage, zoom }: Props) {
     const { a, i } = findAtom(x, y)
     if (i < 0 || !a.a) return
     const atoms = store.sandbox.atoms
-    const t = type(a.a)
+    const typ = type(a.a)
     let bondIdx = store.status.bondIdx
-    if (bondIdx >= BOND_TYPES[t].length) bondIdx = store.status.bondIdx = 0
-    let d = (BOND_TYPES[t]?.[bondIdx]?.[0] || BOND_TYPES[t]?.[0]?.[0])?.(a.a) + 1
+    if (bondIdx >= BOND_TYPES[typ].length) bondIdx = store.status.bondIdx = 0
+    let d = (BOND_TYPES[typ]?.[bondIdx]?.[0] || BOND_TYPES[typ]?.[0]?.[0])?.(a.a) + 1
     //
     // only for next VM dir & bond 3 in con atom, which are have 4 bits we may set
     // "no bond" state for all other 3 bits bonds it's impossible to remove it
     //
     if (d > Dir.leftUp) {
       // VM dir or bond 3 of con atom
-      if (bondIdx === 0 && t !== AtomTypes.con || t === AtomTypes.con && bondIdx === 3) d = Dir.no
+      if (bondIdx === 0 && typ !== AtomIndexes.con || typ === AtomIndexes.con && bondIdx === 3) d = Dir.no
       else d = Dir.up
     }
-    a.a = (BOND_TYPES[t]?.[bondIdx]?.[1] || BOND_TYPES[t]?.[0]?.[1])?.(a.a, d)
+    a.a = (BOND_TYPES[typ]?.[bondIdx]?.[1] || BOND_TYPES[typ]?.[0]?.[1])?.(a.a, d)
     atoms[i] = a
     store.sandbox.atoms = [...atoms]
   }

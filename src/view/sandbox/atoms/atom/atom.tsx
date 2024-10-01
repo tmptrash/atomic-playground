@@ -9,7 +9,7 @@ type Props = {
 }
 export default function Atom({atom}: Props) {
   const lineWidth = Config.grid.lineWidth
-  const textColor = Config.atoms.textColor
+  const textColor = Config.textColor
   const stepSize = Config.grid.stepSize
   const halfStep = stepSize / 2
   const typ = type(atom.a)

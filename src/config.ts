@@ -2,6 +2,7 @@ const Config = {
   minZoom: .1,
   maxZoom: 20,
   zoomDivider: 1.03,
+  textColor: 'black',
   grid: {
     linesColor: '#aaa',
     fillColor: '#2980B9',
@@ -24,10 +25,9 @@ const Config = {
     movColor:  '#e6b8af',
     fixColor:  '#9fc5e8',
     splColor:  '#b6d7a8',
-    ifColor:   '#efefef',
+    conColor:  '#efefef',
     jobColor:  '#f9cb9c',
-    repColor:  '#b4a7d6',
-    textColor: 'black'
+    repColor:  '#b4a7d6'
   },
   vm: {
     nextColor: '#6aa84f'

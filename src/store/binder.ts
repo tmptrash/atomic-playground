@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { store } from './store'
-import { isObject } from '../utils/utils'
+import { isObject } from '../utils'
 import { Changer } from './../types/store'
 
 type IObj = {

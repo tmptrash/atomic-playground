@@ -1,7 +1,7 @@
 import React from 'react'
 import { ifDir, thenDir, elseDir, vmDir, b1Dir, b2Dir, b3Dir } from 'irma5/src/atom'
 import Config from "../../../../../config"
-import { AtomTypes, Atom, Dir } from "../../../../../types"
+import { AtomIndexes, Atom, Dir } from "../../../../../types"
 import Arrow from "./arrows/arrow"
 import Sceptre from './arrows/sceptre'
 import { findAtomIdx, getXYByDir } from '../../../../../utils/atom'
@@ -22,12 +22,12 @@ export interface IBonds {
 }
 
 export const ATOM_BONDS = {
-  [AtomTypes.mov]: movBonds,
-  [AtomTypes.fix]: fixSplBonds,
-  [AtomTypes.spl]: fixSplBonds,
-  [AtomTypes.con]: conBonds,
-  [AtomTypes.job]: jobBonds,
-  [AtomTypes.rep]: repBonds
+  [AtomIndexes.mov]: movBonds,
+  [AtomIndexes.fix]: fixSplBonds,
+  [AtomIndexes.spl]: fixSplBonds,
+  [AtomIndexes.con]: conBonds,
+  [AtomIndexes.job]: jobBonds,
+  [AtomIndexes.rep]: repBonds
 }
 
 export function getArrows(bonds: IBond[]) {

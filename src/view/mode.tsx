@@ -5,8 +5,8 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
 import Typography from '@mui/material/Typography'
 import { Box } from '@mui/material'
-import { id } from '../utils/utils'
-import { AtomTypes, EditModes, BOND_TYPES } from '../types'
+import { id } from '../utils'
+import { AtomIndexes, EditModes, BOND_TYPES } from '../types'
 import { store } from '../store/store'
 
 export default function Mode() {
@@ -21,7 +21,7 @@ export default function Mode() {
       <RadioGroup aria-labelledby={id()} defaultValue={EditModes.Atoms} name="group" onChange={onChange}>
         <FormControlLabel value={EditModes.Atoms} control={<Radio />} label="Atoms" />
         <Typography variant="body2" sx={{ ml: 2 }}>
-          Current atom: <span style={{ color: 'blue' }}>{AtomTypes[store.status.atom]}</span>
+          Current atom: <span style={{ color: 'blue' }}>{AtomIndexes[store.status.atom]}</span>
         </Typography>
         <br/>
         <Box style={{ color: 'grey' }} sx={{ ml: 2 }}>
