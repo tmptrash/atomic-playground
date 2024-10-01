@@ -4,6 +4,7 @@ import { Circle, Rect, Text } from "react-konva"
 import Config from "../../../../config"
 import { ATOM_COLORS, ATOM_TEXTS, Atom as AtomType } from '../../../../types/atom'
 import { store } from '../../../../store/store'
+import { VM } from '../../../../types'
 
 type Props = {
   atom: AtomType
@@ -15,7 +16,7 @@ export default function Atom({atom}: Props) {
   const halfStep = step / 2
   const typ = type(atom.a)
   const offs = atom.y / step * Config.grid.cols + atom.x / step
-  const hasVm = store.sandbox.vms.findIndex(vm => vm.offs === offs) > -1
+  const vmAmount = store.sandbox.vms.amount((vm: VM) => vm.offs === offs)
 
   return <>
     {/* Atom rect */}
@@ -29,13 +30,21 @@ export default function Atom({atom}: Props) {
       fill={ATOM_COLORS[typ]}/>
 
     {/* VM circle */}
-    {hasVm && <Circle
-      x={atom.x + halfStep}
-      y={atom.y + halfStep}
-      radius={13}
-      stroke={Config.vm.color}
-      strokeWidth={1}
-    />}
+    {vmAmount > 0 && <>
+      <Circle
+        x={atom.x + halfStep}
+        y={atom.y + halfStep}
+        radius={13}
+        stroke={Config.vm.color}
+        strokeWidth={1}/>
+      <Text
+        x={atom.x + halfStep + 3.3}
+        y={atom.y + halfStep + 3.3}
+        text={vmAmount.toString()}
+        fontSize={2}
+        fontFamily={'Monospace'}
+        fill={Config.vm.color}/>
+    </>}
 
     {/* The letter in atom center (m-mov, s-spl,...) */}
     <Text

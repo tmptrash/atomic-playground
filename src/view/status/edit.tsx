@@ -17,7 +17,7 @@ export default function Edit() {
   }
 
   return <Box sx={{ m: 2 }}>
-    <Typography variant="caption" sx={{ display: 'block', mb: 2 }}>Edit atoms, bones & VMs</Typography>
+    <Typography variant="caption" sx={{ display: 'block', mb: 1 }}>Edit atoms, bones & VMs</Typography>
     <FormControl>
       <RadioGroup aria-labelledby={id()} defaultValue={EditModes.Atom} name="group" onChange={onChange}>
         <FormControlLabel value={EditModes.Atom} control={<Radio />} label={<span style={{ fontWeight: 500 }}>Atoms</span>}/>
