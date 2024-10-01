@@ -1,7 +1,6 @@
 import React from 'react'
 import Box from '@mui/material/Box'
 import Upload from './upload/upload'
-import './status.scss'
 import Mode from '../mode'
 import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography'
@@ -12,7 +11,7 @@ export default function Status() {
   bind(store.status)
   
   return (
-    <div className="status">
+    <div className="w-60 bg-gray-100">
       <Box sx={{ m: 2 }}>
         <Typography variant="caption" sx={{ display: 'block', mb: 2 }}>Upload atoms from JSON</Typography>
         <Upload/>

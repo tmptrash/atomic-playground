@@ -4,7 +4,7 @@ import Status from './status/status'
 import './app.scss'
 
 export default function App() {
-  return <div className="contaner">
+  return <div className="flex h-full">
     <Sandbox/>
     <Status/>
   </div>

@@ -1,6 +1,5 @@
 import Config from "../config"
 
-export type Atoms = [number, number, number, number, number, number, number]
 export type AtomKeys = {[key in AtomIndexes]: unknown}
 
 export enum AtomIndexes {
@@ -20,7 +19,7 @@ export type Atom = {
   y: number
 }
 
-export const ATOMS: AtomKeys = {
+export const ATOM_NEW: AtomKeys = {
   [AtomIndexes.no] : 0,
   [AtomIndexes.mov]: 0b0010000000000000,
   [AtomIndexes.fix]: 0b0100000000000000,

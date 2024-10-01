@@ -8,7 +8,6 @@ import Grid from '../grid'
 import { bind } from '../../store/binder'
 import { store } from '../../store/store'
 import Atoms from './atoms/atoms'
-import './sandbox.scss'
 
 export default function Sandbox() {
   bind(store.sandbox)
@@ -48,7 +47,7 @@ export default function Sandbox() {
   }, [])
 
   return (
-    <div id={Config.grid.query} className="sandbox">
+    <div id={Config.grid.query} className="grow overflow-hidden">
       <Stage
         ref={stageRef}
         width={size.w}

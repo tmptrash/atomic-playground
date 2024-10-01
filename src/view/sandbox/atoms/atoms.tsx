@@ -12,7 +12,7 @@ import React, { useEffect } from 'react'
 import { KonvaEventObject } from 'konva/lib/Node'
 import { type } from 'irma5/src/atom'
 import Config from '../../../config'
-import { AtomIndexes, EditModes, ATOMS, Dir, BOND_TYPES, Atom as AtomType } from '../../../types'
+import { AtomIndexes, EditModes, ATOM_NEW, Dir, BOND_TYPES, Atom as AtomType } from '../../../types'
 import { store } from '../../../store/store'
 import { findAtom, findAtomIdx, nextAtom } from '../../../utils/atom'
 import { id } from '../../../utils'
@@ -53,7 +53,7 @@ export default function Atoms({ stage, zoom }: Props) {
   function onAddAtom(x: number, y: number) {
     const atomIndex = findAtomIdx(x, y)
     if (atomIndex >= 0) { return }
-    store.sandbox.atoms = [...store.sandbox.atoms, { id: id(), x, y, a: ATOMS[store.status.atom] } as AtomType]
+    store.sandbox.atoms = [...store.sandbox.atoms, { id: id(), x, y, a: ATOM_NEW[store.status.atom] } as AtomType]
   }
 
   function onDelAtom(x: number, y: number) {
