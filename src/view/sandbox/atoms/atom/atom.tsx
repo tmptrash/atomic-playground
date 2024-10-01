@@ -17,8 +17,6 @@ export default function Atom({atom}: Props) {
   const offs = atom.y / step * Config.grid.cols + atom.x / step
   const hasVm = store.sandbox.vms.findIndex(vm => vm.offs === offs) > -1
 
-  console.log('atom')
-  
   return <>
     {/* Atom rect */}
     <Rect

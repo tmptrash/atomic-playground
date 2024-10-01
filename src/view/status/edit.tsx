@@ -17,32 +17,30 @@ export default function Edit() {
   }
 
   return <Box sx={{ m: 2 }}>
-    <Typography variant="caption" sx={{ display: 'block', mb: 2 }}>Edit atoms and bones</Typography>
+    <Typography variant="caption" sx={{ display: 'block', mb: 2 }}>Edit atoms, bones & VMs</Typography>
     <FormControl>
       <RadioGroup aria-labelledby={id()} defaultValue={EditModes.Atom} name="group" onChange={onChange}>
-        <FormControlLabel value={EditModes.Atom} control={<Radio />} label="Atoms" />
-        <Typography variant="body2" sx={{ ml: 2 }}>
-          Current atom: <span style={{ color: 'blue' }}>{AtomIndexes[store.status.atom]}</span>
-        </Typography>
-        <br/>
-        <Box style={{ color: 'grey' }} sx={{ ml: 2 }}>
+        <FormControlLabel value={EditModes.Atom} control={<Radio />} label={<span style={{ fontWeight: 500 }}>Atoms</span>}/>
+        <Box style={{ color: 'grey' }} sx={{ ml: 4, mt: -1 }}>
           <Typography variant="body2">LMB + ctrl - change atom</Typography>
           <Typography variant="body2">LMB - add atom</Typography>
           <Typography variant="body2">RMB - remove atom</Typography>
         </Box>
-
-        <FormControlLabel value={EditModes.Bond} control={<Radio />} label="Bonds" />
-        <Typography variant="body2" sx={{ ml: 2 }}>
-          Current bond: <span style={{ color: 'blue' }}>{bond}</span>
+        <Typography variant="body2" sx={{ ml: 4, mt: .3, mb: 2 }}>
+          Current atom: <span style={{ color: 'blue' }}>{AtomIndexes[store.status.atom]}</span>
         </Typography>
-        <br/>
-        <Box style={{ color: 'grey' }} sx={{ ml: 2 }}>
+
+        <FormControlLabel value={EditModes.Bond} control={<Radio />} label={<span style={{ fontWeight: 500 }}>Bonds</span>} />
+        <Box style={{ color: 'grey' }} sx={{ ml: 4, mt: -1 }}>
           <Typography variant="body2">LMB - change direction</Typography>
           <Typography variant="body2">RMB - change type</Typography>
         </Box>
+        <Typography variant="body2" sx={{ ml: 4, mt: .3, mb: 2 }}>
+          Current bond: <span style={{ color: 'blue' }}>{bond}</span>
+        </Typography>
 
-        <FormControlLabel value={EditModes.VM} control={<Radio />} label="VMs" />
-        <Box style={{ color: 'grey' }} sx={{ ml: 2 }}>
+        <FormControlLabel value={EditModes.VM} control={<Radio />} label={<span style={{ fontWeight: 500 }}>VMs</span>} />
+        <Box style={{ color: 'grey' }} sx={{ ml: 4, mt: -1 }}>
           <Typography variant="body2">LMB - add VM</Typography>
           <Typography variant="body2">RMB - remove VM</Typography>
         </Box>
