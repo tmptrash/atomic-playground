@@ -9,16 +9,14 @@
 import Konva from 'konva'
 import { Vector2d } from 'konva/lib/types'
 import React, { useEffect } from 'react'
-import { type } from 'irma5/src/atom'
-import Config from '../../config'
-import { AtomTypes, Modes } from '../../enums/enums'
-import { store } from '../../store/store'
-import { ATOMS, Dir } from '../../types/atom'
-import { findAtom, findAtomIdx, nextAtom } from '../../utils/atom'
-import { id } from '../../utils/utils'
-import Atom from './atom/atom'
 import { KonvaEventObject } from 'konva/lib/Node'
-import { BOND_TYPES } from '../../types/bond'
+import { type } from 'irma5/src/atom'
+import Config from '../../../config'
+import { AtomTypes, EditModes, ATOMS, Dir, BOND_TYPES } from '../../../types'
+import { store } from '../../../store/store'
+import { findAtom, findAtomIdx, nextAtom } from '../../../utils/atom'
+import { id } from '../../../utils/utils'
+import Atom from './atom/atom'
 import { Bonds } from './atom/bonds/bonds'
 import { ATOM_BONDS, IBonds } from './atom/bonds/analyzer'
 
@@ -35,11 +33,11 @@ export default function Atoms({ stage, zoom }: Props) {
   let clickPos: Vector2d = {x: -1, y: -1}
   const MODES = {
     // mouse button: 0 - left, 2 - right
-    [`${Modes.Atoms}-0-ctrl`]: onNextAtom,
-    [`${Modes.Atoms}-0`]: onAddAtom,
-    [`${Modes.Atoms}-2`]: onDelAtom,
-    [`${Modes.Bonds}-0`]: onNextDir,
-    [`${Modes.Bonds}-2`]: onNextType
+    [`${EditModes.Atoms}-0-ctrl`]: onNextAtom,
+    [`${EditModes.Atoms}-0`]: onAddAtom,
+    [`${EditModes.Atoms}-2`]: onDelAtom,
+    [`${EditModes.Bonds}-0`]: onNextDir,
+    [`${EditModes.Bonds}-2`]: onNextType
   }
   const atoms = store.sandbox.atoms
   const bonds: IBonds = {}

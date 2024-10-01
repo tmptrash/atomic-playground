@@ -1,13 +1,13 @@
 import React from 'react'
 import { ifDir, thenDir, elseDir, vmDir, b1Dir, b2Dir, b3Dir } from 'irma5/src/atom'
-import Config from "../../../../config"
-import { AtomTypes } from "../../../../enums/enums"
-import { Atom, Dir } from "../../../../types/atom"
+import Config from "../../../../../config"
+import { AtomTypes, Atom, Dir } from "../../../../../types"
 import Arrow from "./arrows/arrow"
 import Sceptre from './arrows/sceptre'
-import { findAtomIdx, getXYByDir } from '../../../../utils/atom'
-import { store } from '../../../../store/store'
+import { findAtomIdx, getXYByDir } from '../../../../../utils/atom'
+import { store } from '../../../../../store/store'
 
+// TODO: put these functions into <Bonds /> component
 type ArrowType = 'arrow' | 'sceptre'
 export interface IBond {
   a: Atom

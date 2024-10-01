@@ -1,8 +1,8 @@
 import React from 'react'
 import { type } from 'irma5/src/atom'
 import { Rect, Text } from "react-konva"
-import Config from "../../../config"
-import { ATOM_COLORS, ATOM_TEXTS, Atom as AtomType } from '../../../types/atom'
+import Config from "../../../../config"
+import { ATOM_COLORS, ATOM_TEXTS, Atom as AtomType } from '../../../../types/atom'
 
 type Props = {
   atom: AtomType

@@ -1,11 +1,10 @@
-import { AtomTypes, Modes } from "../enums/enums"
-import { Atom } from "./atom"
+import { AtomTypes, EditModes, Atom } from "./atom"
 
 export type Sandbox = {
   atoms: Atom[]
 }
 export type Status = {
-  mode: Modes
+  mode: EditModes
   atom: AtomTypes
   curAtom: AtomTypes
   bondIdx: number

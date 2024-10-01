@@ -1,9 +1,9 @@
 import React from 'react'
 import { Text, Circle, Line } from 'react-konva'
-import { Atom, Dir } from '../../../../../types/atom'
-import { getLinePoints } from '../../../../../utils/bonds'
-import Config from '../../../../../config'
-import { DIR_OFFS } from '../../../../../utils/atom'
+import { Atom, Dir } from '../../../../../../types/atom'
+import { getLinePoints } from '../../../../../../utils/bonds'
+import Config from '../../../../../../config'
+import { DIR_OFFS } from '../../../../../../utils/atom'
 
 const LETTER_HEIGHT = 1.4
 

@@ -3,24 +3,25 @@ import FormControl from '@mui/material/FormControl'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
-import { id } from '../utils/utils'
-import { AtomNames, Modes } from '../enums/enums'
-import { store } from '../store/store'
 import Typography from '@mui/material/Typography'
 import { Box } from '@mui/material'
-import { BOND_TYPES } from '../types/bond'
+import { id } from '../utils/utils'
+import { AtomTypes, EditModes, BOND_TYPES } from '../types'
+import { store } from '../store/store'
 
 export default function Mode() {
+  const bond = BOND_TYPES[store.status.curAtom]?.[store.status.bondIdx]?.[2]
+
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
-    store.status.mode = e.target.value as Modes
+    store.status.mode = e.target.value as EditModes
   }
 
   return <>
     <FormControl>
-      <RadioGroup aria-labelledby={id()} defaultValue={Modes.Atoms} name="group" onChange={onChange}>
-        <FormControlLabel value={Modes.Atoms} control={<Radio />} label="Atoms" />
+      <RadioGroup aria-labelledby={id()} defaultValue={EditModes.Atoms} name="group" onChange={onChange}>
+        <FormControlLabel value={EditModes.Atoms} control={<Radio />} label="Atoms" />
         <Typography variant="body2" sx={{ ml: 2 }}>
-          Current atom: <span style={{ color: 'blue' }}>{AtomNames[store.status.atom]}</span>
+          Current atom: <span style={{ color: 'blue' }}>{AtomTypes[store.status.atom]}</span>
         </Typography>
         <br/>
         <Box style={{ color: 'grey' }} sx={{ ml: 2 }}>
@@ -28,9 +29,9 @@ export default function Mode() {
           <Typography variant="body2">LMB - add atom</Typography>
           <Typography variant="body2">RMB - remove atom</Typography>
         </Box>
-        <FormControlLabel value={Modes.Bonds} control={<Radio />} label="Bonds" />
+        <FormControlLabel value={EditModes.Bonds} control={<Radio />} label="Bonds" />
         <Typography variant="body2" sx={{ ml: 2 }}>
-          Current bond: <span style={{ color: 'blue' }}>{BOND_TYPES[store.status.curAtom]?.[store.status.bondIdx]?.[2]}</span>
+          Current bond: <span style={{ color: 'blue' }}>{bond}</span>
         </Typography>
         <br/>
         <Box style={{ color: 'grey' }} sx={{ ml: 2 }}>

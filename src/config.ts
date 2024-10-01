@@ -10,8 +10,8 @@ const Config = {
     borderWidth: 4,
     stepSize: 40,
     query: 'canvas',
-    rows: 10,
-    cols: 10
+    rows: 5,
+    cols: 5
   },
   bonds: {
     vmDirColor:  '#6aa84f',

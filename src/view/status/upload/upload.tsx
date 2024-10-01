@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useState } from 'react'
 import Button from '@mui/material/Button'
 import { Input } from './styled'
-import { store } from '../../store/store'
-import { toAtoms } from '../../utils/json'
+import { store } from '../../../store/store'
+import { toAtoms } from '../../../utils/json'
 
 export default function Upload() {
   const [file, setFile] = useState('')

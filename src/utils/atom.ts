@@ -1,7 +1,6 @@
 import Config from "../config"
-import { AtomTypes } from "../enums/enums"
+import { AtomTypes, Atom, Dir } from "../types"
 import { store } from "../store/store"
-import { Atom, Dir } from "../types/atom"
 
 export const DIR_OFFS = [[0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1]]
 

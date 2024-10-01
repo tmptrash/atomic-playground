@@ -1,5 +1,19 @@
 import Config from "../config"
-import { AtomTypes } from "../enums/enums"
+
+export enum AtomTypes {
+  no  = 0,
+  mov = 1,
+  fix = 2,
+  spl = 3,
+  con = 4,
+  job = 5,
+  rep = 6
+}
+
+export enum EditModes {
+  Atoms = 'atoms',
+  Bonds = 'bonds'
+}
 
 export const ATOMS = {
   [AtomTypes.mov]: 0b0010000000000000,
