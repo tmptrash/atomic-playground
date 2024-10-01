@@ -1,7 +1,7 @@
 import React from 'react'
 import { ifDir, thenDir, elseDir, vmDir, b1Dir, b2Dir, b3Dir } from 'irma5/src/atom'
 import Config from "../../../../../config"
-import { AtomIndexes, Atom, Dir } from "../../../../../types"
+import { AtomIndexes, Atom, Dir, AtomKeys } from "../../../../../types"
 import Arrow from "./arrow"
 import Sceptre from './sceptre'
 import { findAtomIdx, getXYByDir } from '../../../../../utils/atom'
@@ -21,7 +21,9 @@ export interface IBonds {
   [id: string]: IBond[]
 }
 
-export const ATOM_BONDS = {
+export const ATOM_BONDS: AtomKeys = {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  [AtomIndexes.no] : () => {},
   [AtomIndexes.mov]: movBonds,
   [AtomIndexes.fix]: fixSplBonds,
   [AtomIndexes.spl]: fixSplBonds,

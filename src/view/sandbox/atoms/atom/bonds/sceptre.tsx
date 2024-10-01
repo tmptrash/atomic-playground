@@ -42,7 +42,7 @@ export default function Sceptre({a, dir, color, bondIdx, bonds, id: id = ''}: Pr
         strokeWidth={1}
       />
       {id && <Text
-        x={points[0] - a.id.length * .6 + DIR_OFFS[dir][0] * -2}
+        x={points[0] - id.length * .6 + DIR_OFFS[dir][0] * -2}
         y={points[1] + DIR_OFFS[dir][1] * -2 + getFontHeight(dir)}
         text={id}
         fontSize={2}

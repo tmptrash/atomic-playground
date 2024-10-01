@@ -27,7 +27,7 @@ export default function Atom({atom}: Props) {
 
     {/* The letter in atom center (m-mov, s-spl,...) */}
     <Text
-      x={atom.x + halfStep - 3.2}
+      x={atom.x + halfStep - 3}
       y={atom.y + halfStep - 4}
       text={ATOM_TEXTS[typ]}
       fontSize={10}
