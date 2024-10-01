@@ -16,10 +16,11 @@ export default function Edit() {
     store.status.mode = e.target.value as EditModes
   }
 
-  return <>
+  return <Box sx={{ m: 2 }}>
+    <Typography variant="caption" sx={{ display: 'block', mb: 2 }}>Edit atoms and bones</Typography>
     <FormControl>
-      <RadioGroup aria-labelledby={id()} defaultValue={EditModes.Atoms} name="group" onChange={onChange}>
-        <FormControlLabel value={EditModes.Atoms} control={<Radio />} label="Atoms" />
+      <RadioGroup aria-labelledby={id()} defaultValue={EditModes.Atom} name="group" onChange={onChange}>
+        <FormControlLabel value={EditModes.Atom} control={<Radio />} label="Atoms" />
         <Typography variant="body2" sx={{ ml: 2 }}>
           Current atom: <span style={{ color: 'blue' }}>{AtomIndexes[store.status.atom]}</span>
         </Typography>
@@ -29,7 +30,8 @@ export default function Edit() {
           <Typography variant="body2">LMB - add atom</Typography>
           <Typography variant="body2">RMB - remove atom</Typography>
         </Box>
-        <FormControlLabel value={EditModes.Bonds} control={<Radio />} label="Bonds" />
+
+        <FormControlLabel value={EditModes.Bond} control={<Radio />} label="Bonds" />
         <Typography variant="body2" sx={{ ml: 2 }}>
           Current bond: <span style={{ color: 'blue' }}>{bond}</span>
         </Typography>
@@ -38,7 +40,13 @@ export default function Edit() {
           <Typography variant="body2">LMB - change direction</Typography>
           <Typography variant="body2">RMB - change type</Typography>
         </Box>
+
+        <FormControlLabel value={EditModes.VM} control={<Radio />} label="VMs" />
+        <Box style={{ color: 'grey' }} sx={{ ml: 2 }}>
+          <Typography variant="body2">LMB - add VM</Typography>
+          <Typography variant="body2">RMB - remove VM</Typography>
+        </Box>
       </RadioGroup>
     </FormControl>
-  </>
+  </Box>
 }

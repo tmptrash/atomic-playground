@@ -1,8 +1,10 @@
 import React, { ChangeEvent, useState } from 'react'
 import Button from '@mui/material/Button'
-import { Input } from './styled'
-import { store } from '../../../store/store'
-import { toAtoms } from '../../../utils/json'
+import Box from '@mui/material/Box'
+import { Typography } from '@mui/material'
+import CloudUploadIcon from '@mui/icons-material/CloudUpload'
+import { store } from '../../store/store'
+import { toAtoms } from '../../utils/json'
 
 export default function Upload() {
   const [file, setFile] = useState('')
@@ -27,12 +29,13 @@ export default function Upload() {
     }
   }
 
-  return (
+  return <Box sx={{ m: 2 }}>
+    <Typography variant="caption" sx={{ display: 'block', mb: 2 }}>Upload atoms from JSON</Typography>
     <label htmlFor="upload-file">
-      <Input accept="application/JSON" id="upload-file" type="file" onChange={onChange} value={file}/>
-      <Button variant="contained" component="span">
+      <input accept="application/JSON" id="upload-file" type="file" onChange={onChange} value={file} className="hidden"/>
+      <Button variant="contained" component="span" startIcon={<CloudUploadIcon />}>
         Upload
       </Button>
     </label>
-  )
+  </Box>
 }

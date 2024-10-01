@@ -30,7 +30,9 @@ const Config = {
     repColor:  '#b4a7d6'
   },
   vm: {
-    nextColor: '#6aa84f'
+    nextColor: '#6aa84f',
+    color:     '#e69138',
+    energy: 10
   }
 }
 

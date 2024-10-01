@@ -33,11 +33,14 @@ export default function Atoms({ stage, zoom }: Props) {
   let clickPos: Vector2d = {x: -1, y: -1}
   const MODES = {
     // mouse button: 0 - left, 2 - right
-    [`${EditModes.Atoms}-0-ctrl`]: onNextAtom,
-    [`${EditModes.Atoms}-0`]: onAddAtom,
-    [`${EditModes.Atoms}-2`]: onDelAtom,
-    [`${EditModes.Bonds}-0`]: onNextDir,
-    [`${EditModes.Bonds}-2`]: onNextType
+    [`${EditModes.Atom}-0-ctrl`]: onNextAtom,
+    [`${EditModes.Atom}-0`]: onAddAtom,
+    [`${EditModes.Atom}-2`]: onDelAtom,
+    [`${EditModes.Bond}-0`]: onNextDir,
+    [`${EditModes.Bond}-2`]: onNextType,
+    [`${EditModes.VM}-0`]: onAddVM,
+    [`${EditModes.VM}-2`]: onDelVM,
+
   }
   const atoms = store.sandbox.atoms
   const bonds: IBonds = {}
@@ -92,6 +95,24 @@ export default function Atoms({ stage, zoom }: Props) {
     a.a = (BOND_TYPES[typ]?.[bondIdx]?.[1] || BOND_TYPES[typ]?.[0]?.[1])?.(a.a, d)
     atoms[i] = a
     store.sandbox.atoms = [...atoms]
+  }
+
+  function onAddVM(x: number, y: number) {
+    const step = Config.grid.stepSize
+    store.sandbox.vms = [...store.sandbox.vms, {
+      energy: Config.vm.energy,
+      offs: y / step * Config.grid.cols + x / step
+    }]
+  }
+
+  function onDelVM(x: number, y: number) {
+    const step = Config.grid.stepSize
+    const vms = store.sandbox.vms
+    const offs = y / step * Config.grid.cols + x / step
+    const idx = vms.findIndex(vm => vm.offs === offs)
+    if (idx < 0) return
+    vms.splice(idx, 1)
+    store.sandbox.vms = [...vms]
   }
 
   function getRelatedPos(): [number, number] {

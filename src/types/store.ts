@@ -1,8 +1,8 @@
-import { EditModes } from "."
-import { AtomIndexes, Atom } from "./atom"
+import { EditModes, AtomIndexes, Atom, VM } from "."
 
 export type Sandbox = {
   atoms: Atom[]
+  vms: VM[]
 }
 export type Status = {
   mode: EditModes
