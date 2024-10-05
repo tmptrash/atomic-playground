@@ -5,6 +5,7 @@ import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import { sync } from "../../utils/irma5";
 import { tick } from 'irma5/src/vms'
 import { store } from "../../store/store";
+import { toXY } from "../../utils";
 //
 // Virtual machines instance singleton. Will be updated
 // after every synchronization with irma5
@@ -12,13 +13,15 @@ import { store } from "../../store/store";
 let vms
 
 export default function Run() {
+  const [x, y] = toXY(store.sandbox.vms?.[store.sandbox.vmIdx]?.offs)
+
   function onDebug() {
     if (!store.sandbox.synced) {
       vms = sync(vms?.w)
       store.sandbox.synced = true
     }
     const vmIdx = store.sandbox.vmIdx
-    vmIdx < vms.offs.i && (store.sandbox.vmIdx += tick(vms, vmIdx))
+    vmIdx <= vms.offs.i && (store.sandbox.vmIdx += tick(vms, vmIdx))
   }
 
   function onRun() {
@@ -27,6 +30,9 @@ export default function Run() {
 
   return <Box sx={{ m: 2 }}>
     <Typography variant="caption" sx={{ display: 'block', mb: 2 }}>Run & Debug</Typography>
+    <Typography variant="body2" style={{ color: 'grey' }} sx={{ ml: 4, mb: 2 }}>
+      Current VM: (<span style={{ color: 'blue' }}>{x}</span>, <span style={{ color: 'blue' }}>{y}</span>)
+    </Typography>
     <Button variant="contained" startIcon={<AdbRoundedIcon />} sx={{mr: 6}} onClick={onDebug}>Step</Button>
     <Button variant="contained" startIcon={<PlayArrowRoundedIcon />} onClick={onRun}>Run</Button>
   </Box>

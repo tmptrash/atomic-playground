@@ -41,3 +41,8 @@ export function toOffs(x: number, y: number) {
   const step = Config.grid.stepSize
   return y / step * Config.grid.cols + x / step
 }
+
+export function toXY(offs?: number, step = 1) {
+  const width = Config.grid.cols
+  return [(offs || -1) % width * step, Math.floor((offs || -1) / width * step)]
+}
