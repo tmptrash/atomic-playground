@@ -24,8 +24,8 @@ export default function Run() {
     //
     // runs one tick in irma5 for one VM
     //
-    const vmIdx = store.sandbox.vmIdx
-    vmIdx <= irma5Vms.offs.i && (store.sandbox.vmIdx += tick(irma5Vms, vmIdx));
+    store.sandbox.vmIdx += tick(irma5Vms, store.sandbox.vmIdx)
+    store.sandbox.vmIdx > irma5Vms.offs.i && (store.sandbox.vmIdx = 0);
     //
     // receives new atoms and vms from irma5 after tick()
     //
