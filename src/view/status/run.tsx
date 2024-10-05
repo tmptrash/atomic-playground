@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Button, Typography } from "@mui/material";
 import AdbRoundedIcon from '@mui/icons-material/AdbRounded';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
-import { sync } from "../../utils/irma5";
+import { receive, send } from "../../utils/irma5";
 import { tick } from 'irma5/src/vms'
 import { store } from "../../store/store";
 import { toXY } from "../../utils";
@@ -10,18 +10,26 @@ import { toXY } from "../../utils";
 // Virtual machines instance singleton. Will be updated
 // after every synchronization with irma5
 //
-let vms
+let irma5Vms
 
 export default function Run() {
   const [x, y] = toXY(store.sandbox.vms?.[store.sandbox.vmIdx]?.offs)
 
   function onDebug() {
-    if (!store.sandbox.synced) {
-      vms = sync(vms?.w)
-      store.sandbox.synced = true
-    }
+    //
+    // if atoms or vms were changed we have to sync with irma5
+    //
+    !store.sandbox.synced && (irma5Vms = send(store.sandbox.vms, store.sandbox.atoms, irma5Vms?.w))
+    store.sandbox.synced = true
+    //
+    // runs one tick in irma5 for one VM
+    //
     const vmIdx = store.sandbox.vmIdx
-    vmIdx <= vms.offs.i && (store.sandbox.vmIdx += tick(vms, vmIdx))
+    vmIdx <= irma5Vms.offs.i && (store.sandbox.vmIdx += tick(irma5Vms, vmIdx));
+    //
+    // receives new atoms and vms from irma5 after tick()
+    //
+    [store.sandbox.vms, store.sandbox.atoms] = receive(irma5Vms)
   }
 
   function onRun() {
