@@ -1,3 +1,5 @@
+import Config from '../config';
+
 export * from './atom'
 export * from './bond'
 export * from './json'
@@ -7,7 +9,9 @@ let _id = 0
  * Extend Array type with count() function
  */
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface Array<T> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     amount(cb: (el: any) => boolean): number;
   }
 }
@@ -29,3 +33,11 @@ export function isObject(obj: unknown): boolean { return !!obj && typeof obj ===
  * @returns number[]
  */
 export function arr(n: number) { return Array.from(Array(n).keys()) }
+/**
+ * Converts x,y into absolute offset
+ * @returns offset
+ */
+export function toOffs(x: number, y: number) {
+  const step = Config.grid.stepSize
+  return y / step * Config.grid.cols + x / step
+}

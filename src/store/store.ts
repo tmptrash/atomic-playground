@@ -3,7 +3,9 @@ import { AtomIndexes, EditModes, Store } from "../types"
 export const store: Store = {
   sandbox: {
     atoms: [],
-    vms: []
+    vms: [],
+    vmIdx: 0,
+    synced: false
   },
   status: {
     mode: EditModes.Atom,

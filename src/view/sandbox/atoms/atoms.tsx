@@ -15,7 +15,7 @@ import Config from '../../../config'
 import { AtomIndexes, EditModes, ATOM_NEW, Dir, BOND_TYPES, Atom as AtomType } from '../../../types'
 import { store } from '../../../store/store'
 import { findAtom, findAtomIdx, nextAtom } from '../../../utils/atom'
-import { id } from '../../../utils'
+import { id, toOffs } from '../../../utils'
 import Atom from './atom/atom'
 import { Bonds } from './atom/bonds/bonds'
 import { ATOM_BONDS, IBonds } from './atom/bonds/analyzer'
@@ -57,6 +57,7 @@ export default function Atoms({ stage, zoom }: Props) {
     const atomIndex = findAtomIdx(x, y)
     if (atomIndex >= 0) { return }
     store.sandbox.atoms = [...store.sandbox.atoms, { id: id(), x, y, a: ATOM_NEW[store.status.atom] } as AtomType]
+    store.sandbox.synced = false
   }
 
   function onDelAtom(x: number, y: number) {
@@ -65,6 +66,7 @@ export default function Atoms({ stage, zoom }: Props) {
     const atoms = store.sandbox.atoms
     atoms.splice(atomIndex, 1)
     store.sandbox.atoms = [...atoms]
+    store.sandbox.synced = false
   }
 
   function onNextType(x: number, y: number) {
@@ -95,24 +97,25 @@ export default function Atoms({ stage, zoom }: Props) {
     a.a = (BOND_TYPES[typ]?.[bondIdx]?.[1] || BOND_TYPES[typ]?.[0]?.[1])?.(a.a, d)
     atoms[i] = a
     store.sandbox.atoms = [...atoms]
+    store.sandbox.synced = false
   }
 
   function onAddVM(x: number, y: number) {
-    const step = Config.grid.stepSize
     store.sandbox.vms = [...store.sandbox.vms, {
       energy: Config.vm.energy,
-      offs: y / step * Config.grid.cols + x / step
+      offs: toOffs(x, y)
     }]
+    store.sandbox.synced = false
   }
 
   function onDelVM(x: number, y: number) {
-    const step = Config.grid.stepSize
     const vms = store.sandbox.vms
-    const offs = y / step * Config.grid.cols + x / step
+    const offs = toOffs(x, y)
     const idx = vms.findIndex(vm => vm.offs === offs)
     if (idx < 0) return
     vms.splice(idx, 1)
     store.sandbox.vms = [...vms]
+    store.sandbox.synced = false
   }
 
   function getRelatedPos(): [number, number] {

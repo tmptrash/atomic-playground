@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
-import CloudUploadIcon from '@mui/icons-material/CloudUpload'
+import CloudUploadRoundedIcon from '@mui/icons-material/CloudUploadRounded';
 import { store } from '../../store/store'
 import { toAtoms } from '../../utils/json'
 
@@ -33,7 +33,7 @@ export default function Upload() {
     <Typography variant="caption" sx={{ display: 'block', mb: 2 }}>Upload atoms from JSON</Typography>
     <label htmlFor="upload-file">
       <input accept="application/JSON" id="upload-file" type="file" onChange={onChange} value={file} className="hidden"/>
-      <Button variant="contained" component="span" startIcon={<CloudUploadIcon />}>
+      <Button variant="contained" component="span" startIcon={<CloudUploadRoundedIcon />}>
         Upload
       </Button>
     </label>

@@ -5,6 +5,7 @@ import Config from "../../../../config"
 import { ATOM_COLORS, ATOM_TEXTS, Atom as AtomType } from '../../../../types/atom'
 import { store } from '../../../../store/store'
 import { VM } from '../../../../types'
+import { toOffs } from '../../../../utils'
 
 type Props = {
   atom: AtomType
@@ -15,7 +16,7 @@ export default function Atom({atom}: Props) {
   const step = Config.grid.stepSize
   const halfStep = step / 2
   const typ = type(atom.a)
-  const offs = atom.y / step * Config.grid.cols + atom.x / step
+  const offs = toOffs(atom.x, atom.y)
   const vmAmount = store.sandbox.vms.amount((vm: VM) => vm.offs === offs)
 
   return <>

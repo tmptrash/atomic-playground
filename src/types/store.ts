@@ -3,6 +3,8 @@ import { EditModes, AtomIndexes, Atom, VM } from "."
 export type Sandbox = {
   atoms: Atom[]
   vms: VM[]
+  vmIdx: number
+  synced: boolean
 }
 export type Status = {
   mode: EditModes
