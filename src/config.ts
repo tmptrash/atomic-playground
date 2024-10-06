@@ -22,16 +22,17 @@ const Config = {
     bondIfColor: '#cc4125'
   },
   atoms: {
-    movColor:  '#e6b8af',
-    fixColor:  '#9fc5e8',
-    splColor:  '#b6d7a8',
-    conColor:  '#efefef',
-    jobColor:  '#f9cb9c',
-    repColor:  '#b4a7d6'
+    movColor:   '#e6b8af',
+    fixColor:   '#9fc5e8',
+    splColor:   '#b6d7a8',
+    conColor:   '#efefef',
+    jobColor:   '#f9cb9c',
+    repColor:   '#b4a7d6'
   },
   vm: {
-    nextColor: '#6aa84f',
-    color:     '#b45f06',
+    nextColor:  '#6aa84f',
+    color:      '#b45f06',
+    energyColor:'#6aa84f',
     energy: 10
   }
 }

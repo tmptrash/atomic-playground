@@ -19,6 +19,7 @@ export default function Atom({atom}: Props) {
   const offs = toOffs(atom.x, atom.y)
   const vmAmount = store.sandbox.vms.amount((vm: VM) => vm.offs === offs)
   const [x, y] = toXY(store.sandbox.vms?.[store.sandbox.vmIdx]?.offs, step)
+  const energy = store.sandbox.vms?.[store.sandbox.vmIdx]?.energy.toString()
 
   return <>
     {/* Atom rect */}
@@ -41,13 +42,24 @@ export default function Atom({atom}: Props) {
       fill={Config.vm.color}
     />}
 
-    {x === atom.x && y === atom.y && <Circle
-      x={atom.x + halfStep}
-      y={atom.y + halfStep}
-      radius={13}
-      stroke={Config.vm.color}
-      strokeWidth={1}
-    />}
+    {/* Draw a circle if current atom is running with some VM + energy */}
+    {x === atom.x && y === atom.y && <>
+      <Circle
+        x={atom.x + halfStep}
+        y={atom.y + halfStep}
+        radius={13}
+        stroke={Config.vm.color}
+        strokeWidth={1}
+      />
+      <Text
+        x={atom.x + halfStep - energy.length * .6}
+        y={atom.y + halfStep + 3.9}
+        text={energy}
+        fontSize={2}
+        fontFamily={'Monospace'}
+        fill={Config.vm.energyColor}
+      />
+    </>}
 
     {/* The letter in atom center (m-mov, s-spl,...) */}
     <Text
