@@ -47,7 +47,7 @@ export function receive(vms): [VM[], Atom[]] {
 }
 
 function putVms(w, vms) {
-  const vmOffs = BigUint64Array.new(vms.length)
+  const vmOffs = Uint32Array.new(vms.length)
   vms.forEach((v, i) => vmOffs[i] = vm(v.offs, v.energy))
   return VMs(w, vmOffs)
 }
