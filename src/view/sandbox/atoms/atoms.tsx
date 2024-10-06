@@ -106,6 +106,7 @@ export default function Atoms({ stage, zoom }: Props) {
       offs: toOffs(x, y)
     }]
     store.sandbox.synced = false
+    store.sandbox.vms.length === 1 && (store.sandbox.vmIdx = 0)
   }
 
   function onDelVM(x: number, y: number) {
