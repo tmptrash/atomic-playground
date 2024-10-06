@@ -13,7 +13,7 @@ export function send(vms, atoms, w?) {
   w && destroy(w)
   CFG.WORLD.width = Config.grid.cols
   CFG.WORLD.height = Config.grid.rows
-  w = World()
+  w = World(true)
   vms = putVms(w, vms)
   atoms.forEach(a => put(w, toOffs(a.x, a.y), a.a))
   return vms
