@@ -23,10 +23,10 @@ export function receive(vms): [VM[], Atom[]] {
   const offs = vms.offs
   const w = vms.w
   const atoms: Atom[] = []
-  const newVms: VM[] = new Array(offs?.i + 1)
+  const newVms: VM[] = new Array(offs?.i)
   const step = Config.grid.stepSize
   
-  for (let i = 0; i <= offs?.i; i++) {
+  for (let i = 0; i < offs?.i; i++) {
     newVms[i] = {offs: to32Offs(offs[i]), energy: nrg(offs[i])}
   }
   for (let x = 0; x < Config.grid.cols; x++) {
