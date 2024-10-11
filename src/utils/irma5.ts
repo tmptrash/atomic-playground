@@ -23,7 +23,7 @@ export function receive(vms): [VM[], Atom[]] {
   const offs = vms.offs
   const w = vms.w
   const atoms: Atom[] = []
-  const newVms: VM[] = new Array(offs?.i)
+  const newVms: VM[] = new Array(offs?.i === undefined || offs?.i < 0 ? 0 : offs?.i)
   const step = Config.grid.stepSize
   
   for (let i = 0; i < offs?.i; i++) {
