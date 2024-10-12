@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "rootDirs": ["./node_modules/irma5/types", "./src"],
+    "rootDirs": ["./src"],
     "target": "es5",
     "lib": [
       "dom",
@@ -24,7 +24,6 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "./node_modules/irma5/types/**/*.ts",
     "src"
   ]
 }

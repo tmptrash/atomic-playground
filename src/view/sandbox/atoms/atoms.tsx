@@ -6,9 +6,9 @@
  * We need such analysis because bonds are located not only around an atom,
  * but also around near atoms.
  */
+import React, { useEffect } from 'react'
 import Konva from 'konva'
 import { Vector2d } from 'konva/lib/types'
-import React, { useEffect } from 'react'
 import { KonvaEventObject } from 'konva/lib/Node'
 import { type } from 'irma5/src/atom'
 import Config from '../../../config'

@@ -1,25 +1,25 @@
-import World, { destroy, put } from 'irma5/src/world'
+import World, { destroy, put, get, WorldType } from 'irma5/src/world'
 import VMs, { vm, nrg } from 'irma5/src/vms'
-import { get } from 'irma5/src/world'
 import { toOffs as to32Offs } from 'irma5/src/atom'
+import CFG from 'irma5/src/cfg'
 import Config from '../config'
 import { id, toOffs } from '.'
 import { Atom, VM } from '../types'
-import CFG from 'irma5/src/cfg'
 //
 // Recreates the world and put all atoms and vms into it
 //
-export function send(vms, atoms, w?) {
+export function send(vms: VM[], atoms: Atom[], w?: WorldType) {
   w && destroy(w)
   CFG.WORLD.width = Config.grid.cols
   CFG.WORLD.height = Config.grid.rows
   w = World(true)
-  vms = putVms(w, vms)
-  atoms.forEach(a => put(w, toOffs(a.x, a.y), a.a))
-  return vms
+  const irma5Vms = putVms(w, vms)
+  atoms.forEach(a => put(w!, toOffs(a.x, a.y), a.a))
+  return irma5Vms
 }
 
 export function receive(vms): [VM[], Atom[]] {
+  if (!vms) return [[], []]
   const offs = vms.offs
   const w = vms.w
   const atoms: Atom[] = []

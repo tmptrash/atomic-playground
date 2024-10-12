@@ -2,8 +2,8 @@ import React from "react";
 import { Box, Button, Typography } from "@mui/material";
 import AdbRoundedIcon from '@mui/icons-material/AdbRounded';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
-import { receive, send } from "../../utils/irma5";
 import { tick } from 'irma5/src/vms'
+import { receive, send } from "../../utils/irma5";
 import { store } from "../../store/store";
 //
 // Virtual machines instance singleton. Will be updated
@@ -21,7 +21,7 @@ export default function Run() {
     //
     // runs one tick in irma5 for one VM
     //
-    if (store.sandbox.vmIdx >= 0 && irma5Vms.offs.i > 0) {
+    if (store.sandbox.vmIdx >= 0 && irma5Vms?.offs?.i > 0) {
       store.sandbox.vmIdx += tick(irma5Vms, store.sandbox.vmIdx)
       store.sandbox.vmIdx >= irma5Vms.offs.i && (store.sandbox.vmIdx = 0);
     }

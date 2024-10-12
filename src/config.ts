@@ -1,7 +1,7 @@
 const Config = {
   minZoom: .1,
-  maxZoom: 20,
-  zoomDivider: 1.03,
+  maxZoom: 30,
+  zoomDivider: 1.02,
   textColor: 'black',
   grid: {
     linesColor: '#aaa',
