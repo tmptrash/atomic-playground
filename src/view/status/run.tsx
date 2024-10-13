@@ -2,14 +2,14 @@ import React from "react";
 import { Box, Button, Typography } from "@mui/material";
 import AdbRoundedIcon from '@mui/icons-material/AdbRounded';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
-import { tick } from 'irma5/src/vms'
+import { VMType, tick } from 'irma5/src/vms'
 import { receive, send } from "../../utils/irma5";
 import { store } from "../../store/store";
 //
 // Virtual machines instance singleton. Will be updated
 // after every synchronization with irma5
 //
-let irma5Vms
+let irma5Vms: VMType
 
 export default function Run() {
   function onDebug() {
