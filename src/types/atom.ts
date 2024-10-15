@@ -1,7 +1,5 @@
 import Config from "../config"
 
-export type AtomKeys = {[key in AtomIndexes]: unknown}
-
 export enum AtomIndexes {
   no  = 0,
   mov = 1,
@@ -19,7 +17,7 @@ export type Atom = {
   y: number
 }
 
-export const ATOM_NEW: AtomKeys = {
+export const ATOM_NEW = {
   [AtomIndexes.no] : 0,
   [AtomIndexes.mov]: 0b0010000000000000,
   [AtomIndexes.fix]: 0b0100000000000000,
@@ -29,7 +27,7 @@ export const ATOM_NEW: AtomKeys = {
   [AtomIndexes.rep]: 0b1100000000000000
 }
 
-export const ATOM_COLORS: AtomKeys = {
+export const ATOM_COLORS = {
   [AtomIndexes.no] : '',
   [AtomIndexes.mov]: Config.atoms.movColor,
   [AtomIndexes.fix]: Config.atoms.fixColor,
@@ -39,7 +37,7 @@ export const ATOM_COLORS: AtomKeys = {
   [AtomIndexes.rep]: Config.atoms.repColor
 }
 
-export const ATOM_TEXTS: AtomKeys = {
+export const ATOM_TEXTS = {
   [AtomIndexes.no] : '',
   [AtomIndexes.mov]: 'm',
   [AtomIndexes.fix]: 'f',

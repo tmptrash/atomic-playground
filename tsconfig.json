@@ -24,7 +24,8 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
+    "src",
+    "node_modules/irma5/types"
   ],
   "exclude": []
 }

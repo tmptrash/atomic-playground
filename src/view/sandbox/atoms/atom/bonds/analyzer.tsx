@@ -1,7 +1,7 @@
 import React from 'react'
 import { ifDir, thenDir, elseDir, vmDir, b1Dir, b2Dir, b3Dir } from 'irma5/src/atom'
 import Config from "../../../../../config"
-import { AtomIndexes, Atom, Dir, AtomKeys } from "../../../../../types"
+import { AtomIndexes, Atom, Dir } from "../../../../../types"
 import Arrow from "./arrow"
 import Sceptre from './sceptre'
 import { findAtomIdx, getXYByDir } from '../../../../../utils/atom'
@@ -21,7 +21,7 @@ export interface IBonds {
   [id: string]: IBond[]
 }
 
-export const ATOM_BONDS: AtomKeys = {
+export const ATOM_BONDS = {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   [AtomIndexes.no] : () => {},
   [AtomIndexes.mov]: movBonds,
@@ -33,7 +33,7 @@ export const ATOM_BONDS: AtomKeys = {
 }
 
 export function getArrows(bonds: IBond[]) {
-  const dirMap = {}
+  const dirMap: {[k: string]: [number, number]} = {}
   const arrows: React.ReactElement[] = []
   // calc amount of bonds on all directions. [0] - index, [1] - amount
   bonds.forEach(({ d }) => {!dirMap[d] && (dirMap[d] = [0,0]), ++dirMap[d][1]})

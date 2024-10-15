@@ -2,7 +2,7 @@ import React from 'react'
 import { type } from 'irma5/src/atom'
 import { Circle, Rect, Text } from "react-konva"
 import Config from "../../../../config"
-import { ATOM_COLORS, ATOM_TEXTS, Atom as AtomType } from '../../../../types/atom'
+import { ATOM_COLORS, ATOM_TEXTS, Atom as AtomType, AtomIndexes } from '../../../../types/atom'
 import { store } from '../../../../store/store'
 import { VM } from '../../../../types'
 import { toOffs, toXY } from '../../../../utils'
@@ -29,8 +29,8 @@ export default function Atom({atom}: Props) {
       width={step - lineWidth * 2}
       height={step - lineWidth * 2}
       strokeWidth={lineWidth}
-      stroke={ATOM_COLORS[typ]}
-      fill={ATOM_COLORS[typ]}/>
+      stroke={ATOM_COLORS[typ as AtomIndexes]}
+      fill={ATOM_COLORS[typ as AtomIndexes]}/>
 
     {/* VMs amount on current atom */}
     {vmAmount > 0 && <Text
@@ -65,7 +65,7 @@ export default function Atom({atom}: Props) {
     <Text
       x={atom.x + halfStep - 3}
       y={atom.y + halfStep - 4}
-      text={ATOM_TEXTS[typ]}
+      text={ATOM_TEXTS[typ as AtomIndexes]}
       fontSize={10}
       fontFamily={'Monospace'}
       fill={textColor}

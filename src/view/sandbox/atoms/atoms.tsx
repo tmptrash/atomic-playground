@@ -47,7 +47,7 @@ export default function Atoms({ stage, zoom }: Props) {
   // we have to collect all bonds before rendering them to exclude
   // collisions and z-index issues. it happend when we render fix and
   // spl atoms, which put their bonds outside of it's atoms
-  atoms.forEach(a => ATOM_BONDS?.[type(a.a)]?.(a, bonds))
+  atoms.forEach(a => ATOM_BONDS?.[type(a.a) as AtomIndexes]?.(a, bonds))
 
   function onNextAtom() {
     store.status.atom = nextAtom(store.status.atom)
@@ -56,7 +56,7 @@ export default function Atoms({ stage, zoom }: Props) {
   function onAddAtom(x: number, y: number) {
     const atomIndex = findAtomIdx(x, y)
     if (atomIndex >= 0) { return }
-    store.sandbox.atoms = [...store.sandbox.atoms, { id: id(), x, y, a: ATOM_NEW[store.status.atom] } as AtomType]
+    store.sandbox.atoms = [...store.sandbox.atoms, { id: id(), x, y, a: ATOM_NEW[store.status.atom] } as unknown as AtomType]
     store.sandbox.synced = false
   }
 
