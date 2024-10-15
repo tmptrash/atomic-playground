@@ -1,5 +1,6 @@
 import World, { destroy, put, get, WorldType } from 'irma5/src/world'
 import VMs, { vm, nrg, VMType } from 'irma5/src/vms'
+import { UInt64Array } from 'irma5/src/shared'
 import { toOffs as to32Offs } from 'irma5/src/atom'
 import CFG from 'irma5/src/cfg'
 import Config from '../config'
@@ -49,7 +50,7 @@ export function receive(vms: VMType): [VM[], Atom[]] {
 }
 
 function putVms(w: WorldType, vms: VM[]) {
-  const vmOffs = BigUint64Array.new(vms.length)
+  const vmOffs = UInt64Array.create(vms.length)
   vms.forEach(v => vmOffs.add(vm(v.offs, v.energy)))
   return VMs(w, vmOffs)
 }

@@ -8,7 +8,6 @@
 /// <reference types="../node_modules/irma5/types/atom.d.ts"/>
 /// <reference types="../node_modules/irma5/types/cfg.d.ts"/>
 
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './view/app'
 import './index.scss'
