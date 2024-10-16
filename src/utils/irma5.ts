@@ -14,10 +14,11 @@ export function send(vms: VM[], atoms: Atom[], w?: WorldType) {
     w && destroy(w)
     CFG.WORLD.width = Config.grid.cols
     CFG.WORLD.height = Config.grid.rows
-    w = World(true)
   }
-  const irma5Vms = putVms(w, vms)
-  atoms.forEach(a => put(w!, toOffs(a.x, a.y), a.a))
+  const world = !w ? World(true) : w
+
+  const irma5Vms = putVms(world, vms)
+  atoms.forEach(a => put(world, toOffs(a.x, a.y), a.a))
   return irma5Vms
 }
 
