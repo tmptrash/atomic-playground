@@ -10,11 +10,11 @@ import { Atom, VM } from '../types'
 // Recreates the world and put all atoms and vms into it
 //
 export function send(vms: VM[], atoms: Atom[], w?: WorldType) {
-  if (w?.w !== Config.grid.cols || w?.h !== Config.grid.rows) {
-    w && destroy(w)
+  if (!w || w.w !== Config.grid.cols || w.h !== Config.grid.rows) {
     CFG.WORLD.width = Config.grid.cols
     CFG.WORLD.height = Config.grid.rows
   }
+  w && destroy(w)
   const world = !w ? World(true) : w
 
   const irma5Vms = putVms(world, vms)

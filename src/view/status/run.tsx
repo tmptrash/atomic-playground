@@ -12,7 +12,7 @@ import { store } from "../../store/store";
 let irma5Vms: VMType
 
 export default function Run() {
-  function onDebug() {
+  function onStep() {
     //
     // if atoms or vms were changed we have to sync with irma5
     //
@@ -37,7 +37,7 @@ export default function Run() {
 
   return <Box sx={{ m: 2 }}>
     <Typography variant="caption" sx={{ display: 'block', mb: 2 }}>Run & Debug</Typography>
-    <Button variant="contained" startIcon={<AdbRoundedIcon />} sx={{mr: 6}} onClick={onDebug}>Step</Button>
+    <Button variant="contained" startIcon={<AdbRoundedIcon />} sx={{mr: 6}} onClick={onStep}>Step</Button>
     <Button variant="contained" startIcon={<PlayArrowRoundedIcon />} onClick={onRun}>Run</Button>
   </Box>
 }
