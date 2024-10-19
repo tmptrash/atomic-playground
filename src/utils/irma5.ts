@@ -14,7 +14,7 @@ export function send(vms: VM[], atoms: Atom[], w?: WorldType) {
     CFG.WORLD.width = Config.grid.cols
     CFG.WORLD.height = Config.grid.rows
   }
-  w && destroy(w)
+  if (w) destroy(w), w = undefined
   const world = !w ? World(true) : w
 
   const irma5Vms = putVms(world, vms)
