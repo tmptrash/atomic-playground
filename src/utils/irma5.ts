@@ -1,7 +1,7 @@
 import World, { destroy, put, get, WorldType } from 'irma5/src/world'
 import VMs, { vm, nrg, VMType } from 'irma5/src/vms'
 import { UInt64Array } from 'irma5/src/shared'
-import { toOffs as to32Offs } from 'irma5/src/atom'
+import { toOffs as to32Offs } from 'irma5/src/world'
 import CFG from 'irma5/src/cfg'
 import Config from '../config'
 import { id, toOffs } from '.'
