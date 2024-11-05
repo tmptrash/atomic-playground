@@ -18,6 +18,7 @@ export default function Atom({atom}: Props) {
   const typ = type(atom.a)
   const offs = toOffs(atom.x, atom.y)
   const vmAmount = store.sandbox.vms.amount((vm: VM) => vm.offs === offs)
+  const vmIdx = store.sandbox.vmIdx.toString()
   const [x, y] = toXY(store.sandbox.vms?.[store.sandbox.vmIdx]?.offs, step)
   const energy = store.sandbox.vms?.[store.sandbox.vmIdx]?.energy.toString()
 
@@ -33,14 +34,25 @@ export default function Atom({atom}: Props) {
       fill={ATOM_COLORS[typ as AtomIndexes]}/>
 
     {/* VMs amount on current atom */}
-    {vmAmount > 0 && <Text
-      x={atom.x + halfStep + 3.3}
-      y={atom.y + halfStep + 3.3}
-      text={vmAmount.toString()}
-      fontSize={2}
-      fontFamily={'Monospace'}
-      fill={Config.vm.color}
-    />}
+    {vmAmount > 0 && <>
+      <Text
+        x={atom.x + halfStep + 3.3}
+        y={atom.y + halfStep + 3.3}
+        text={vmAmount.toString()}
+        fontSize={2}
+        fontFamily={'Monospace'}
+        fill={Config.vm.amount}
+      />
+      {/* Index of current running VM */}
+      <Text
+        x={atom.x + halfStep - 3.9 - vmIdx.length * .6}
+        y={atom.y + halfStep + 3.3}
+        text={vmIdx}
+        fontSize={2}
+        fontFamily={'Monospace'}
+        fill={Config.vm.color}
+      />
+    </>}
 
     {/* Draw a circle if current atom is running with some VM + energy */}
     {x === atom.x && y === atom.y && <>
