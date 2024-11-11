@@ -14,7 +14,7 @@ import { type } from 'irma5/src/atom'
 import Config from '../../../config'
 import { AtomIndexes, EditModes, ATOM_NEW, Dir, BOND_TYPES, Atom as AtomType } from '../../../types'
 import { store } from '../../../store/store'
-import { findAtom, findAtomIdx, nextAtom } from '../../../utils/atom'
+import { findAtom, findAtomIdx, findVmIdx, nextAtom } from '../../../utils/atom'
 import { id, toOffs } from '../../../utils'
 import Atom from './atom/atom'
 import { Bonds } from './atom/bonds/bonds'
@@ -63,8 +63,14 @@ export default function Atoms({ stage, zoom }: Props) {
   function onDelAtom(x: number, y: number) {
     const atomIndex = findAtomIdx(x, y)
     if (atomIndex < 0) { return }
+    const vmIndex = findVmIdx(x, y)
     const atoms = store.sandbox.atoms
+    const vms = store.sandbox.vms
     atoms.splice(atomIndex, 1)
+    if (vmIndex > -1) {
+      vms.splice(vmIndex, 1)
+      store.sandbox.vms = [...vms]
+    }
     store.sandbox.atoms = [...atoms]
     store.sandbox.synced = false
   }

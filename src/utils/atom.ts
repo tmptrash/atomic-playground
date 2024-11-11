@@ -1,6 +1,7 @@
 import Config from "../config"
 import { AtomIndexes, Atom, Dir, DIR_OFFS } from "../types"
 import { store } from "../store/store"
+import { toOffs } from "."
 
 export function nextAtom(type: AtomIndexes): number {
   if (++type > AtomIndexes.rep) { type = AtomIndexes.mov }
@@ -25,4 +26,9 @@ export function findAtom(x: number, y: number) {
     a: atoms[atomIndex],
     i: atomIndex
   }
+}
+
+export function findVmIdx(x: number, y: number) {
+  const offs = toOffs(x, y)
+  return store.sandbox.vms.findIndex(vm => vm.offs === offs)
 }
