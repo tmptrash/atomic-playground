@@ -137,7 +137,7 @@ export default function Atoms({ stage, zoom }: Props) {
     if (ax < 0 || ay < 0 || ax >= Config.grid.rows * step || ay >= Config.grid.cols * step) { return }
     const { a } = findAtom(ax, ay)
     store.status.curAtom = type(a.a)
-    MODES[getModeByMouse(e.evt)](ax, ay)
+    MODES[getModeByMouse(e.evt)]?.(ax, ay)
   }
 
   function getModeByMouse(e: MouseEvent): string {

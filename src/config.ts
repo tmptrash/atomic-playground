@@ -15,25 +15,26 @@ const Config = {
     cols: 5
   },
   bonds: {
-    vmDirColor:  '#6aa84f',
-    movDirColor: '#cc4125',
-    bond1Color:  '#6aa84f',
-    bond2Color:  '#3d85c6',
-    bondIfColor: '#cc4125'
+    vmDirColor:   '#6aa84f',
+    movDirColor:  '#cc4125',
+    bond1Color:   '#6aa84f',
+    bond2Color:   '#3d85c6',
+    bondIfColor:  '#cc4125'
   },
   atoms: {
-    movColor:   '#e6b8af',
-    fixColor:   '#9fc5e8',
-    splColor:   '#b6d7a8',
-    conColor:   '#efefef',
-    jobColor:   '#f9cb9c',
-    repColor:   '#b4a7d6'
+    movColor:     '#e6b8af',
+    fixColor:     '#9fc5e8',
+    splColor:     '#b6d7a8',
+    conColor:     '#efefef',
+    jobColor:     '#f9cb9c',
+    repColor:     '#b4a7d6'
   },
   vm: {
-    nextColor:  '#6aa84f',
-    color:      '#9f713b',
-    amount:     '#cc4125',
-    energyColor:'#6aa84f',
+    nextColor:    '#6aa84f',
+    color:        '#6aa84f',
+    inactiveColor:'#888',
+    amount:       '#cc4125',
+    energyColor:  '#6aa84f',
     energy: 10
   }
 }
