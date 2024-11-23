@@ -46,15 +46,24 @@ export default function Atom({atom}: Props) {
     />}
     
     { /* if current atom has a VM's, but they are not currently active */ }
-    {inactiveVm && <Circle
-      x={atom.x + halfStep}
-      y={atom.y + halfStep}
-      radius={13}
-      stroke={Config.vm.inactiveColor}
-      strokeWidth={1}
-    />}
+    {inactiveVm && <>
+      <Circle
+        x={atom.x + halfStep}
+        y={atom.y + halfStep}
+        radius={13}
+        stroke={Config.vm.inactiveColor}
+        strokeWidth={1}
+      />
+      {vmAmount === 1 && <Text
+        x={atom.x + halfStep - energy.length * .6}
+        y={atom.y + halfStep + 3.9}
+        text={energy}
+        fontSize={2}
+        fontFamily={'Monospace'}
+        fill={Config.vm.inactiveColor}
+      />}
+    </>}
 
-    {/* Draw a circle if current atom is running with some VM + energy */}
     {x === atom.x && y === atom.y && <>
       {/* Index of current running VM */}
       {vmAmount > 1 && <Text
@@ -65,6 +74,7 @@ export default function Atom({atom}: Props) {
         fontFamily={'Monospace'}
         fill={Config.vm.color}
       />}
+      {/* Draw a circle if current atom is running with some VM */}
       <Circle
         x={atom.x + halfStep}
         y={atom.y + halfStep}
@@ -72,6 +82,7 @@ export default function Atom({atom}: Props) {
         stroke={Config.vm.color}
         strokeWidth={1}
       />
+      {/* Draw current VM energy */}
       <Text
         x={atom.x + halfStep - energy.length * .6}
         y={atom.y + halfStep + 3.9}
