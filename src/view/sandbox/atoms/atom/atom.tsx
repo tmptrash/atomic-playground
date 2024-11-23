@@ -36,13 +36,13 @@ export default function Atom({atom}: Props) {
       fill={ATOM_COLORS[typ as AtomIndexes]}/>
 
     {/* VMs amount on current atom */}
-    {vmAmount > 0 && <Text
-      x={atom.x + halfStep + 3.3}
+    {vmAmount > 1 && <Text
+      x={atom.x + halfStep + 3.5}
       y={atom.y + halfStep + 3.3}
-      text={`${vmAmount}`}
+      text={`\u03A3${vmAmount}`}
       fontSize={2}
       fontFamily={'Monospace'}
-      fill={Config.vm.amount}
+      fill={Config.vm[`${inactiveVm ? 'inactive' : 'amount'}Color`]}
     />}
     
     { /* if current atom has a VM's, but they are not currently active */ }
@@ -57,14 +57,14 @@ export default function Atom({atom}: Props) {
     {/* Draw a circle if current atom is running with some VM + energy */}
     {x === atom.x && y === atom.y && <>
       {/* Index of current running VM */}
-      <Text
-        x={atom.x + halfStep - 3.9 - `${vmIdx}`.length * .6}
+      {vmAmount > 1 && <Text
+        x={atom.x + halfStep - 4.9 - `${vmIdx}`.length * .6}
         y={atom.y + halfStep + 3.3}
-        text={`${vmIdx}`}
+        text={`#${vmIdx}`}
         fontSize={2}
         fontFamily={'Monospace'}
         fill={Config.vm.color}
-      />
+      />}
       <Circle
         x={atom.x + halfStep}
         y={atom.y + halfStep}

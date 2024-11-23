@@ -33,7 +33,7 @@ const Config = {
     nextColor:    '#6aa84f',
     color:        '#6aa84f',
     inactiveColor:'#888',
-    amount:       '#cc4125',
+    amountColor:  '#cc4125',
     energyColor:  '#6aa84f',
     energy: 10
   }
