@@ -11,6 +11,7 @@ export type Status = {
   atom: AtomIndexes
   curAtom: AtomIndexes
   bondIdx: number
+  energy: number
 }
 export type Store = {
   sandbox: Sandbox

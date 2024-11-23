@@ -10,7 +10,7 @@ export default function Status() {
   bind(store.status)
   
   return (
-    <div className="bg-gray-100" style={{width: 260}}>
+    <div className="bg-gray-100" style={{width: 280}}>
       <Upload/>
       <Divider/>
       <Edit/>

@@ -109,7 +109,7 @@ export default function Atoms({ stage, zoom }: Props) {
 
   function onAddVM(x: number, y: number) {
     store.sandbox.vms = [...store.sandbox.vms, {
-      energy: Config.vm.energy,
+      energy: store.status.energy,
       offs: toOffs(x, y)
     }]
     store.sandbox.synced = false

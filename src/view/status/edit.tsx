@@ -4,13 +4,14 @@ import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
 import Typography from '@mui/material/Typography'
-import { Box } from '@mui/material'
+import { Box, Stack, TextField } from '@mui/material'
 import { id } from '../../utils'
 import { AtomIndexes, EditModes, BOND_TYPES } from '../../types'
 import { store } from '../../store/store'
 
 export default function Edit() {
   const bond = BOND_TYPES[store.status.curAtom]?.[store.status.bondIdx]?.[2]
+  const inputStyle = {"& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": { display: "none" }, "& input[type=number]": { MozAppearance: "textfield"}}
 
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
     store.status.mode = e.target.value as EditModes
@@ -41,8 +42,20 @@ export default function Edit() {
 
         <FormControlLabel value={EditModes.VM} control={<Radio />} label={<span style={{ fontWeight: 500 }}>VMs</span>} />
         <Box style={{ color: 'grey' }} sx={{ ml: 4, mt: -1 }}>
-          <Typography variant="body2">LMB - add VM</Typography>
-          <Typography variant="body2">RMB - remove VM</Typography>
+          <Stack direction='row' spacing={2}>
+            <Stack direction='column'>
+              <Typography variant="body2">LMB - add VM</Typography>
+              <Typography variant="body2">RMB - remove VM</Typography>
+            </Stack>
+            <TextField
+              value={store.status.energy}
+              onChange={e => store.status.energy = +e.target.value}
+              style={{width: 83}}
+              sx={inputStyle}
+              size='small'
+              type='number'
+            />
+          </Stack>
         </Box>
       </RadioGroup>
     </FormControl>

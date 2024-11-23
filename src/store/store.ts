@@ -1,3 +1,4 @@
+import Config from "../config"
 import { AtomIndexes, EditModes, Store } from "../types"
 
 export const store: Store = {
@@ -11,6 +12,7 @@ export const store: Store = {
     mode: EditModes.Atom,
     atom: AtomIndexes.mov,
     curAtom: AtomIndexes.no,
-    bondIdx: 0
+    bondIdx: 0,
+    energy: Config.vm.energy
   }
 }
