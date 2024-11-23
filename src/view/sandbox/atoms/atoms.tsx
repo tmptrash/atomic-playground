@@ -123,6 +123,7 @@ export default function Atoms({ stage, zoom }: Props) {
     if (idx < 0) return
     vms.splice(idx, 1)
     store.sandbox.vms = [...vms]
+    if (store.sandbox.vmIdx > vms.length - 1) store.sandbox.vmIdx = vms.length - 1
     store.sandbox.synced = false
   }
 
@@ -161,6 +162,8 @@ export default function Atoms({ stage, zoom }: Props) {
     stage.on('mousedown', onMousedown)
     return onDestroy
   }, [stage, zoom])
+
+  console.log(store.sandbox.vms);
 
   return <>
     <>{atoms.map(a => <Atom key={a.id} atom={a}/>)}</>
