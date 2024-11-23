@@ -63,14 +63,15 @@ export default function Atoms({ stage, zoom }: Props) {
   function onDelAtom(x: number, y: number) {
     const atomIndex = findAtomIdx(x, y)
     if (atomIndex < 0) { return }
-    const vmIndex = findVmIdx(x, y)
-    const atoms = store.sandbox.atoms
-    const vms = store.sandbox.vms
-    atoms.splice(atomIndex, 1)
-    if (vmIndex > -1) {
+    let vmIndex = findVmIdx(x, y)
+    while (vmIndex > -1) {
+      const vms = store.sandbox.vms
       vms.splice(vmIndex, 1)
       store.sandbox.vms = [...vms]
+      vmIndex = findVmIdx(x, y)
     }
+    const atoms = store.sandbox.atoms
+    atoms.splice(atomIndex, 1)
     store.sandbox.atoms = [...atoms]
     store.sandbox.synced = false
   }
