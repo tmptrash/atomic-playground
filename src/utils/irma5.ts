@@ -4,7 +4,7 @@ import { UInt64Array } from 'irma5/src/shared'
 import { toOffs as to32Offs } from 'irma5/src/world'
 import CFG from 'irma5/src/cfg'
 import Config from '../config'
-import { id, toOffs } from '.'
+import { toOffs } from '.'
 import { Atom, VM } from '../types'
 //
 // Recreates the world and put all atoms and vms into it
@@ -38,7 +38,7 @@ export function receive(vms: VMType): [VM[], Atom[]] {
       const a = get(w, toOffs(x, y, 1))
       if (a) {
         atoms.push({
-          id: id(),
+          id: `${toOffs(x, y, 1)}`,
           a,
           x: x * step,
           y: y * step

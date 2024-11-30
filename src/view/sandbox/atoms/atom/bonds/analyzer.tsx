@@ -6,6 +6,7 @@ import Arrow from "./arrow"
 import Sceptre from './sceptre'
 import { findAtomIdx, getXYByDir } from '../../../../../utils/atom'
 import { store } from '../../../../../store/store'
+import { NO_DIR } from 'irma5/src/shared'
 
 // TODO: put these functions into <Bonds /> component
 type ArrowType = 'arrow' | 'sceptre'
@@ -92,13 +93,14 @@ function fixSplBonds(a: Atom, bonds: IBonds) {
 
 function conBonds(a: Atom, bonds: IBonds) {
   const id = a.id
+  const cmpMode = b3Dir(a.a) !== NO_DIR
   !bonds[id] && (bonds[id] = [])
   bonds[id] = [
     ...bonds[id], 
-    {a, d: ifDir(a.a), col: Config.bonds.bondIfColor, type: 'sceptre', id: a.id},
+    {a, d: ifDir(a.a), col: Config.bonds.bondIfColor, type: 'sceptre', id: cmpMode ? a.id : undefined},
     {a, d: thenDir(a.a), col: Config.bonds.bond1Color, type: 'sceptre'},
     {a, d: elseDir(a.a), col: Config.bonds.bond2Color, type: 'sceptre'},
-    {a, d: b3Dir(a.a), col: Config.bonds.vmDirColor, type: 'sceptre', id: a.id}
+    {a, d: b3Dir(a.a), col: Config.bonds.vmDirColor, type: 'sceptre', id: cmpMode ? a.id : undefined}
   ]
 }
 

@@ -47,7 +47,7 @@ export function bind(obj: IObj, changers?: Changer[]) {
   useEffect(() => () => {
     parent[key] = parent[key].old
     delete parent[key].old
-  })
+  }, [])
 
   useEffect(() => {
     if (parent[key].old) { throw new Error(`Current store property "${key}" is already user in other component`) }
@@ -62,7 +62,7 @@ export function bind(obj: IObj, changers?: Changer[]) {
         return true
       }
     })
-  })
+  }, [])
 }
 /**
  * Finds an object by it's reference inside other object
