@@ -56,7 +56,7 @@ export default function Atoms({ stage, zoom }: Props) {
   function onAddAtom(x: number, y: number) {
     const atomIndex = findAtomIdx(x, y)
     if (atomIndex >= 0) { return }
-    store.sandbox.atoms = [...store.sandbox.atoms, { id: id(), x, y, a: ATOM_NEW[store.status.atom] } as unknown as AtomType]
+    store.sandbox.atoms = [...store.sandbox.atoms, { id: `${toOffs(x, y)}`, x, y, a: ATOM_NEW[store.status.atom] } as unknown as AtomType]
     store.sandbox.synced = false
   }
 
@@ -162,8 +162,6 @@ export default function Atoms({ stage, zoom }: Props) {
     stage.on('mousedown', onMousedown)
     return onDestroy
   }, [stage, zoom])
-
-  console.log(store.sandbox.vms);
 
   return <>
     <>{atoms.map(a => <Atom key={a.id} atom={a}/>)}</>

@@ -1,7 +1,7 @@
 import Config from "../config"
 import { Atom } from "../types/atom"
 import { Block, Json, Vm } from "../types/json"
-import { id } from "."
+import { toOffs } from "."
 
 export function toAtoms(val: Json): Atom[] {
   if (val.width !== Config.grid.cols || val.height !== Config.grid.rows) {
@@ -13,7 +13,7 @@ export function toAtoms(val: Json): Atom[] {
   const atoms: Atom[] = []
   val.blocks.forEach((b: Block) => {
     b.atoms.forEach((a: Atom) => {
-      a.id = id()
+      a.id = `${toOffs(a.x, a.y, 1)}`
       a.x *= stepSize
       a.y *= stepSize
       atoms.push(a)
