@@ -11,6 +11,7 @@ type Props = {
   atom: AtomType
 }
 export default function Atom({atom}: Props) {
+  let energy = '';
   const lineWidth = Config.grid.lineWidth
   const textColor = Config.textColor
   const step = Config.grid.stepSize
@@ -18,11 +19,11 @@ export default function Atom({atom}: Props) {
   const typ = type(atom.a)
   const offs = toOffs(atom.x, atom.y)
   const vms = store?.sandbox?.vms
-  const vmAmount = vms.amount((vm: VM) => vm.offs === offs)
+  const vmAmount = vms.amount((vm: VM) => {if (vm.offs === offs) energy = `${vm.energy}`; return vm.offs === offs})
   const vmIdx: number = store.sandbox.vmIdx
   const [x, y] = toXY(vms?.[vmIdx]?.offs, step)
-  const energy = vms?.[vmIdx]?.energy.toString()
   const inactiveVm = !!(vms?.[vmIdx]?.offs !== undefined && vms?.[vmIdx]?.offs !== offs && vmAmount)
+  energy = !inactiveVm ? `${vms?.[vmIdx]?.energy}` : energy
 
   return <>
     {/* Atom rect */}
