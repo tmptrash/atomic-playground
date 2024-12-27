@@ -16,8 +16,19 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './view/app'
 import './index.scss'
+import { parseAtom } from './utils'
+
+declare global {
+  interface Window { parseAtom: (a: number) => string; }
+}
 //
 // create react Atomic Playground app
 //
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(<App/>)
+//
+// For the debug mode we set parseAtom() function
+//
+if (process.env.NODE_ENV === 'development') {
+  window.parseAtom = parseAtom
+}
