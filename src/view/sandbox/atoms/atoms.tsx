@@ -31,7 +31,7 @@ type Props = {
 }
 export default function Atoms({ stage, zoom }: Props) {
   let clickPos: Vector2d = {x: -1, y: -1}
-  const MODES = {
+  const MODES: { [key: string]: (...args: any[]) => void } = {
     // mouse button: 0 - left, 2 - right
     [`${EditModes.Atom}-0-ctrl`]: onNextAtom,
     [`${EditModes.Atom}-0`]: onAddAtom,
@@ -39,8 +39,7 @@ export default function Atoms({ stage, zoom }: Props) {
     [`${EditModes.Bond}-0`]: onNextDir,
     [`${EditModes.Bond}-2`]: onNextType,
     [`${EditModes.VM}-0`]: onAddVM,
-    [`${EditModes.VM}-2`]: onDelVM,
-
+    [`${EditModes.VM}-2`]: onDelVM
   }
   const atoms = store.sandbox.atoms
   const bonds: IBonds = {}
