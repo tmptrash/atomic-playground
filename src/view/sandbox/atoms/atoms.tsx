@@ -130,7 +130,7 @@ export default function Atoms({ stage, zoom }: Props) {
     store.status.curAtom = type(atom)
     MODES[getModeByMouse(e.evt)]?.(ax, ay)
     const updatedAtom = findAtom(ax!, ay!)
-    store.status.hovers.atom = parseAtom(updatedAtom.a.a)
+    store.status.hovers.atom = updatedAtom.a.a ? parseAtom(updatedAtom.a.a) : ''
   }
 
   function getModeByMouse(e: MouseEvent): string {
