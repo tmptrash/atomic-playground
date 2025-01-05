@@ -13,7 +13,7 @@ import { KonvaEventObject } from 'konva/lib/Node'
 import { type } from 'irma5/src/atom'
 import { AtomIndexes, EditModes, ATOM_NEW, Dir, BOND_TYPES, Atom as AtomType } from '../../../types'
 import { store } from '../../../store/store'
-import { atomUnder, findAtom, findAtomIdx, findVmIdx, nextAtom } from '../../../utils/atom'
+import { atomUnder, findAtom, findAtomIdx, findVmIdx, nextAtom, parseAtom } from '../../../utils/atom'
 import { toOffs } from '../../../utils'
 import Atom from './atom/atom'
 import { Bonds } from './atom/bonds/bonds'
@@ -131,8 +131,11 @@ export default function Atoms({ stage, zoom }: Props) {
 
   function onMouseup(e: KonvaEventObject<MouseEvent>): void {
     const {a, ax, ay} = atomUnder(stage, zoom)
-    store.status.curAtom = type(a?.a?.a || 0)
+    const atom = a?.a?.a || 0
+    store.status.curAtom = type(atom)
     MODES[getModeByMouse(e.evt)]?.(ax, ay)
+    const updatedAtom = findAtom(ax!, ay!)
+    store.status.hovers.atom = parseAtom(updatedAtom.a.a)
   }
 
   function getModeByMouse(e: MouseEvent): string {
