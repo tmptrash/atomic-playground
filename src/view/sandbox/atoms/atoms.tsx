@@ -29,7 +29,6 @@ type Props = {
   zoom: number
 }
 export default function Atoms({ stage, zoom }: Props) {
-  let clickPos: Vector2d = {x: -1, y: -1}
   const MODES: { [key: string]: (...args: any[]) => void } = {
     // mouse button: 0 - left, 2 - right
     [`${EditModes.Atom}-0-ctrl`]: onNextAtom,
@@ -125,10 +124,6 @@ export default function Atoms({ stage, zoom }: Props) {
     store.sandbox.synced = false
   }
 
-  function onMousedown() {
-    clickPos = stage.position()
-  }
-
   function onMouseup(e: KonvaEventObject<MouseEvent>): void {
     const {a, ax, ay} = atomUnder(stage, zoom)
     const atom = a?.a?.a || 0
@@ -144,12 +139,10 @@ export default function Atoms({ stage, zoom }: Props) {
 
   function onDestroy() {
     stage.off('mouseup', onMouseup)
-    stage.off('mousedown', onMousedown)
   }
 
   useEffect(() => {
     stage.on('mouseup', onMouseup)
-    stage.on('mousedown', onMousedown)
     return onDestroy
   }, [stage, zoom])
 
