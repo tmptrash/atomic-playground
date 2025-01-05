@@ -11,10 +11,9 @@ import Konva from 'konva'
 import { Vector2d } from 'konva/lib/types'
 import { KonvaEventObject } from 'konva/lib/Node'
 import { type } from 'irma5/src/atom'
-import Config from '../../../config'
 import { AtomIndexes, EditModes, ATOM_NEW, Dir, BOND_TYPES, Atom as AtomType } from '../../../types'
 import { store } from '../../../store/store'
-import { findAtom, findAtomIdx, findVmIdx, nextAtom } from '../../../utils/atom'
+import { atomUnder, findAtom, findAtomIdx, findVmIdx, nextAtom } from '../../../utils/atom'
 import { toOffs } from '../../../utils'
 import Atom from './atom/atom'
 import { Bonds } from './atom/bonds/bonds'
@@ -126,24 +125,13 @@ export default function Atoms({ stage, zoom }: Props) {
     store.sandbox.synced = false
   }
 
-  function getRelatedPos(): [number, number] {
-    const pos = stage.getPointerPosition() as Vector2d
-    return [(pos.x - stage.position().x) / zoom, (pos.y - stage.position().y) / zoom]
-  }
-
   function onMousedown() {
     clickPos = stage.position()
   }
 
   function onMouseup(e: KonvaEventObject<MouseEvent>): void {
-    const pos = stage.position()
-    if (pos.x !== clickPos.x || pos.y !== clickPos.y) { return }
-    const [x, y] = getRelatedPos()
-    const step = Config.grid.stepSize
-    const [ax, ay] = [Math.floor(x / step) * step, Math.floor(y / step) * step]
-    if (ax < 0 || ay < 0 || ax >= Config.grid.rows * step || ay >= Config.grid.cols * step) { return }
-    const { a } = findAtom(ax, ay)
-    store.status.curAtom = type(a.a)
+    const {a, ax, ay} = atomUnder(stage, zoom)
+    store.status.curAtom = type(a?.a?.a || 0)
     MODES[getModeByMouse(e.evt)]?.(ax, ay)
   }
 
@@ -163,7 +151,7 @@ export default function Atoms({ stage, zoom }: Props) {
   }, [stage, zoom])
 
   return <>
-    <>{atoms.map(a => <Atom key={a.id} atom={a}/>)}</>
+    <>{atoms.map(a => <Atom key={a.id} atom={a} stage={stage} zoom={zoom}/>)}</>
     <>{Object.values(bonds).map((v, i) => <Bonds key={i} bonds={v}/>)}</>
   </>
 }

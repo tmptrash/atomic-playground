@@ -4,6 +4,8 @@ import { store } from "../store/store"
 import { toOffs } from "."
 import { b1Dir, b2Dir, b3Dir, elseDir, ifDir, thenDir, type, vmDir } from "irma5/src/atom"
 import { ATOM_MOV, ATOM_FIX, ATOM_SPL, ATOM_CON, ATOM_JOB, ATOM_REP } from "irma5/src/shared"
+import Konva from "konva"
+import { Vector2d } from "konva/lib/types"
 
 export function nextAtom(type: AtomIndexes): number {
   if (++type > AtomIndexes.rep) { type = AtomIndexes.mov }
@@ -35,6 +37,19 @@ export function findVmIdx(x: number, y: number) {
   return store.sandbox.vms.findIndex(vm => vm.offs === offs)
 }
 
+export function getRelatedPos(stage: Konva.Stage, zoom: number): [number, number] {
+  const pos = stage.getPointerPosition() as Vector2d
+  return [(pos.x - stage.position().x) / zoom, (pos.y - stage.position().y) / zoom]
+}
+
+export function atomUnder(stage: Konva.Stage, zoom: number) {
+  const step = Config.grid.stepSize
+  const [x, y] = getRelatedPos(stage, zoom)
+  const [ax, ay] = [Math.floor(x / step) * step, Math.floor(y / step) * step]
+  if (ax < 0 || ay < 0 || ax >= Config.grid.rows * step || ay >= Config.grid.cols * step) { return {} }
+  return {a: findAtom(ax, ay), ax, ay}
+}
+
 /**
  * Returns human readable atom details from it's number 
  */
@@ -47,5 +62,5 @@ export function parseAtom(a: number) {
   case ATOM_JOB: return `job(vmDir=${vmDir(a)}, newVmDir=${b1Dir(a)})`
   case ATOM_REP: return `rep(vmDir=${vmDir(a)}, a1Dir=${b1Dir(a)}, a2Dir=${b2Dir(a)})`
   }
-  return 'Unknown atom of type "${type(a)}"'
+  return `Unknown atom '${a}' with type '${type(a)}'`
 }

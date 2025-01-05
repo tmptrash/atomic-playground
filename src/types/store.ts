@@ -10,6 +10,9 @@ export type Status = {
   mode: EditModes
   atom: AtomIndexes
   curAtom: AtomIndexes
+  hovers: {
+    atom: string
+  }
   bondIdx: number
   energy: number
 }

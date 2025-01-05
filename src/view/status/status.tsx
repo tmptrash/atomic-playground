@@ -5,6 +5,7 @@ import { bind } from '../../store/binder'
 import { store } from '../../store/store'
 import Edit from './edit'
 import Run from './run'
+import Info from './info'
 
 export default function Status() {
   bind(store.status)
@@ -16,6 +17,8 @@ export default function Status() {
       <Edit/>
       <Divider/>
       <Run/>
+      <Divider/>
+      <Info/>
     </div>
   )
 }

@@ -5,12 +5,16 @@ import Config from "../../../../config"
 import { ATOM_COLORS, ATOM_TEXTS, Atom as AtomType, AtomIndexes } from '../../../../types/atom'
 import { store } from '../../../../store/store'
 import { VM } from '../../../../types'
-import { toOffs, toXY } from '../../../../utils'
+import { atomUnder, getRelatedPos, parseAtom, toOffs, toXY } from '../../../../utils'
+import Konva from 'konva'
+import { KonvaEventObject } from 'konva/lib/Node'
 
 type Props = {
   atom: AtomType
+  stage: Konva.Stage
+  zoom: number
 }
-export default function Atom({atom}: Props) {
+export default function Atom({atom, stage, zoom}: Props) {
   let energy = '';
   const lineWidth = Config.grid.lineWidth
   const textColor = Config.textColor
@@ -25,6 +29,19 @@ export default function Atom({atom}: Props) {
   const inactiveVm = !!(vms?.[vmIdx]?.offs !== undefined && vms?.[vmIdx]?.offs !== offs && vmAmount)
   energy = !inactiveVm ? `${vms?.[vmIdx]?.energy}` : energy
 
+  function onAtomEnter() {
+    const {a} = atomUnder(stage, zoom)
+    store.status.hovers.atom = parseAtom(a?.a?.a || 0)
+  }
+
+  function onAtomLeave(e: KonvaEventObject<MouseEvent>) {
+    const r = e.target.attrs
+    const [x, y] = getRelatedPos(stage, zoom)
+    const [rx, ry] = [Math.round(x), Math.round(y)]
+    const [ax, ay] = [Math.floor(r.x), Math.floor(r.y)]
+    if (rx <= ax || rx >= ax + step || ry <= ay || ry >= ay + step) store.status.hovers.atom = ''
+  }
+
   return <>
     {/* Atom rect */}
     <Rect
@@ -34,7 +51,9 @@ export default function Atom({atom}: Props) {
       height={step - lineWidth * 2}
       strokeWidth={lineWidth}
       stroke={ATOM_COLORS[typ as AtomIndexes]}
-      fill={ATOM_COLORS[typ as AtomIndexes]}/>
+      fill={ATOM_COLORS[typ as AtomIndexes]}
+      onMouseEnter={onAtomEnter}
+      onMouseLeave={onAtomLeave}/>
 
     {/* VMs amount on current atom */}
     {vmAmount > 1 && <Text

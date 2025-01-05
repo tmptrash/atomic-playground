@@ -12,6 +12,9 @@ export const store: Store = {
     mode: EditModes.Atom,
     atom: AtomIndexes.mov,
     curAtom: AtomIndexes.no,
+    hovers: {
+      atom: ''
+    },
     bondIdx: 0,
     energy: Config.vm.energy
   }
