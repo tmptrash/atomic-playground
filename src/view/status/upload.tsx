@@ -33,7 +33,7 @@ export default function Upload() {
     <Typography variant="caption" sx={{ display: 'block', mb: 2 }}>Upload atoms from JSON</Typography>
     <label htmlFor="upload-file">
       <input accept="application/JSON" id="upload-file" type="file" onChange={onChange} value={file} className="hidden"/>
-      <Button variant="contained" component="span" startIcon={<CloudUploadRoundedIcon />}>
+      <Button variant="contained" component="span" startIcon={<CloudUploadRoundedIcon />} disabled>
         Upload
       </Button>
     </label>
