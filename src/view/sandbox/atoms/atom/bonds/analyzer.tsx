@@ -100,7 +100,7 @@ function conBonds(a: Atom, bonds: IBonds) {
     {a, d: ifDir(a.a), col: Config.bonds.bondIfColor, type: 'sceptre', id: cmpMode ? a.id : undefined},
     {a, d: thenDir(a.a), col: Config.bonds.bond1Color, type: 'sceptre'},
     {a, d: elseDir(a.a), col: Config.bonds.bond2Color, type: 'sceptre'},
-    {a, d: b3Dir(a.a), col: Config.bonds.vmDirColor, type: 'sceptre', id: cmpMode ? a.id : undefined}
+    {a, d: b3Dir(a.a), col: Config.bonds.bondIs2Color, type: 'sceptre', id: cmpMode ? a.id : undefined}
   ]
 }
 

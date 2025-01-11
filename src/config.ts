@@ -19,7 +19,8 @@ const Config = {
     movDirColor:  '#cc4125',
     bond1Color:   '#6aa84f',
     bond2Color:   '#3d85c6',
-    bondIfColor:  '#cc4125'
+    bondIfColor:  '#cc4125',
+    bondIs2Color: '#b4a7d6'
   },
   atoms: {
     movColor:     '#e6b8af',
