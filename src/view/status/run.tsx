@@ -38,6 +38,6 @@ export default function Run() {
   return <Box sx={{ m: 2 }}>
     <Typography variant="caption" sx={{ display: 'block', mb: 2 }}>Run & Debug</Typography>
     <Button variant="contained" startIcon={<AdbRoundedIcon />} sx={{mr: 6}} onClick={onStep}>Step</Button>
-    <Button variant="contained" startIcon={<PlayArrowRoundedIcon />} onClick={onRun}>Run</Button>
+    <Button variant="contained" startIcon={<PlayArrowRoundedIcon />} onClick={onRun} disabled>Run</Button>
   </Box>
 }
