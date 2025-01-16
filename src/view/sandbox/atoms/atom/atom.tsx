@@ -74,9 +74,10 @@ export default function Atom({atom, stage, zoom}: Props) {
         stroke={Config.vm.inactiveColor}
         strokeWidth={1}
       />
+      { /* Inactive VM energy */}
       {vmAmount === 1 && <Text
         x={atom.x + halfStep - energy.length * .6}
-        y={atom.y + halfStep + 3.9}
+        y={atom.y + halfStep + 5}
         text={energy}
         fontSize={2}
         fontFamily={'Monospace'}
@@ -105,7 +106,7 @@ export default function Atom({atom, stage, zoom}: Props) {
       {/* Draw current VM energy */}
       <Text
         x={atom.x + halfStep - energy.length * .6}
-        y={atom.y + halfStep + 3.9}
+        y={atom.y + halfStep + 5}
         text={energy}
         fontSize={2}
         fontFamily={'Monospace'}
