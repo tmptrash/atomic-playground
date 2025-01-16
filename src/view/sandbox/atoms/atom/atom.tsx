@@ -115,10 +115,10 @@ export default function Atom({atom, stage, zoom}: Props) {
 
     {/* The letter in atom center (m-mov, s-spl,...) */}
     <Text
-      x={atom.x + halfStep - 3}
+      x={atom.x + halfStep - 2.3}
       y={atom.y + halfStep - 4}
       text={ATOM_TEXTS[typ as AtomIndexes]}
-      fontSize={10}
+      fontSize={8}
       fontFamily={'Monospace'}
       fill={textColor}
     />
