@@ -115,12 +115,27 @@ function jobBonds(a: Atom, bonds: IBonds) {
 }
 
 function repBonds(a: Atom, bonds: IBonds) {
-  const id = a.id
+  let id = a.id
   !bonds[id] && (bonds[id] = [])
+  const b1d = b1Dir(a.a)
   bonds[id] = [
     ...bonds[id], 
     {a, d: vmDir(a.a), col: Config.vm.nextColor, type: 'arrow'},
-    {a, d: b1Dir(a.a), col: Config.bonds.bond1Color, type: 'sceptre', id: a.id},
-    {a, d: b2Dir(a.a), col: Config.bonds.bond2Color, type: 'sceptre', id: a.id}
+    {a, d: b1d, col: Config.bonds.bond1Color, type: 'sceptre', id: a.id}
   ]
+
+  // find near atom
+  const [x, y] = getXYByDir(a, b1d)
+  const atomIdx = findAtomIdx(x, y)
+  if (atomIdx < 0) return
+  const atoms = store.sandbox.atoms
+  id = atoms[atomIdx].id
+  !bonds[id] && (bonds[id] = [])
+  bonds[id].push({
+    a: atoms[atomIdx],
+    d: b2Dir(a.a),
+    col: Config.bonds.bond2Color,
+    type: 'sceptre',
+    id: a.id
+  })
 }
