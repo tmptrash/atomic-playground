@@ -5,8 +5,8 @@ import { AtomIndexes, Atom, Dir } from "../../../../../types"
 import Arrow from "./arrow"
 import Sceptre from './sceptre'
 import { findAtomIdx, getXYByDir } from '../../../../../utils/atom'
-import { store } from '../../../../../store/store'
 import { NO_DIR } from 'irma5/src/shared'
+import { ATOMS_SIGNAL } from '../../../../../store/signals'
 
 // TODO: put these functions into <Bonds /> component
 type ArrowType = 'arrow' | 'sceptre'
@@ -79,7 +79,7 @@ function fixSplBonds(a: Atom, bonds: IBonds) {
   const [x, y] = getXYByDir(a, b1d)
   const atomIdx = findAtomIdx(x, y)
   if (atomIdx < 0) return
-  const atoms = store.sandbox.atoms
+  const atoms = ATOMS_SIGNAL.value
   id = atoms[atomIdx].id
   !bonds[id] && (bonds[id] = [])
   bonds[id].push({
@@ -128,7 +128,7 @@ function repBonds(a: Atom, bonds: IBonds) {
   const [x, y] = getXYByDir(a, b1d)
   const atomIdx = findAtomIdx(x, y)
   if (atomIdx < 0) return
-  const atoms = store.sandbox.atoms
+  const atoms = ATOMS_SIGNAL.value
   id = atoms[atomIdx].id
   !bonds[id] && (bonds[id] = [])
   bonds[id].push({

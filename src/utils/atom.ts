@@ -6,6 +6,7 @@ import { b1Dir, b2Dir, b3Dir, elseDir, ifDir, thenDir, type, vmDir } from "irma5
 import { ATOM_MOV, ATOM_FIX, ATOM_SPL, ATOM_CON, ATOM_JOB, ATOM_REP } from "irma5/src/shared"
 import Konva from "konva"
 import { Vector2d } from "konva/lib/types"
+import { ATOMS_SIGNAL } from "../store/signals"
 
 export function nextAtom(type: AtomIndexes): number {
   if (++type > AtomIndexes.rep) { type = AtomIndexes.mov }
@@ -19,15 +20,14 @@ export function getXYByDir(a: Atom, dir: Dir): [number, number] {
 }
 
 export function findAtomIdx(atomX: number, atomY: number): number {
-  return store.sandbox.atoms.findIndex(a => a.x === atomX && a.y === atomY)
+  return ATOMS_SIGNAL.value.findIndex(a => a.x === atomX && a.y === atomY)
 }
 
 export function findAtom(x: number, y: number) {
   const atomIndex = findAtomIdx(x, y)
   if (atomIndex < 0) return {a: {a: 0} as Atom, i: -1}
-  const atoms = store.sandbox.atoms
   return {
-    a: atoms[atomIndex],
+    a: ATOMS_SIGNAL.value[atomIndex],
     i: atomIndex
   }
 }

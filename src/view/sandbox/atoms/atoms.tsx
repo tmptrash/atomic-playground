@@ -17,7 +17,7 @@ import { toOffs } from '../../../utils'
 import Atom from './atom/atom'
 import { Bonds } from './atom/bonds/bonds'
 import { ATOM_BONDS, IBonds } from './atom/bonds/analyzer'
-import { MODE_SIGNAL } from '../../../store/signals'
+import { ATOMS_SIGNAL, MODE_SIGNAL } from '../../../store/signals'
 
 //
 // Turns off right mouse button context menu
@@ -39,12 +39,11 @@ export default function Atoms({ stage, zoom }: Props) {
     [`${EditModes.VM}-0`]: onAddVM,
     [`${EditModes.VM}-2`]: onDelVM
   }
-  const atoms = store.sandbox.atoms
   const bonds: IBonds = {}
   // we have to collect all bonds before rendering them to exclude
   // collisions and z-index issues. it happend when we render fix and
   // spl atoms, which put their bonds outside of it's atoms
-  atoms.forEach(a => ATOM_BONDS?.[type(a.a) as AtomIndexes]?.(a, bonds))
+  ATOMS_SIGNAL.value.forEach(a => ATOM_BONDS?.[type(a.a) as AtomIndexes]?.(a, bonds))
 
   function onNextAtom() {
     store.status.atom = nextAtom(store.status.atom)
@@ -53,7 +52,7 @@ export default function Atoms({ stage, zoom }: Props) {
   function onAddAtom(x: number, y: number) {
     const atomIndex = findAtomIdx(x, y)
     if (atomIndex >= 0) { return }
-    store.sandbox.atoms = [...store.sandbox.atoms, { id: `${toOffs(x, y)}`, x, y, a: ATOM_NEW[store.status.atom] } as unknown as AtomType]
+    ATOMS_SIGNAL.value = [...ATOMS_SIGNAL.value, { id: `${toOffs(x, y)}`, x, y, a: ATOM_NEW[store.status.atom] } as unknown as AtomType]
     store.sandbox.synced = false
   }
 
@@ -67,9 +66,9 @@ export default function Atoms({ stage, zoom }: Props) {
       store.sandbox.vms = [...vms]
       vmIndex = findVmIdx(x, y)
     }
-    const atoms = store.sandbox.atoms
+    const atoms = ATOMS_SIGNAL.value
     atoms.splice(atomIndex, 1)
-    store.sandbox.atoms = [...atoms]
+    ATOMS_SIGNAL.value = [...atoms]
     store.sandbox.synced = false
   }
 
@@ -84,7 +83,7 @@ export default function Atoms({ stage, zoom }: Props) {
   function onNextDir(x: number, y: number) {
     const { a, i } = findAtom(x, y)
     if (i < 0 || !a.a) return
-    const atoms = store.sandbox.atoms
+    const atoms = ATOMS_SIGNAL.value
     const typ = type(a.a)
     let bondIdx = store.status.bondIdx
     if (bondIdx >= BOND_TYPES[typ].length) bondIdx = store.status.bondIdx = 0
@@ -100,7 +99,7 @@ export default function Atoms({ stage, zoom }: Props) {
     }
     a.a = (BOND_TYPES[typ]?.[bondIdx]?.[1] || BOND_TYPES[typ]?.[0]?.[1])?.(a.a, d)
     atoms[i] = a
-    store.sandbox.atoms = [...atoms]
+    ATOMS_SIGNAL.value = [...atoms]
     store.sandbox.synced = false
   }
 
@@ -149,7 +148,7 @@ export default function Atoms({ stage, zoom }: Props) {
   }, [stage, zoom])
 
   return <>
-    <>{atoms.map(a => <Atom key={a.id} atom={a} stage={stage} zoom={zoom}/>)}</>
+    <>{ATOMS_SIGNAL.value.map(a => <Atom key={a.id} atom={a} stage={stage} zoom={zoom}/>)}</>
     <>{Object.values(bonds).map((v, i) => <Bonds key={i} bonds={v}/>)}</>
   </>
 }

@@ -3,8 +3,8 @@ import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
 import CloudUploadRoundedIcon from '@mui/icons-material/CloudUploadRounded';
-import { store } from '../../store/store'
 import { toAtoms } from '../../utils/json'
+import { ATOMS_SIGNAL } from '../../store/signals';
 
 export default function Upload() {
   const [file, setFile] = useState('')
@@ -20,7 +20,7 @@ export default function Upload() {
     return (e: ProgressEvent<FileReader>) => {
       if (e?.target?.result) {
         try {
-          store.sandbox.atoms = toAtoms(JSON.parse(e.target.result.toString()))
+          ATOMS_SIGNAL.value = toAtoms(JSON.parse(e.target.result.toString()))
           setFile('')
         } catch(e) {
           console.error(`Invalid json file ${event?.target?.files?.[0]}`)
