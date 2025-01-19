@@ -8,7 +8,6 @@
  */
 import React, { useEffect } from 'react'
 import Konva from 'konva'
-import { Vector2d } from 'konva/lib/types'
 import { KonvaEventObject } from 'konva/lib/Node'
 import { type } from 'irma5/src/atom'
 import { AtomIndexes, EditModes, ATOM_NEW, Dir, BOND_TYPES, Atom as AtomType } from '../../../types'
@@ -18,6 +17,7 @@ import { toOffs } from '../../../utils'
 import Atom from './atom/atom'
 import { Bonds } from './atom/bonds/bonds'
 import { ATOM_BONDS, IBonds } from './atom/bonds/analyzer'
+import { MODE_SIGNAL } from '../../../store/signals'
 
 //
 // Turns off right mouse button context menu
@@ -136,7 +136,7 @@ export default function Atoms({ stage, zoom }: Props) {
   }
 
   function getModeByMouse(e: MouseEvent): string {
-    return `${store.status.mode}-${e.button}${e.ctrlKey ? '-ctrl' : ''}`
+    return `${MODE_SIGNAL.value}-${e.button}${e.ctrlKey ? '-ctrl' : ''}`
   }
 
   function onDestroy() {

@@ -8,13 +8,14 @@ import { Box, Stack, TextField } from '@mui/material'
 import { id } from '../../utils'
 import { AtomIndexes, EditModes, BOND_TYPES } from '../../types'
 import { store } from '../../store/store'
+import { MODE_SIGNAL } from '../../store/signals'
 
 export default function Edit() {
   const bond = BOND_TYPES[store.status.curAtom]?.[store.status.bondIdx]?.[2]
   const inputStyle = {"& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": { display: "none" }, "& input[type=number]": { MozAppearance: "textfield"}}
 
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
-    store.status.mode = e.target.value as EditModes
+    MODE_SIGNAL.value = e.target.value as EditModes
   }
 
   return <Box sx={{ m: 2 }}>
