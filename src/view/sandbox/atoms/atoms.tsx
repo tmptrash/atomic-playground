@@ -17,8 +17,7 @@ import { toOffs } from '../../../utils'
 import Atom from './atom/atom'
 import { Bonds } from './atom/bonds/bonds'
 import { ATOM_BONDS, IBonds } from './atom/bonds/analyzer'
-import { ATOMS_SIGNAL, MODE_SIGNAL } from '../../../store/signals'
-
+import { ATOMS_SIGNAL, MODE_SIGNAL, VMS_SIGNAL } from '../../../store/signals'
 //
 // Turns off right mouse button context menu
 //
@@ -61,9 +60,9 @@ export default function Atoms({ stage, zoom }: Props) {
     if (atomIndex < 0) { return }
     let vmIndex = findVmIdx(x, y)
     while (vmIndex > -1) {
-      const vms = store.sandbox.vms
+      const vms = VMS_SIGNAL.value
       vms.splice(vmIndex, 1)
-      store.sandbox.vms = [...vms]
+      VMS_SIGNAL.value = [...vms]
       vmIndex = findVmIdx(x, y)
     }
     const atoms = ATOMS_SIGNAL.value
@@ -106,21 +105,21 @@ export default function Atoms({ stage, zoom }: Props) {
   function onAddVM(x: number, y: number) {
     const atomIndex = findAtomIdx(x, y)
     if (atomIndex < 0) { return }
-    store.sandbox.vms = [...store.sandbox.vms, {
+    VMS_SIGNAL.value = [...VMS_SIGNAL.value, {
       energy: store.status.energy,
       offs: toOffs(x, y)
     }]
     store.sandbox.synced = false
-    store.sandbox.vms.length === 1 && (store.sandbox.vmIdx = 0)
+    VMS_SIGNAL.value.length === 1 && (store.sandbox.vmIdx = 0)
   }
 
   function onDelVM(x: number, y: number) {
-    const vms = store.sandbox.vms
+    const vms = VMS_SIGNAL.value
     const offs = toOffs(x, y)
     const idx = vms.findIndex(vm => vm.offs === offs)
     if (idx < 0) return
     vms.splice(idx, 1)
-    store.sandbox.vms = [...vms]
+    VMS_SIGNAL.value = [...vms]
     if (store.sandbox.vmIdx > vms.length - 1) store.sandbox.vmIdx = vms.length - 1
     store.sandbox.synced = false
   }

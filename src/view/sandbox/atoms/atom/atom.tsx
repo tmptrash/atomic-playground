@@ -8,6 +8,7 @@ import { VM } from '../../../../types'
 import { atomUnder, getRelatedPos, parseAtom, toOffs, toXY } from '../../../../utils'
 import Konva from 'konva'
 import { KonvaEventObject } from 'konva/lib/Node'
+import { VMS_SIGNAL } from '../../../../store/signals'
 
 type Props = {
   atom: AtomType
@@ -22,7 +23,7 @@ export default function Atom({atom, stage, zoom}: Props) {
   const halfStep = step / 2
   const typ = type(atom.a)
   const offs = toOffs(atom.x, atom.y)
-  const vms = store?.sandbox?.vms
+  const vms = VMS_SIGNAL.value
   const vmAmount = vms.amount((vm: VM) => {if (vm.offs === offs) energy = `${vm.energy}`; return vm.offs === offs})
   const vmIdx: number = store.sandbox.vmIdx
   const [x, y] = toXY(vms?.[vmIdx]?.offs, step)

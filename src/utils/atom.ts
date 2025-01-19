@@ -1,12 +1,11 @@
 import Config from "../config"
 import { AtomIndexes, Atom, Dir, DIR_OFFS } from "../types"
-import { store } from "../store/store"
 import { toOffs } from "."
 import { b1Dir, b2Dir, b3Dir, elseDir, ifDir, thenDir, type, vmDir } from "irma5/src/atom"
 import { ATOM_MOV, ATOM_FIX, ATOM_SPL, ATOM_CON, ATOM_JOB, ATOM_REP } from "irma5/src/shared"
 import Konva from "konva"
 import { Vector2d } from "konva/lib/types"
-import { ATOMS_SIGNAL } from "../store/signals"
+import { ATOMS_SIGNAL, VMS_SIGNAL } from "../store/signals"
 
 export function nextAtom(type: AtomIndexes): number {
   if (++type > AtomIndexes.rep) { type = AtomIndexes.mov }
@@ -34,7 +33,7 @@ export function findAtom(x: number, y: number) {
 
 export function findVmIdx(x: number, y: number) {
   const offs = toOffs(x, y)
-  return store.sandbox.vms.findIndex(vm => vm.offs === offs)
+  return VMS_SIGNAL.value.findIndex(vm => vm.offs === offs)
 }
 
 export function getRelatedPos(stage: Konva.Stage, zoom: number): [number, number] {

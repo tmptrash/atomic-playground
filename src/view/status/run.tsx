@@ -5,7 +5,7 @@ import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import { VMType, tick } from 'irma5/src/vms'
 import { receive, send } from "./../../utils/irma5";
 import { store } from "../../store/store";
-import { ATOMS_SIGNAL } from "../../store/signals";
+import { ATOMS_SIGNAL, VMS_SIGNAL } from "../../store/signals";
 //
 // Virtual machines instance singleton. Will be updated
 // after every synchronization with irma5
@@ -17,7 +17,7 @@ export default function Run() {
     //
     // if atoms or vms were changed we have to sync with irma5
     //
-    !store.sandbox.synced && (irma5Vms = send(store.sandbox.vms, ATOMS_SIGNAL.value, irma5Vms?.w))
+    !store.sandbox.synced && (irma5Vms = send(VMS_SIGNAL.value, ATOMS_SIGNAL.value, irma5Vms?.w))
     store.sandbox.synced = true
     //
     // runs one tick in irma5 for one VM
@@ -29,7 +29,7 @@ export default function Run() {
     //
     // receives new atoms and vms from irma5 after tick()
     //
-    [store.sandbox.vms, ATOMS_SIGNAL.value] = receive(irma5Vms)
+    [VMS_SIGNAL.value, ATOMS_SIGNAL.value] = receive(irma5Vms)
   }
 
   function onRun() {
