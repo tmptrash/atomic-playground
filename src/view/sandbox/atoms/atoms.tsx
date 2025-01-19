@@ -17,7 +17,7 @@ import { toOffs } from '../../../utils'
 import Atom from './atom/atom'
 import { Bonds } from './atom/bonds/bonds'
 import { ATOM_BONDS, IBonds } from './atom/bonds/analyzer'
-import { ATOMS_SIGNAL, MODE_SIGNAL, VMS_SIGNAL } from '../../../store/signals'
+import { ATOMS_SIGNAL, MODE_SIGNAL, VMS_SIGNAL, VM_IDX_SIGNAL } from '../../../store/signals'
 //
 // Turns off right mouse button context menu
 //
@@ -110,7 +110,7 @@ export default function Atoms({ stage, zoom }: Props) {
       offs: toOffs(x, y)
     }]
     store.sandbox.synced = false
-    VMS_SIGNAL.value.length === 1 && (store.sandbox.vmIdx = 0)
+    VMS_SIGNAL.value.length === 1 && (VM_IDX_SIGNAL.value = 0)
   }
 
   function onDelVM(x: number, y: number) {
@@ -120,7 +120,7 @@ export default function Atoms({ stage, zoom }: Props) {
     if (idx < 0) return
     vms.splice(idx, 1)
     VMS_SIGNAL.value = [...vms]
-    if (store.sandbox.vmIdx > vms.length - 1) store.sandbox.vmIdx = vms.length - 1
+    if (VM_IDX_SIGNAL.value > vms.length - 1) VM_IDX_SIGNAL.value = vms.length - 1
     store.sandbox.synced = false
   }
 

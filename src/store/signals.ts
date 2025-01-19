@@ -12,3 +12,7 @@ export const ATOMS_SIGNAL: Signal<Atom[]> = signal([])
  * Represents virtual machines inside the sandbox
  */
 export const VMS_SIGNAL: Signal<VM[]> = signal([])
+/**
+ * Represents current VM index in VMS_SIGNAL array
+ */
+export const VM_IDX_SIGNAL = signal(0)
