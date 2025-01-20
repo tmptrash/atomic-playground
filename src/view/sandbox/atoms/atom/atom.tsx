@@ -9,6 +9,7 @@ import { atomUnder, getRelatedPos, parseAtom, toOffs, toXY } from '../../../../u
 import Konva from 'konva'
 import { KonvaEventObject } from 'konva/lib/Node'
 import { VMS_SIGNAL, VM_IDX_SIGNAL } from '../../../../store/signals'
+import { useSignals } from '@preact/signals-react/runtime'
 
 type Props = {
   atom: AtomType
@@ -16,6 +17,7 @@ type Props = {
   zoom: number
 }
 export default function Atom({atom, stage, zoom}: Props) {
+  useSignals()
   let energy = '';
   const lineWidth = Config.grid.lineWidth
   const textColor = Config.textColor

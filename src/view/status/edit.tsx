@@ -9,8 +9,10 @@ import { id } from '../../utils'
 import { AtomIndexes, EditModes, BOND_TYPES } from '../../types'
 import { store } from '../../store/store'
 import { ADD_ATOM_SIGNAL, CUR_ATOM_SIGNAL, MODE_SIGNAL } from '../../store/signals'
+import { useSignals } from '@preact/signals-react/runtime'
 
 export default function Edit() {
+  useSignals()
   const bond = BOND_TYPES[CUR_ATOM_SIGNAL.value]?.[store.status.bondIdx]?.[2]
   const inputStyle = {"& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": { display: "none" }, "& input[type=number]": { MozAppearance: "textfield"}}
 

@@ -7,6 +7,7 @@
  * but also around near atoms.
  */
 import React, { useEffect } from 'react'
+import { useSignals } from '@preact/signals-react/runtime'
 import Konva from 'konva'
 import { KonvaEventObject } from 'konva/lib/Node'
 import { type } from 'irma5/src/atom'
@@ -28,6 +29,7 @@ type Props = {
   zoom: number
 }
 export default function Atoms({ stage, zoom }: Props) {
+  useSignals()
   const MODES: { [key: string]: (...args: any[]) => void } = {
     // mouse button: 0 - left, 2 - right
     [`${EditModes.Atom}-0-ctrl`]: onNextAtom,
