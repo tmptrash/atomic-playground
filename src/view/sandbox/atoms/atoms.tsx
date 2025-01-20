@@ -18,7 +18,7 @@ import { toOffs } from '../../../utils'
 import Atom from './atom/atom'
 import { Bonds } from './atom/bonds/bonds'
 import { ATOM_BONDS, IBonds } from './atom/bonds/analyzer'
-import { ADD_ATOM_SIGNAL, ATOMS_SIGNAL, CUR_ATOM_SIGNAL, MODE_SIGNAL, SYNCED_SIGNAL, VMS_SIGNAL, VM_IDX_SIGNAL } from '../../../store/signals'
+import { ADD_ATOM_SIGNAL, ADD_BOND_IDX_SIGNAL, ATOMS_SIGNAL, CUR_ATOM_SIGNAL, ENERGY_SIGNAL, HOVERED_ATOM_SIGNAL, MODE_SIGNAL, SYNCED_SIGNAL, VMS_SIGNAL, VM_IDX_SIGNAL } from '../../../store/signals'
 //
 // Turns off right mouse button context menu
 //
@@ -78,7 +78,7 @@ export default function Atoms({ stage, zoom }: Props) {
     if (i < 0) return
     const typ = type(a.a)
     const bondTypes = BOND_TYPES[typ]
-    ++store.status.bondIdx >= bondTypes.length && (store.status.bondIdx = 0)
+    ++ADD_BOND_IDX_SIGNAL.value >= bondTypes.length && (ADD_BOND_IDX_SIGNAL.value = 0)
   }
 
   function onNextDir(x: number, y: number) {
@@ -86,8 +86,8 @@ export default function Atoms({ stage, zoom }: Props) {
     if (i < 0 || !a.a) return
     const atoms = ATOMS_SIGNAL.value
     const typ = type(a.a)
-    let bondIdx = store.status.bondIdx
-    if (bondIdx >= BOND_TYPES[typ].length) bondIdx = store.status.bondIdx = 0
+    let bondIdx = ADD_BOND_IDX_SIGNAL.value
+    if (bondIdx >= BOND_TYPES[typ].length) bondIdx = ADD_BOND_IDX_SIGNAL.value = 0
     let d = (BOND_TYPES[typ]?.[bondIdx]?.[0] || BOND_TYPES[typ]?.[0]?.[0])?.(a.a) + 1
     //
     // only for next VM dir & bond 3 in con atom, which are have 4 bits we may set
@@ -108,7 +108,7 @@ export default function Atoms({ stage, zoom }: Props) {
     const atomIndex = findAtomIdx(x, y)
     if (atomIndex < 0) { return }
     VMS_SIGNAL.value = [...VMS_SIGNAL.value, {
-      energy: store.status.energy,
+      energy: ENERGY_SIGNAL.value,
       offs: toOffs(x, y)
     }]
     SYNCED_SIGNAL.value = false
@@ -133,7 +133,7 @@ export default function Atoms({ stage, zoom }: Props) {
     CUR_ATOM_SIGNAL.value = type(atom)
     MODES[getModeByMouse(e.evt)]?.(ax, ay)
     const updatedAtom = findAtom(ax!, ay!)
-    store.status.hovers.atom = updatedAtom.a.a ? parseAtom(updatedAtom.a.a) : ''
+    HOVERED_ATOM_SIGNAL.value = updatedAtom.a.a ? parseAtom(updatedAtom.a.a) : ''
   }
 
   function getModeByMouse(e: MouseEvent): string {

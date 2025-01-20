@@ -1,5 +1,6 @@
 import { Signal, signal } from "@preact/signals-react";
 import { Atom, AtomIndexes, EditModes, VM } from "../types";
+import Config from "../config";
 /**
  * Represents atoms array, which we draw on a sandbox
  */
@@ -28,3 +29,15 @@ export const ADD_ATOM_SIGNAL = signal(AtomIndexes.mov)
  * Represents an atom under mouse
  */
 export const CUR_ATOM_SIGNAL = signal(AtomIndexes.no)
+/**
+ * Represents hovered atom to show it's details
+ */
+export const HOVERED_ATOM_SIGNAL = signal('')
+/**
+ * Represents current bond to set
+ */
+export const ADD_BOND_IDX_SIGNAL = signal(0)
+/**
+ * Represents amount of energy in an input
+ */
+export const ENERGY_SIGNAL = signal(Config.vm.energy)

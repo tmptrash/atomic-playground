@@ -8,12 +8,12 @@ import { Box, Stack, TextField } from '@mui/material'
 import { id } from '../../utils'
 import { AtomIndexes, EditModes, BOND_TYPES } from '../../types'
 import { store } from '../../store/store'
-import { ADD_ATOM_SIGNAL, CUR_ATOM_SIGNAL, MODE_SIGNAL } from '../../store/signals'
+import { ADD_ATOM_SIGNAL, ADD_BOND_IDX_SIGNAL, CUR_ATOM_SIGNAL, ENERGY_SIGNAL, MODE_SIGNAL } from '../../store/signals'
 import { useSignals } from '@preact/signals-react/runtime'
 
 export default function Edit() {
   useSignals()
-  const bond = BOND_TYPES[CUR_ATOM_SIGNAL.value]?.[store.status.bondIdx]?.[2]
+  const bond = BOND_TYPES[CUR_ATOM_SIGNAL.value]?.[ADD_BOND_IDX_SIGNAL.value]?.[2]
   const inputStyle = {"& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": { display: "none" }, "& input[type=number]": { MozAppearance: "textfield"}}
 
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -51,8 +51,8 @@ export default function Edit() {
               <Typography variant="body2">RMB - remove VM</Typography>
             </Stack>
             <TextField
-              value={store.status.energy}
-              onChange={e => store.status.energy = +e.target.value}
+              value={ENERGY_SIGNAL.value}
+              onChange={e => ENERGY_SIGNAL.value = +e.target.value}
               style={{width: 83}}
               sx={inputStyle}
               size='small'

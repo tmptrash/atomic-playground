@@ -8,7 +8,7 @@ import { VM } from '../../../../types'
 import { atomUnder, getRelatedPos, parseAtom, toOffs, toXY } from '../../../../utils'
 import Konva from 'konva'
 import { KonvaEventObject } from 'konva/lib/Node'
-import { VMS_SIGNAL, VM_IDX_SIGNAL } from '../../../../store/signals'
+import { HOVERED_ATOM_SIGNAL, VMS_SIGNAL, VM_IDX_SIGNAL } from '../../../../store/signals'
 import { useSignals } from '@preact/signals-react/runtime'
 
 type Props = {
@@ -34,7 +34,7 @@ export default function Atom({atom, stage, zoom}: Props) {
 
   function onAtomEnter() {
     const {a} = atomUnder(stage, zoom)
-    store.status.hovers.atom = parseAtom(a?.a?.a || 0)
+    HOVERED_ATOM_SIGNAL.value = parseAtom(a?.a?.a || 0)
   }
 
   function onAtomLeave(e: KonvaEventObject<MouseEvent>) {
@@ -42,7 +42,7 @@ export default function Atom({atom, stage, zoom}: Props) {
     const [x, y] = getRelatedPos(stage, zoom)
     const [rx, ry] = [Math.round(x), Math.round(y)]
     const [ax, ay] = [Math.floor(r.x), Math.floor(r.y)]
-    if (rx <= ax || rx >= ax + step || ry <= ay || ry >= ay + step) store.status.hovers.atom = ''
+    if (rx <= ax || rx >= ax + step || ry <= ay || ry >= ay + step) HOVERED_ATOM_SIGNAL.value = ''
   }
 
   return <>
