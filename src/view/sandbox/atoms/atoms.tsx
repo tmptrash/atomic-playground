@@ -17,7 +17,7 @@ import { toOffs } from '../../../utils'
 import Atom from './atom/atom'
 import { Bonds } from './atom/bonds/bonds'
 import { ATOM_BONDS, IBonds } from './atom/bonds/analyzer'
-import { ATOMS_SIGNAL, MODE_SIGNAL, VMS_SIGNAL, VM_IDX_SIGNAL } from '../../../store/signals'
+import { ADD_ATOM_SIGNAL, ATOMS_SIGNAL, CUR_ATOM_SIGNAL, MODE_SIGNAL, SYNCED_SIGNAL, VMS_SIGNAL, VM_IDX_SIGNAL } from '../../../store/signals'
 //
 // Turns off right mouse button context menu
 //
@@ -45,14 +45,14 @@ export default function Atoms({ stage, zoom }: Props) {
   ATOMS_SIGNAL.value.forEach(a => ATOM_BONDS?.[type(a.a) as AtomIndexes]?.(a, bonds))
 
   function onNextAtom() {
-    store.status.atom = nextAtom(store.status.atom)
+    ADD_ATOM_SIGNAL.value = nextAtom(ADD_ATOM_SIGNAL.value)
   }
 
   function onAddAtom(x: number, y: number) {
     const atomIndex = findAtomIdx(x, y)
     if (atomIndex >= 0) { return }
-    ATOMS_SIGNAL.value = [...ATOMS_SIGNAL.value, { id: `${toOffs(x, y)}`, x, y, a: ATOM_NEW[store.status.atom] } as unknown as AtomType]
-    store.sandbox.synced = false
+    ATOMS_SIGNAL.value = [...ATOMS_SIGNAL.value, { id: `${toOffs(x, y)}`, x, y, a: ATOM_NEW[ADD_ATOM_SIGNAL.value] } as unknown as AtomType]
+    SYNCED_SIGNAL.value = false
   }
 
   function onDelAtom(x: number, y: number) {
@@ -68,7 +68,7 @@ export default function Atoms({ stage, zoom }: Props) {
     const atoms = ATOMS_SIGNAL.value
     atoms.splice(atomIndex, 1)
     ATOMS_SIGNAL.value = [...atoms]
-    store.sandbox.synced = false
+    SYNCED_SIGNAL.value = false
   }
 
   function onNextType(x: number, y: number) {
@@ -99,7 +99,7 @@ export default function Atoms({ stage, zoom }: Props) {
     a.a = (BOND_TYPES[typ]?.[bondIdx]?.[1] || BOND_TYPES[typ]?.[0]?.[1])?.(a.a, d)
     atoms[i] = a
     ATOMS_SIGNAL.value = [...atoms]
-    store.sandbox.synced = false
+    SYNCED_SIGNAL.value = false
   }
 
   function onAddVM(x: number, y: number) {
@@ -109,7 +109,7 @@ export default function Atoms({ stage, zoom }: Props) {
       energy: store.status.energy,
       offs: toOffs(x, y)
     }]
-    store.sandbox.synced = false
+    SYNCED_SIGNAL.value = false
     VMS_SIGNAL.value.length === 1 && (VM_IDX_SIGNAL.value = 0)
   }
 
@@ -121,13 +121,14 @@ export default function Atoms({ stage, zoom }: Props) {
     vms.splice(idx, 1)
     VMS_SIGNAL.value = [...vms]
     if (VM_IDX_SIGNAL.value > vms.length - 1) VM_IDX_SIGNAL.value = vms.length - 1
-    store.sandbox.synced = false
+    SYNCED_SIGNAL.value = false
   }
 
   function onMouseup(e: KonvaEventObject<MouseEvent>): void {
     const {a, ax, ay} = atomUnder(stage, zoom)
+    if (ax === undefined || ay === undefined) return
     const atom = a?.a?.a || 0
-    store.status.curAtom = type(atom)
+    CUR_ATOM_SIGNAL.value = type(atom)
     MODES[getModeByMouse(e.evt)]?.(ax, ay)
     const updatedAtom = findAtom(ax!, ay!)
     store.status.hovers.atom = updatedAtom.a.a ? parseAtom(updatedAtom.a.a) : ''

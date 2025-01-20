@@ -8,7 +8,7 @@ export type Sandbox = {
 }
 export type Status = {
   mode: EditModes
-  atom: AtomIndexes
+  addAtom: AtomIndexes
   curAtom: AtomIndexes
   hovers: {
     atom: string

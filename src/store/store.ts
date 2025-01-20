@@ -10,7 +10,7 @@ export const store: Store = {
   },
   status: {
     mode: EditModes.Atom,
-    atom: AtomIndexes.mov,
+    addAtom: AtomIndexes.mov,
     curAtom: AtomIndexes.no,
     hovers: {
       atom: ''
