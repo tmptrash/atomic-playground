@@ -1,6 +1,6 @@
 import { Signal, signal } from "@preact/signals-react";
-import { Atom, AtomIndexes, EditModes, VM } from "../types";
-import Config from "../config";
+import { Atom, AtomIndexes, EditModes, VM } from "./types";
+import Config from "./config";
 /**
  * Represents atoms array, which we draw on a sandbox
  */

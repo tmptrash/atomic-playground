@@ -4,7 +4,7 @@ import AdbRoundedIcon from '@mui/icons-material/AdbRounded';
 import PlayArrowRoundedIcon from '@mui/icons-material/PlayArrowRounded';
 import { VMType, tick } from 'irma5/src/vms'
 import { receive, send } from "./../../utils/irma5";
-import { ATOMS_SIGNAL, SYNCED_SIGNAL, VMS_SIGNAL, VM_IDX_SIGNAL } from "../../store/signals";
+import { ATOMS_SIGNAL, SYNCED_SIGNAL, VMS_SIGNAL, VM_IDX_SIGNAL } from "../../signals";
 //
 // Virtual machines instance singleton. Will be updated
 // after every synchronization with irma5

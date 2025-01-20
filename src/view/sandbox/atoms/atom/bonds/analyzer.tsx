@@ -6,7 +6,7 @@ import Arrow from "./arrow"
 import Sceptre from './sceptre'
 import { findAtomIdx, getXYByDir } from '../../../../../utils/atom'
 import { NO_DIR } from 'irma5/src/shared'
-import { ATOMS_SIGNAL } from '../../../../../store/signals'
+import { ATOMS_SIGNAL } from '../../../../../signals'
 
 // TODO: put these functions into <Bonds /> component
 type ArrowType = 'arrow' | 'sceptre'

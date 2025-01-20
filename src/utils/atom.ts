@@ -5,7 +5,7 @@ import { b1Dir, b2Dir, b3Dir, elseDir, ifDir, thenDir, type, vmDir } from "irma5
 import { ATOM_MOV, ATOM_FIX, ATOM_SPL, ATOM_CON, ATOM_JOB, ATOM_REP } from "irma5/src/shared"
 import Konva from "konva"
 import { Vector2d } from "konva/lib/types"
-import { ATOMS_SIGNAL, VMS_SIGNAL } from "../store/signals"
+import { ATOMS_SIGNAL, VMS_SIGNAL } from "../signals"
 
 export function nextAtom(type: AtomIndexes): number {
   if (++type > AtomIndexes.rep) { type = AtomIndexes.mov }

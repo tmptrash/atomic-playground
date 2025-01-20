@@ -7,8 +7,7 @@ import Typography from '@mui/material/Typography'
 import { Box, Stack, TextField } from '@mui/material'
 import { id } from '../../utils'
 import { AtomIndexes, EditModes, BOND_TYPES } from '../../types'
-import { store } from '../../store/store'
-import { ADD_ATOM_SIGNAL, ADD_BOND_IDX_SIGNAL, CUR_ATOM_SIGNAL, ENERGY_SIGNAL, MODE_SIGNAL } from '../../store/signals'
+import { ADD_ATOM_SIGNAL, ADD_BOND_IDX_SIGNAL, CUR_ATOM_SIGNAL, ENERGY_SIGNAL, MODE_SIGNAL } from '../../signals'
 import { useSignals } from '@preact/signals-react/runtime'
 
 export default function Edit() {

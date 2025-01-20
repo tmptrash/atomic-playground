@@ -5,13 +5,9 @@ import { KonvaEventObject } from 'konva/lib/Node'
 import { Vector2d } from 'konva/lib/types'
 import Config from '../../config'
 import Grid from './grid'
-import { bind } from '../../store/binder'
-import { store } from '../../store/store'
 import Atoms from './atoms/atoms'
 
 export default function Sandbox() {
-  bind(store.sandbox)
-
   const [size, setSize] = useState({w: 0, h: 0})
   const [zoom, setZoom] = useState(1)
   const stageRef = useRef(null)

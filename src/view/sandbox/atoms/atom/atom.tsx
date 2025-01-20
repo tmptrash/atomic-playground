@@ -3,12 +3,11 @@ import { type } from 'irma5/src/atom'
 import { Circle, Rect, Text } from "react-konva"
 import Config from "../../../../config"
 import { ATOM_COLORS, ATOM_TEXTS, Atom as AtomType, AtomIndexes } from '../../../../types/atom'
-import { store } from '../../../../store/store'
 import { VM } from '../../../../types'
 import { atomUnder, getRelatedPos, parseAtom, toOffs, toXY } from '../../../../utils'
 import Konva from 'konva'
 import { KonvaEventObject } from 'konva/lib/Node'
-import { HOVERED_ATOM_SIGNAL, VMS_SIGNAL, VM_IDX_SIGNAL } from '../../../../store/signals'
+import { HOVERED_ATOM_SIGNAL, VMS_SIGNAL, VM_IDX_SIGNAL } from '../../../../signals'
 import { useSignals } from '@preact/signals-react/runtime'
 
 type Props = {

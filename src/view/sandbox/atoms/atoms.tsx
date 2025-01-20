@@ -12,13 +12,12 @@ import Konva from 'konva'
 import { KonvaEventObject } from 'konva/lib/Node'
 import { type } from 'irma5/src/atom'
 import { AtomIndexes, EditModes, ATOM_NEW, Dir, BOND_TYPES, Atom as AtomType } from '../../../types'
-import { store } from '../../../store/store'
 import { atomUnder, findAtom, findAtomIdx, findVmIdx, nextAtom, parseAtom } from '../../../utils/atom'
 import { toOffs } from '../../../utils'
 import Atom from './atom/atom'
 import { Bonds } from './atom/bonds/bonds'
 import { ATOM_BONDS, IBonds } from './atom/bonds/analyzer'
-import { ADD_ATOM_SIGNAL, ADD_BOND_IDX_SIGNAL, ATOMS_SIGNAL, CUR_ATOM_SIGNAL, ENERGY_SIGNAL, HOVERED_ATOM_SIGNAL, MODE_SIGNAL, SYNCED_SIGNAL, VMS_SIGNAL, VM_IDX_SIGNAL } from '../../../store/signals'
+import { ADD_ATOM_SIGNAL, ADD_BOND_IDX_SIGNAL, ATOMS_SIGNAL, CUR_ATOM_SIGNAL, ENERGY_SIGNAL, HOVERED_ATOM_SIGNAL, MODE_SIGNAL, SYNCED_SIGNAL, VMS_SIGNAL, VM_IDX_SIGNAL } from '../../../signals'
 //
 // Turns off right mouse button context menu
 //
@@ -137,6 +136,7 @@ export default function Atoms({ stage, zoom }: Props) {
   }
 
   function getModeByMouse(e: MouseEvent): string {
+    console.log(`${MODE_SIGNAL.value}-${e.button}${e.ctrlKey ? '-ctrl' : ''}`)
     return `${MODE_SIGNAL.value}-${e.button}${e.ctrlKey ? '-ctrl' : ''}`
   }
 

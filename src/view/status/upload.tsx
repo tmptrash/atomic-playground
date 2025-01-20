@@ -4,7 +4,7 @@ import Box from '@mui/material/Box'
 import { Typography } from '@mui/material'
 import CloudUploadRoundedIcon from '@mui/icons-material/CloudUploadRounded';
 import { toAtoms } from '../../utils/json'
-import { ATOMS_SIGNAL } from '../../store/signals';
+import { ATOMS_SIGNAL } from '../../signals';
 
 export default function Upload() {
   const [file, setFile] = useState('')
