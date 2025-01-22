@@ -136,7 +136,6 @@ export default function Atoms({ stage, zoom }: Props) {
   }
 
   function getModeByMouse(e: MouseEvent): string {
-    console.log(`${MODE_SIGNAL.value}-${e.button}${e.ctrlKey ? '-ctrl' : ''}`)
     return `${MODE_SIGNAL.value}-${e.button}${e.ctrlKey ? '-ctrl' : ''}`
   }
 
