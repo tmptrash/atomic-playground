@@ -1,14 +1,14 @@
-import { Signal, signal } from "@preact/signals-react";
+import { signal } from "@preact/signals-react";
 import { Atom, AtomIndexes, EditModes, VM } from "./types";
 import Config from "./config";
 /**
  * Represents atoms array, which we draw on a sandbox
  */
-export const ATOMS_SIGNAL: Signal<Atom[]> = signal([])
+export const ATOMS_SIGNAL = signal([] as Atom[])
 /**
  * Represents virtual machines inside the sandbox
  */
-export const VMS_SIGNAL: Signal<VM[]> = signal([])
+export const VMS_SIGNAL = signal([] as VM[])
 /**
  * Represents current VM index in VMS_SIGNAL array
  */
