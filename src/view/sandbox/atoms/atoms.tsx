@@ -69,6 +69,11 @@ export default function Atoms({ stage, zoom }: Props) {
     const atoms = ATOMS_SIGNAL.value
     atoms.splice(atomIndex, 1)
     ATOMS_SIGNAL.value = [...atoms]
+    //
+    // It's possible that we are remiving an atom with current VM,
+    // so we have to update current VM index
+    //
+    if (VM_IDX_SIGNAL.value >= ATOMS_SIGNAL.value.length || VM_IDX_SIGNAL.value < 0) VM_IDX_SIGNAL.value = 0
     SYNCED_SIGNAL.value = false
   }
 
