@@ -17,7 +17,7 @@ import { toOffs } from '../../../utils'
 import Atom from './atom/atom'
 import { Bonds } from './atom/bonds/bonds'
 import { ATOM_BONDS, IBonds } from './atom/bonds/analyzer'
-import { ADD_ATOM_SIGNAL, ADD_BOND_IDX_SIGNAL, ATOMS_SIGNAL, CUR_ATOM_SIGNAL, ENERGY_SIGNAL, HOVERED_ATOM_SIGNAL,
+import { ADD_ATOM_SIGNAL, ADD_BOND_IDX_SIGNAL, ATOMS_SIGNAL, CUR_ATOM_TYPE_SIGNAL, ENERGY_SIGNAL, HOVERED_ATOM_SIGNAL,
   MODE_SIGNAL, SYNCED_SIGNAL, VMS_SIGNAL, VM_IDX_SIGNAL } from '../../../signals'
 //
 // Turns off right mouse button context menu
@@ -135,7 +135,7 @@ export default function Atoms({ stage, zoom }: Props) {
     const {a, ax, ay} = atomUnder(stage, zoom)
     if (ax === undefined || ay === undefined) return
     const atom = a?.a?.a || 0
-    CUR_ATOM_SIGNAL.value = type(atom)
+    CUR_ATOM_TYPE_SIGNAL.value = type(atom)
     MODES[getModeByMouse(e.evt)]?.(ax, ay)
     const updatedAtom = findAtom(ax!, ay!)
     HOVERED_ATOM_SIGNAL.value = updatedAtom.a.a ? parseAtom(updatedAtom.a.a) : ''

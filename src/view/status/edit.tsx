@@ -7,12 +7,12 @@ import Typography from '@mui/material/Typography'
 import { Box, Stack, TextField } from '@mui/material'
 import { id } from '../../utils'
 import { AtomIndexes, EditModes, BOND_TYPES } from '../../types'
-import { ADD_ATOM_SIGNAL, ADD_BOND_IDX_SIGNAL, CUR_ATOM_SIGNAL, ENERGY_SIGNAL, MODE_SIGNAL } from '../../signals'
+import { ADD_ATOM_SIGNAL, ADD_BOND_IDX_SIGNAL, CUR_ATOM_TYPE_SIGNAL, ENERGY_SIGNAL, MODE_SIGNAL } from '../../signals'
 import { useSignals } from '@preact/signals-react/runtime'
 
 export default function Edit() {
   useSignals()
-  const bond = BOND_TYPES[CUR_ATOM_SIGNAL.value]?.[ADD_BOND_IDX_SIGNAL.value]?.[2]
+  const bond = BOND_TYPES[CUR_ATOM_TYPE_SIGNAL.value]?.[ADD_BOND_IDX_SIGNAL.value]?.[2]
   const inputStyle = {"& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": { display: "none" }, "& input[type=number]": { MozAppearance: "textfield"}}
 
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {

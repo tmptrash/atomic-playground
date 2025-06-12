@@ -28,7 +28,7 @@ export const ADD_ATOM_SIGNAL = signal(AtomIndexes.mov)
 /**
  * Represents an atom under mouse
  */
-export const CUR_ATOM_SIGNAL = signal(AtomIndexes.no)
+export const CUR_ATOM_TYPE_SIGNAL = signal(AtomIndexes.no)
 /**
  * Represents hovered atom to show it's details
  */
