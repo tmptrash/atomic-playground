@@ -28,7 +28,8 @@ const Config = {
     splColor:     '#b6d7a8',
     conColor:     '#efefef',
     jobColor:     '#f9cb9c',
-    repColor:     '#b4a7d6'
+    repColor:     '#b4a7d6',
+    mutColor:     '#cccccc'
   },
   vm: {
     nextColor:    '#6aa84f',

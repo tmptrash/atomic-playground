@@ -17,7 +17,8 @@ import { toOffs } from '../../../utils'
 import Atom from './atom/atom'
 import { Bonds } from './atom/bonds/bonds'
 import { ATOM_BONDS, IBonds } from './atom/bonds/analyzer'
-import { ADD_ATOM_SIGNAL, ADD_BOND_IDX_SIGNAL, ATOMS_SIGNAL, CUR_ATOM_SIGNAL, ENERGY_SIGNAL, HOVERED_ATOM_SIGNAL, MODE_SIGNAL, SYNCED_SIGNAL, VMS_SIGNAL, VM_IDX_SIGNAL } from '../../../signals'
+import { ADD_ATOM_SIGNAL, ADD_BOND_IDX_SIGNAL, ATOMS_SIGNAL, CUR_ATOM_SIGNAL, ENERGY_SIGNAL, HOVERED_ATOM_SIGNAL,
+  MODE_SIGNAL, SYNCED_SIGNAL, VMS_SIGNAL, VM_IDX_SIGNAL } from '../../../signals'
 //
 // Turns off right mouse button context menu
 //

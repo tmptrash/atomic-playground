@@ -30,7 +30,8 @@ export const ATOM_BONDS = {
   [AtomIndexes.spl]: fixSplBonds,
   [AtomIndexes.con]: conBonds,
   [AtomIndexes.job]: jobBonds,
-  [AtomIndexes.rep]: repBonds
+  [AtomIndexes.rep]: repBonds,
+  [AtomIndexes.mut]: mutBonds
 }
 
 export function getArrows(bonds: IBond[]) {
@@ -138,4 +139,14 @@ function repBonds(a: Atom, bonds: IBonds) {
     type: 'sceptre',
     id: a.id
   })
+}
+
+function mutBonds(a: Atom, bonds: IBonds) {
+  const id = a.id
+  !bonds[id] && (bonds[id] = [])
+  bonds[id] = [
+    ...bonds[id], 
+    {a, d: vmDir(a.a), col: Config.vm.nextColor, type: 'arrow'},
+    {a, d: b1Dir(a.a), col: Config.bonds.bond1Color, type: 'sceptre'}
+  ]
 }

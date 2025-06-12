@@ -7,7 +7,8 @@ export enum AtomIndexes {
   spl = 3,
   con = 4,
   job = 5,
-  rep = 6
+  rep = 6,
+  mut = 7
 }
 
 export type Atom = {
@@ -24,7 +25,8 @@ export const ATOM_NEW = {
   [AtomIndexes.spl]: 0b0110000000000000,
   [AtomIndexes.con]: 0b1000000000000000,
   [AtomIndexes.job]: 0b1010000000000000,
-  [AtomIndexes.rep]: 0b1100000000000000
+  [AtomIndexes.rep]: 0b1100000000000000,
+  [AtomIndexes.mut]: 0b1110000000000000
 }
 
 export const ATOM_COLORS = {
@@ -34,7 +36,8 @@ export const ATOM_COLORS = {
   [AtomIndexes.spl]: Config.atoms.splColor,
   [AtomIndexes.con]: Config.atoms.conColor,
   [AtomIndexes.job]: Config.atoms.jobColor,
-  [AtomIndexes.rep]: Config.atoms.repColor
+  [AtomIndexes.rep]: Config.atoms.repColor,
+  [AtomIndexes.mut]: Config.atoms.mutColor
 }
 
 export const ATOM_TEXTS = {
@@ -44,5 +47,6 @@ export const ATOM_TEXTS = {
   [AtomIndexes.spl]: 's',
   [AtomIndexes.con]: 'i',
   [AtomIndexes.job]: 'j',
-  [AtomIndexes.rep]: 'r'
+  [AtomIndexes.rep]: 'r',
+  [AtomIndexes.mut]: 'u'
 }
