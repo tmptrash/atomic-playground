@@ -1,5 +1,6 @@
-import { vmDir, b1Dir, b2Dir, ifDir, thenDir, elseDir, b3Dir, setVmDir, setB1Dir, 
-  setB2Dir, setB3Dir, setIfDir, setThenDir, setElseDir } from 'irma5/src/atom'
+import { vmDir, b1Dir, b2Dir, ifDir, thenDir, elseDir, b3Dir, setVmDir, setB1Dir, setB2Dir,
+  setB3Dir, setIfDir, setThenDir, setElseDir, secIdx, setSecIdx, secVal, setSecVal
+} from 'irma5/src/atom'
 
 export type LinePoints = [number, number, number, number]
 export type DirKeys = {[key in Dir]: unknown}
@@ -12,7 +13,7 @@ export type BondType = [
   [Bond, Bond, Bond, Bond],
   [Bond, Bond],
   [Bond, Bond, Bond],
-  [Bond, Bond]
+  [Bond, Bond, Bond, Bond]
 ]
 
 export enum Dir {
@@ -53,5 +54,5 @@ export const BOND_TYPES: BondType = [
   /* con */[[ifDir, setIfDir, 'if dir'], [thenDir, setThenDir, 'then dir'], [elseDir, setElseDir, 'else dir'], [b3Dir, setB3Dir, 'compare if dir']],
   /* job */[[vmDir, setVmDir, 'next atom bond'], [b1Dir, setB1Dir, 'new VM dir']],
   /* rep */[[vmDir, setVmDir, 'next atom bond'], [b1Dir, setB1Dir, 'atom 1 dir'], [b2Dir, setB2Dir, 'atom 2 dir']],
-  /* mut */[[vmDir, setVmDir, 'next atom bond'], [b1Dir, setB1Dir, 'mut atom dir']]
+  /* mut */[[vmDir, setVmDir, 'next atom bond'], [b1Dir, setB1Dir, 'mut atom dir'], [secIdx, setSecIdx, 'section index'], [secVal, setSecVal, 'section value']]
 ]

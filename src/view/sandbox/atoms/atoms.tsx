@@ -19,6 +19,7 @@ import { Bonds } from './atom/bonds/bonds'
 import { ATOM_BONDS, IBonds } from './atom/bonds/analyzer'
 import { ADD_ATOM_SIGNAL, ADD_BOND_IDX_SIGNAL, ATOMS_SIGNAL, CUR_ATOM_TYPE_SIGNAL, ENERGY_SIGNAL, HOVERED_ATOM_SIGNAL,
   MODE_SIGNAL, SYNCED_SIGNAL, VMS_SIGNAL, VM_IDX_SIGNAL } from '../../../signals'
+import { ATOM_MUT } from 'irma5/src/shared'
 //
 // Turns off right mouse button context menu
 //
@@ -95,13 +96,20 @@ export default function Atoms({ stage, zoom }: Props) {
     if (bondIdx >= BOND_TYPES[typ].length) bondIdx = ADD_BOND_IDX_SIGNAL.value = 0
     let d = (BOND_TYPES[typ]?.[bondIdx]?.[0] || BOND_TYPES[typ]?.[0]?.[0])?.(a.a) + 1
     //
-    // only for next VM dir & bond 3 in con atom, which are have 4 bits we may set
-    // "no bond" state for all other 3 bits bonds it's impossible to remove it
+    // for the mut atom the value is 4 bits (0..15)
     //
-    if (d > Dir.leftUp) {
-      // VM dir or bond 3 of con atom
-      if (bondIdx === 0 && typ !== AtomIndexes.con || typ === AtomIndexes.con && bondIdx === 3) d = Dir.no
-      else d = Dir.up
+    if (typ === ATOM_MUT) {
+      if (d > 15) d = 0
+    } else {
+      //
+      // only for next VM dir & bond 3 in con atom, which are have 4 bits we may set
+      // "no bond" state for all other 3 bits bonds it's impossible to remove it
+      //
+      if (d > Dir.leftUp) {
+        // VM dir or bond 3 of con atom
+        if (bondIdx === 0 && typ !== AtomIndexes.con || typ === AtomIndexes.con && bondIdx === 3) d = Dir.no
+        else d = Dir.up
+      }
     }
     a.a = (BOND_TYPES[typ]?.[bondIdx]?.[1] || BOND_TYPES[typ]?.[0]?.[1])?.(a.a, d)
     atoms[i] = a
