@@ -96,7 +96,7 @@ export default function Atoms({ stage, zoom }: Props) {
     if (bondIdx >= BOND_TYPES[typ].length) bondIdx = ADD_BOND_IDX_SIGNAL.value = 0
     let d = (BOND_TYPES[typ]?.[bondIdx]?.[0] || BOND_TYPES[typ]?.[0]?.[0])?.(a.a) + 1
     //
-    // for the mut atom the value is 4 bits (0..15)
+    // for the mut atom the value (d) is 4 bits (0..15)
     //
     if (typ === ATOM_MUT) {
       if (d > 15) d = 0
